@@ -1,0 +1,160 @@
+<app-menu-principal-editor></app-menu-principal-editor>
+<div class="contenido">
+  <div class="content">
+    <div class="row">
+      <div class="col-sm-9 offset-md-2">
+        <h5 class="text-center" style="color: #161515">Listado de Noticias en STEM</h5>
+        <button type="reset" class="btn btn-primary" (click)="open(contenido);clear()">
+      
+          CREAR NOTICIAS <i class="fas fa-plus-square"></i>
+        </button>
+      
+        <br>
+        <br>
+        <div class="card">
+          <div class="table-responsive"> 
+            <table class="table align-middle">
+              <thead>
+                <tr class="table-active">
+                  <th scope="col" >Titulo</th>
+                  
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Imagen</th>
+                  
+                  <th scope="col" >Acciones</th>
+                </tr>
+              </thead>
+        
+              <tbody>
+                <tr  *ngFor="
+                let noticia of noticias | paginate: { itemsPerPage: 3, currentPage: p }">
+                  <td>{{ noticia.titulo }}</td>
+                  
+                  <td>{{ noticia.descripcion}}</td>
+                
+                  <td>
+                    <img *ngIf="noticia.tipo_archivo == 'image/png' || noticia.tipo_archivo=='image/jpeg'  || noticia.tipo_archivo=='image/jpg'" width="100px" heigh="100px"width="100px" heigh="100px"
+                      [src]="noticia.ruta_archivo" alt="no-image" width="100px" heigh="100px"/>
+                    <video *ngIf="noticia.tipo_archivo == 'video/mp4' || noticia.tipo_archivo=='video/mov'"  width="100px" heigh="100px"
+                      [src]="noticia.ruta_archivo" class="img-fluid" alt="no-image"></video>
+                  </td>
+                  <!-- <td><img [src]="'http://localhost:3000/'+ perfil.ruta_archivo" class="img-card-top w-100"  alt="no-image"></td> -->
+                  <td>
+                    <button class="btn btn-primary"  (click)="getpublicacion(noticia.id_publicacion); open(contenido)" >
+                      <i class="fas fa-edit"></i>
+                    </button> | 
+                    <button class="btn btn-danger"  (click)="deletePublicacion(noticia.id_publicacion )">
+                      <i class="far fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+        
+      </div>
+     
+    </div>
+  </div>
+   
+</div>
+
+  <ng-template #contenido let-modal>
+    <div class="modal-header">
+      <h4 *ngIf="!edit" class="modal-title" id="modal-basic-title">
+       Noticias, iniciativas y eventos STEM
+      </h4>
+      <h4 *ngIf="edit">Actualizar información   </h4>
+      <button
+        class="close"
+        aria-label="close"
+        type="button"
+        (click)="modal.dismiss()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Titulo: </label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese Titulo"
+          [(ngModel)]="noticia.titulo"
+          required
+        />
+    
+      </div>
+     
+  
+      <div class="form-group">
+        <label>Descripción:</label>
+        <textarea
+          rows="2"
+          class="form-control"
+          [(ngModel)]="noticia.descripcion"
+          placeholder="Ingrese descripción"
+          required
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label>Enlace: </label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese Enlace"
+          [(ngModel)]="noticia.enlace"
+          required
+        />
+    
+      </div>
+      <div class="form-group">
+        <input
+          type="file"
+          name=""
+          placeholder=""
+          (change)="onFileSelect($event)"
+          #photo
+        />
+         
+          <img [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'" class="img-fluid" alt="no-image" >
+       
+       
+        <!-- <class="d-none"<img [src]="../../../../assets/noimage.png" class="img-fluid" alt="no-image" (click)="photo.click()"> -->
+      </div>
+    </div>
+  
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-dismiss="modal"
+        (click)="close(contenido)"
+      >
+        Cerrar
+      </button>
+      <button  *ngIf="!edit" type="button" class="btn btn-primary" (click)=" edit ? updatepublicacion():saveArchivo();close(contenido)">
+        PUBLICAR
+      </button>
+      <button *ngIf="edit" type="button" class="btn btn-primary" (click)="edit ? updatepublicacion() : saveArchivo()">
+        GUARDAR <i class="fas fa-save"></i>
+      </button>
+    </div>
+  </ng-template>
+
+<br>
+<br>
+
+  <!-- <footer style="padding-top: 0.5%;" class="bg-light text-center text-lg-start">
+ 
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2021 Copyright: W-STEM UTN
+      
+    </div>
+   
+  </footer> -->

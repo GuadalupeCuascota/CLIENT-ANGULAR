@@ -1,0 +1,181 @@
+<app-registro-usuario></app-registro-usuario>
+<div class="contenido">
+  <div class="content">
+
+    <div class="card">
+      <div class="card-body text-center">
+        <h5 class="text-center" style="color: #161515">Listado de Usuarios</h5>
+   <div class="row">
+     <div class="col-md-2" >
+     
+      <button (click)="Crear()" class="btn btn-primary">NUEVO <i class="fas fa-plus-square"></i></button>
+     </div>
+     <div class="col-md-4">
+      
+     </div>
+     <div class="col-md-5 ">
+      <div class="form-group row">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            name="textoBuscar"
+            [(ngModel)]="textoBuscar"
+            placeholder="Buscar perfil"
+          />
+          <div class="input-group-text bg-white">
+            <i class="fas fa-search"></i>
+          </div>
+        </div>
+      </div>
+     </div>
+  
+   </div>
+  
+        <div class="table-responsive">
+          <table class="table table-striped ">
+            <thead>
+              <tr class="table-active">
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Correo electrónico</th>
+                <th scope="col">Tipo rol</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              <tr
+                *ngFor="
+                  let usuario of usuarios
+                    | paginate: { itemsPerPage: 5, currentPage: p }
+                    | filtroUsuarios: textoBuscar
+                "
+              >
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.apellido }}</td>
+                <td>{{ usuario.correo_electronico }}</td>
+                <td>{{ usuario.tipo_rol }}</td>
+                <td>
+                  <button
+                    class="btn btn-primary"
+                    (click)="getUsuario(usuario.id_usuario); open(contenido)"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  |
+                  <button
+                    class="btn btn-danger"
+                    (click)="deleteUsuario(usuario.id_usuario)"
+                  >
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>
+
+
+<ng-template #contenido let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar información</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label style="color: #161515">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        name=""
+        placeholder="Ingrese nombre"
+        [(ngModel)]="usuario1.nombre"
+      />
+    </div>
+    <div class="form-group">
+      <label style="color: #161515">Apellido</label>
+      <input
+        type="text"
+        class="form-control"
+        name=""
+        placeholder="Ingrese apellido"
+        [(ngModel)]="usuario1.apellido"
+      />
+    </div>
+    <div class="form-group row">
+      <div class="col">
+        <label style="color: #161515">Correo</label>
+        <input
+          type="text"
+          class="form-control"
+          name="correo_electronico"
+          [(ngModel)]="usuario1.correo_electronico"
+          placeholder="Ingrese correo electrónico"
+        />
+      </div>
+      <div class="col">
+        <label style="color: #161515">Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          name=""
+          placeholder="Ingrese contraseña"
+          [(ngModel)]="usuario1.contrasenia"
+        />
+      </div>
+      <div class="col">
+        <label style="color: #161515">Tipo rol</label>
+        <select
+          class="form-control"
+          name="miselect"
+          [(ngModel)]="usuario1.tipo_rol"
+        >
+          <option value="0">Selecciona una opción</option>
+          <option *ngFor="let rol of roles">{{ rol.tipo_rol }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="close(contenido)"
+    >
+      Cerrar
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="updateUsuario(); close(contenido)"
+    >
+      GUARDAR
+    </button>
+  </div>
+</ng-template>
+
+
+<footer class="bg-light text-center text-lg-start">
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright: W-STEM UTN
+    
+  </div>
+  <!-- Copyright -->
+</footer>

@@ -1,0 +1,88 @@
+
+
+<div class="form">
+  <!-- <div class="col-md-4 offset-md-4"> -->
+    <h5 class="text-center" style="color:#161515">Registrarse como rol editor</h5>
+    <div class="col">
+      <label style="color: #161515">Nombre</label>
+      <input
+        type="text" value=""
+        class="form-control"
+        name=""
+        placeholder="Ingrese nombre"
+        [(ngModel)]="usuario.nombre"
+        
+      />
+    </div>
+    <div class="col">
+      <label style="color: #161515">Apellido</label>
+      <input
+        type="text"
+        class="form-control"
+        name=""
+        placeholder="Ingrese apellido"
+        [(ngModel)]="usuario.apellido"
+       
+      />
+    </div>
+    <div class="col">
+      <label style="color: #161515">Correo electrónico</label>
+      <input
+        type="text"  value=""
+        class="form-control"
+        name=""
+        placeholder="Ingrese correo"
+        [(ngModel)]="usuario.correo_electronico"
+       
+      />
+    </div>
+    <div class="col">
+      <label style="color: #161515">Contraseña</label>
+          
+      <input
+      type="password" 
+        class="form-control"
+        name=""
+        placeholder="Ingrese contraseña"
+        [(ngModel)]="usuario.contrasenia"
+        
+        
+      />
+  
+    </div>
+    <div class="col">
+      <label style="color: #161515">Confirmar Contraseña</label>
+          
+      <input
+      type="password" 
+        class="form-control"
+        name=""
+        placeholder="Ingrese contraseña"
+        
+        
+      />
+  
+    </div>
+    <div class="col">
+      <label style="color: #161515">Código de registro</label>
+      <input
+        type="number"  value=""
+        class="form-control"
+        name=""
+        placeholder="Ingrese código"
+       
+      />
+    </div>
+    <br>
+    <div class="col">
+      <button class="btn btn-primary btn-block" (click)="saveUsuario()">
+        Regístrate
+         </button>
+         <p class="message" >Tienes una cuenta? <a href="/login">Iniciar Sesión</a></p>
+    </div>
+   
+  
+  <!-- </div> -->
+</div>
+
+

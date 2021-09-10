@@ -1,0 +1,23 @@
+.content {
+  
+    margin-left: 150px;
+    padding-left: 20px;
+    margin-right: 150px;
+    padding-top: 140px;
+  }
+  .contenido {
+    padding: 30% 0 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(163, 157, 157, 0.5)),url(../../../../assets/admin.jpg);
+    background-repeat: no-repeat center center fixed;
+    min-height: 100vh;
+    background-size:100% 100%;  
+    
+  
+  
+  }
+  h1{
+    margin: 0 0 10px 0;
+         font-weight: 800;
+         margin-top: -10%;
+ 
+ }

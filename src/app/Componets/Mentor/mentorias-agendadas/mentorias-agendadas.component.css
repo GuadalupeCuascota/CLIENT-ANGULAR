@@ -1,0 +1,17 @@
+.content {
+  
+  margin-left: 40px;
+  padding-left: 20px;
+  margin-right: 40px;
+  padding-top: 115px;
+  }
+  .contenido {
+    padding: 3% 0 0;
+    background-image: linear-gradient(rgba(255, 246, 246, 0.5),rgba(213, 195, 247, 0.5)),url(../../../../assets/mentor.jpg);
+    background-repeat: no-repeat center center fixed;
+    min-height: 100vh;
+    background-size:100% 100%;  
+    
+  
+  
+  }

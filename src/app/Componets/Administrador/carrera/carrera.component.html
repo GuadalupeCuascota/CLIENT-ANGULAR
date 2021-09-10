@@ -1,0 +1,108 @@
+<app-registro-usuario></app-registro-usuario>
+<div class="contenido">
+  <div class="content">
+
+
+    <div class="row">
+      <div class="list-group">
+        <div class="list-group-item">
+          <h5 class="text-center" style="color: #161515">
+            Registro de Carreras Fica
+          </h5>
+          <form [formGroup]="carreraform">
+            <div class="form-group row">
+              <div class="col">
+                <input type="text" name="tipo_rol" class="form-control" formControlName="nombre_carrera"
+                  placeholder="Ingrese la carrera" />
+                <small *ngIf="
+                    carreraform.get('nombre_carrera').invalid &&
+                    carreraform.get('nombre_carrera').touched
+                  " class="text-danger">Carrera es requerido</small>
+              </div>
+              <div class="col">
+                <button [disabled]="!carreraform.valid" class="btn btn-primary" (click)="saveCarrera()">
+                  Agregar
+                  <i class="fas fa-plus-square"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr class="table-active">
+  
+                  <th scope="col">Nombre</th>
+  
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+  
+              <tbody>
+                <tr *ngFor="let carrera of carreras  paginate: { itemsPerPage: 5, currentPage: p }">
+  
+                  <td>{{ carrera.nombre_carrera}}</td>
+  
+                  <td>
+                    <button class="btn btn-primary" (click)="getCarrera(carrera.id_carrera);open(contenido)">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    |
+                    <button class="btn btn-danger" (click)="deleteCarrera(carrera.id_carrera)">
+                      <i class="far fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pagination-controls (pageChange)="p= $event"></pagination-controls>
+          </div>
+      
+      </div>
+
+
+    </div>
+
+
+
+
+  </div>
+</div>
+
+<ng-template #contenido let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar información</h4>
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label style="color: #161515">Carrera</label>
+      <input type="text" class="form-control" name="" placeholder="Ingrese nombre"
+        [(ngModel)]="carrera1.nombre_carrera" />
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(contenido)">
+      Cerrar
+    </button>
+    <button type="button" class="btn btn-primary" (click)="updateCarrera(); close(contenido)">
+      GUARDAR
+    </button>
+  </div>
+</ng-template>
+<footer class="bg-light text-center text-lg-start">
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright: W-STEM UTN
+
+  </div>
+  <!-- Copyright -->
+</footer>

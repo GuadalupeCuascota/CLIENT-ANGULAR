@@ -1,0 +1,18 @@
+.content {
+  
+  margin-left: 40px;
+  padding-left: 20px;
+  margin-right: 40px;
+  padding-top: 115px;
+  }
+    
+  .contenido {
+    padding: 2% 0 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(163, 157, 157, 0.5)),url(../../../../assets/editor.jpg);
+    background-repeat: no-repeat center center fixed;
+    min-height: 100vh;
+    background-size:100% 100%;  
+    
+  
+  
+  }

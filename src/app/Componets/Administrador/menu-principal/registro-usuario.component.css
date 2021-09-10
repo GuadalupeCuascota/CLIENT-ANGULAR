@@ -1,0 +1,10 @@
+
+  header {
+   
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+  }
+  a{
+    font-size: 120%;
+  }

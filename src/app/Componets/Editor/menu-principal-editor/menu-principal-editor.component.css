@@ -1,0 +1,22 @@
+
+header {
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+}
+
+
+a{
+    font-size: 120%;
+  }
+  /* .contenido {
+    padding: 6% 0 0;
+    background-image: url(../../../../assets/prueba1.jfif );
+    background-repeat: no-repeat center center fixed;
+    min-height: 100vh;
+    background-size:100% 100%;
+  
+   
+  
+  
+  } */

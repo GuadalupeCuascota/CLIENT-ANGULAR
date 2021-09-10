@@ -1,0 +1,36 @@
+
+<div class="login-page">
+
+
+  <div class="form">
+
+    <img src="../../../assets/Fica Stem JPG.jpg">
+    <h2>Iniciar Sesión</h2>
+    
+    <input type="text"  placeholder="Correo electrónico" [(ngModel)]="user.correo_electronico"
+      class="form-control" required autofocus />
+
+     <div>
+      <i [class]=" show_eye ? 'fa fa-eye iconoInput' : 'fa fa-eye-slash iconoInput' " (click)="toggleShow()"> </i>
+      <input [type]="showPassword ? 'text': 'password'" placeholder="Contraseña " class="form-control"
+        [(ngModel)]="user.contrasenia" required autofocus />
+     </div>
+     
+
+    
+
+
+    <button (click)="login()" class="btn btn-primary btn-block">Acceder </button>
+    <p  class="message">Not registrado? <a >Registrarse</a></p>
+    <!-- "node_modules/bootswatch/dist/Pulse/bootstrap.min.css", -->
+  </div>
+
+</div>
+<footer class="bg-light text-center text-lg-start">
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright: W-STEM UTN
+    
+  </div>
+  <!-- Copyright -->
+</footer>

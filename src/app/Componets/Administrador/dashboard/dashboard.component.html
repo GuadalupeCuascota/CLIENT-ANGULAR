@@ -1,0 +1,154 @@
+<app-registro-usuario></app-registro-usuario>
+<div class="contenido">
+
+  <div class="content">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col">
+        <div class="card text-center" style="width: 18rem">
+          <div class="card-body">
+            <h5 class="card-title">Estudiantes registrados</h5>
+            <p class="card-text">{{countEstudiantes}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-center" style="width: 18rem">
+          <div class="card-body">
+            <h5 class="card-title">Editores FICA-STEM</h5>
+            <p class="card-text">{{countEdit}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-center" style="width: 18rem">
+          <div class="card-body">
+            <h5 class="card-title">Mentoras</h5>
+            <p class="card-text">{{countMent}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="content">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header">Estudiantes registrados por mes</div>
+          <div class="card-body">
+            <table>
+              <tr>
+                <td>
+                  <ngx-charts-bar-vertical
+                    [results]="registro"
+                    [view]="view"
+                    scheme="cool"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [legendPosition]="legendPosition"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLabel"
+                    
+                    [yAxisLabel]="yAxisLabel"
+                    (select)="onSelect($event)"
+                  >
+                  </ngx-charts-bar-vertical
+                  >
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header">Mentorias Agendadas</div>
+          <div class="card-body">
+            <table>
+              <tr>
+                <td>
+                  <ngx-charts-bar-vertical
+                  [results]="mentoria"
+                  [view]="view"
+                  [scheme]="colorScheme"
+                  [gradient]="gradient"
+                  [xAxis]="showXAxis"
+                  [yAxis]="showYAxis"
+                  [legend]="showLegend"
+                  [legendPosition]="legendPosition"
+                  [showXAxisLabel]="showXAxisLabel"
+                  [showYAxisLabel]="showYAxisLabel"
+                  [xAxisLabel]="xAxisLabel"
+                  [animations]="animations"
+                  
+                  [yAxisLabel]="yAxisLabel"
+                  (select)="onSelect($event)"
+                  
+                  ></ngx-charts-bar-vertical>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header">Contenido compartido</div>
+          <div class="card-body">
+            <table>
+              <tr>
+                <td>
+                  <ngx-charts-pie-grid
+                    [results]="mentoria"
+                    [view]="view"
+                    [scheme]="colorScheme"
+                   
+                  >
+                  </ngx-charts-pie-grid
+                  >
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header">Contenido compartido</div>
+          <div class="card-body">
+            <table>
+              <tr>
+                <td>
+                  <ngx-charts-number-card
+                    [results]="registro"
+                    [view]="view"
+                    [scheme]="colorScheme"
+                    
+                  >
+                  </ngx-charts-number-card
+                  >
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <BR>
+</div>
+<footer class="bg-light text-center text-lg-start">
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright: W-STEM UTN
+    
+  </div>
+  <!-- Copyright -->
+</footer>

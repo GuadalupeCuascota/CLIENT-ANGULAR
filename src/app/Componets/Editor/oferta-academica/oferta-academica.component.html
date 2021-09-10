@@ -1,0 +1,144 @@
+<app-menu-principal-editor></app-menu-principal-editor>
+
+<div class="contenido">
+<div class="content">
+  <div class="row">
+
+    <div class="col-sm-9 offset-md-2">
+      <h5 class="text-center" style="color: #161515">Listado publicaciones oferta académica FICA</h5>
+      <div class="form-group row">
+        <div class="col">
+          <button type="reset" class="btn btn-primary" (click)="open(contenido)">
+            CREAR PUBLICACIÓN <i class="fas fa-plus-square"></i>
+          </button>
+        </div>
+        <div class="col">
+  
+          <div class="col-md-8 offset-md-4">
+            <div class="form-group row">
+  
+              <!-- <div class="input-group">
+  
+                <input type="text" class="form-control" name="textoBuscar" placeholder="Buscar perfil">
+                <div class="input-group-text bg-white">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div> -->
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+      <div class="card">
+        <table class="table table-hover">
+          <thead>
+            <tr class="table-active">
+              <th scope="col">Titulo</th>
+              <th scope="col">Descripción</th>
+    
+    
+              <th scope="col">Imagen</th>
+              <th scope="col">Carrera</th>
+    
+              <th scope="col">acciones</th>
+            </tr>
+          </thead>
+    
+          <tbody>
+            <tr *ngFor="
+              let oferta_academica of ofertas_academica | paginate: { itemsPerPage: 3, currentPage: p }">
+              <td>{{oferta_academica.titulo}}</td>
+              <td>{{oferta_academica.descripcion }}</td>
+    
+    
+    
+              <td><img *ngIf="oferta_academica.tipo_archivo == 'image/png' || perfil.tipo_archivo=='image/jpeg'"  width="100px" heigh="100px" [src]=" oferta_academica.ruta_archivo"
+                  alt="no-image"></td>
+                  <td>{{oferta_academica.nombre_carrera}}</td>
+                  <video *ngIf="oferta_academica.tipo_archivo == 'video/mp4' || tipo_archivo=='video/mov'" width="100px" heigh="100px"
+                  [src]="perfil.ruta_archivo" class="img-fluid" alt="no-image"></video>
+    
+              <td>
+                <button class="btn btn-primary" (click)="getpublicacion(oferta_academica.id_publicacion); open(contenido)">
+                  <i class="fas fa-edit"></i>
+                </button> |
+                <button class="btn btn-danger" (click)="deletePublicacion(oferta_academica.id_publicacion )">
+                  <i class="far fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  
+      <!-- [(ngModel)]="textoBuscar" -->
+  
+  
+  
+      <!-- <video src="../../../../assets/Pregunta a.mp4" width="300" controls> -->
+      <!-- </video> -->
+  
+    </div>
+  </div>
+</div>
+</div>
+
+<ng-template #contenido let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      oferta académica FICA
+    </h4>
+
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <label style="color: #161515">Carrera</label>
+    <select class="form-control" name="miselect" [(ngModel)]="oferta_academica.id_carrera">
+    <option *ngFor="let carrera of carreras">{{carrera.nombre_carrera}}</option>
+    </select>
+    <div class="form-group">
+
+      <label>Titulo: </label>
+      <input type="text" class="form-control" name="" placeholder="Ingrese titulo" [(ngModel)]="oferta_academica.titulo"
+        required />
+    </div>
+    <div class="form-group">
+      <label>Descripción:</label>
+      <textarea rows="2" class="form-control" [(ngModel)]="oferta_academica.descripcion"
+        placeholder="Ingrese descripción" required></textarea>
+    </div>
+    <div class="form-group">
+      <input type="file" name="" placeholder="" (change)="onFileSelect($event)" #photo />
+
+      <img max-width="250px" [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'" class="img-fluid"
+        alt="no-image">
+       
+
+      <!-- <class="d-none"<img [src]="../../../../assets/noimage.png" class="img-fluid" alt="no-image" (click)="photo.click()"> -->
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(contenido)">
+      Cerrar
+    </button>
+    <button type="button" class="btn btn-primary" (click)=" edit ? updatepublicacion():saveArchivo()">
+      PUBLICAR
+    </button>
+  </div>
+</ng-template>
+
+
+<!-- <footer class="bg-light text-center text-lg-start">
+  
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright: W-STEM UTN
+    
+  </div>
+  
+</footer> -->

@@ -1,0 +1,20 @@
+.content {
+  
+    margin-left: 180px;
+    padding-left: 10px;
+    margin-right: 180px;
+    padding-top: 95px;
+    margin-top: -60px;
+  }
+  .contenido {
+    padding: 6% 0 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(71, 69, 69, 0.5)),url(../../../../assets/admin.jpg );
+    background-repeat: no-repeat center center fixed;
+    min-height: 100vh;
+    background-size:100% 100%;
+  
+    /* background-attachment: fixed; */
+    /* width: 100%; */
+  
+  
+  }

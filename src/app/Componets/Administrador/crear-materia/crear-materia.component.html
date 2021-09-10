@@ -1,0 +1,209 @@
+ <app-registro-usuario></app-registro-usuario>
+<div class="contenido">
+  <div class="content">
+    <div class="row">
+      <div class="list-group" style="position: center">
+        <div class="list-group-item">
+          <h5 class="text-center" style="color: #161515">Registro de Materias</h5>
+          <form [formGroup]="materiaform">
+            <div class="form-group row">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="nombre_materia"
+                  placeholder="Ingrese la materia"
+                />
+                <small
+                  *ngIf="
+                    materiaform.get('nombre_materia').invalid &&
+                    materiaform.get('nombre_materia').touched
+                  "
+                  class="text-danger"
+                  >Materia es requerido</small
+                >
+              </div>
+              <div class="col">
+                <button
+                  [disabled]="!materiaform.valid"
+                  class="btn btn-primary"
+                  (click)="saveMateria()"
+                >
+                  Agregar
+                  <i class="fas fa-plus-square"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div 
+        class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr class="table-active">
+                <th scope="col">Nombre</th>
+  
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              <tr *ngFor="let materia of materias">
+                <td>{{ materia.nombre_materia }}</td>
+  
+                <td>
+                  <button
+                    class="btn btn-primary"
+                    (click)="
+                      getMateria(materia.id_materia); open(conten); getCarreras()
+                    "
+                  >
+                    Asignar Carrera
+                  </button>
+                  |
+                  <button
+                    class="btn btn-danger"
+                    (click)="deleteMateria(materia.id_materia)"
+                  >
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                  |
+                  <button
+                    class="btn btn-primary"
+                    (click)="getMateria(materia.id_materia); open(contenido)"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #contenido let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar información</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label style="color: #161515">Carrera</label>
+      <input
+        type="text"
+        class="form-control"
+        name=""
+        placeholder="Ingrese nombre"
+        [(ngModel)]="materia1.nombre_materia"
+      />
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="close(contenido)"
+    >
+      Cerrar
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="updateMateria(); close(contenido)"
+    >
+      GUARDAR
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #conten let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Asignar Carrera</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]="materiaCarreraform">
+    
+    <div class="modal-body">
+      <div class="form-group">
+        <label style="color: #161515">materia:</label>
+        <input
+         
+          type="text"
+          class="form-control"
+          name=""
+          [(ngModel)]="materia1.nombre_materia"
+            
+          formControlName="nombre_materia"
+        />
+
+
+        <label style="color: #161515">Carrera:</label>
+        <select
+          class="form-control"
+          name="miselect"
+          formControlName="nombre_carrera"
+        >
+          <option value="0">Selecciona una opción</option>
+          <option *ngFor="let carrera of carreras">
+            {{ carrera.nombre_carrera }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-dismiss="modal"
+        (click)="close(contenido)"
+      >
+        Cerrar
+      </button>
+      <button
+        [disabled]="!materiaCarreraform.valid"
+        type="button"
+        class="btn btn-primary"
+        (click)="guardar(); close(contenido)"
+      >
+        GUARDAR
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<footer class="bg-light text-center text-lg-start">
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright: W-STEM UTN
+   
+  </div>
+  <!-- Copyright -->
+</footer>

@@ -1,0 +1,183 @@
+<app-menu-principal-m></app-menu-principal-m>
+<div class="contenido">
+  <div class="content">
+    <div class="row">
+      <div class="col-sm-9 offset-md-2">
+        <div class="list-group-item">
+          <h5 class="text-center" style="color: #161515">
+            Registro de Mentorías
+          </h5>
+  
+          <div class="form-group row">
+            <div class="col">
+              <label style="color: #161515" 
+                >Fecha:</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                name=""
+              
+                [(ngModel)]="mentoria.fecha"
+              />
+            </div>
+            <!-- <div class="col">
+              <label style=" font-weight: bold;">Tipo de mentoría:</label>
+              <select class="form-control" name="miselect" [(ngModel)]="mentoria.tipo_mentoria">
+                <option value="0">Selecciona una opción</option>
+                <option>Técnica</option>
+                <option>Apoyo motivacional </option>
+              </select>
+            </div> -->
+  
+            <div class="col">
+              <label style="color: #161515">Hora inicio:</label>
+              <select class="form-control" [(ngModel)]="mentoria.hora_inicio">
+                <option *ngFor="let n of horas">{{ n }}</option>
+              </select>
+              <!-- <input type="time" class="form-control" name="" placeholder="Ingrese apellido"
+                [(ngModel)]="mentoria.hora_inicio" /> -->
+            </div>
+  
+            <div class="col">
+              <label style="color: #161515">Hora Fin:</label>
+              <select class="form-control" [(ngModel)]="mentoria.hora_fin">
+                <option *ngFor="let n of horas">{{ n }}</option>
+              </select>
+              <!-- <input type="time" class="form-control" name="" placeholder="Ingrese apellido"
+                [(ngModel)]="mentoria.hora_fin" /> -->
+            </div>
+          </div>
+  
+          <button class="btn btn-primary" (click)="saveMentoria()">
+            GUARDAR
+            <i class="fas fa-plus-square"></i>
+          </button>
+        </div>
+  
+        <br />
+  
+        <div class="row">
+          <div class="col-sm-12">
+  
+            <div class="card">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr class="table-active">
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Hora inicio</th>
+                      <th scope="col">Hora fin</th>
+    
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+    
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let mentoria of mentorias
+                          | paginate: { itemsPerPage: 3, currentPage: p }
+                      "
+                    >
+                      <td>{{ mentoria.fecha }}</td>
+                      <td>{{ mentoria.hora_inicio }}</td>
+                      <td>{{ mentoria.hora_fin }}</td>
+    
+                      <td>
+                        <button
+                          class="btn btn-primary"
+                          (click)="
+                            getMentoria(mentoria.id_registro_mentoria);
+                            open(contenido)"
+                        >
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        |
+                        <button
+                          class="btn btn-danger"
+                          (click)="deleteMentoria(mentoria.id_registro_mentoria)"
+                        >
+                          <i class="far fa-trash-alt"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #contenido let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editar registro</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label style="color: #161515">Fecha</label>
+      <input
+        type="date"
+        class="form-control"
+        name="fecha"
+        [(ngModel)]="mentoria1.fecha"
+      />
+    </div>
+    <div class="form-group">
+      <label style="color: #161515">Hora inicio</label>
+      <select class="form-control" [(ngModel)]="mentoria1.hora_inicio">
+        <option *ngFor="let n of horas">{{ n}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">  
+      <label style="color: #161515">Hora fin</label>
+      <select class="form-control" [(ngModel)]="mentoria1.hora_fin">
+        <option *ngFor="let n of horas">{{ n}}</option>
+      </select>
+     
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="close(contenido)"
+    >
+      Cerrar
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="updateMentoria(); close(contenido)"
+    >
+      GUARDAR
+    </button>
+  </div>
+</ng-template>
+<footer class="bg-light text-center text-lg-start">
+
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright: W-STEM UTN
+    
+  </div>
+
+</footer>
