@@ -6,7 +6,7 @@
     "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint",  
+    "lint": "ng lint",
     "e2e": "ng e2e",
     "heroku-postbuild": "ng build --prod"
   },
@@ -31,6 +31,7 @@
     "bootstrap": "^4.6.0",
     "bootswatch": "^4.6.0",
     "concurrently": "^5.3.0",
+    "expres": "0.0.5",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
