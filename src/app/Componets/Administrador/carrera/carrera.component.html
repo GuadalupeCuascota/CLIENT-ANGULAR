@@ -43,7 +43,7 @@
               </thead>
   
               <tbody>
-                <tr *ngFor="let carrera of carreras  paginate: { itemsPerPage: 5, currentPage: p }">
+                <tr *ngFor="let carrera of carreras   | paginate: { itemsPerPage: 5, currentPage: p }">
   
                   <td>{{ carrera.nombre_carrera}}</td>
   
