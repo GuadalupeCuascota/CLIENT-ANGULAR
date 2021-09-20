@@ -41,7 +41,7 @@ export class CrearUsuarioComponent implements OnInit {
       correo_electronico: new FormControl('', Validators.required),
       contrasenia: new FormControl('', Validators.required),
       id_rol:new FormControl('', Validators.required),
-      carrera: new FormControl(),
+      carrera: new FormControl(''),
 
     })
   }
@@ -74,7 +74,7 @@ export class CrearUsuarioComponent implements OnInit {
     this.usuario.correo_electronico = this.exform.controls['correo_electronico'].value;
     this.usuario.contrasenia = this.exform.controls['contrasenia'].value;
     this.usuario.id_rol = this.exform.controls['id_rol'].value;
-
+    this.usuario.carrera=this.exform.controls['carrera'].value;
     this.registroUsuarioService.saveUsuario(this.usuario).subscribe(
       (res) => {
         

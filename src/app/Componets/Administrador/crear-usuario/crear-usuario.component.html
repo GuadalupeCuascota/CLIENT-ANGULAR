@@ -84,7 +84,7 @@
               formControlName="carrera"
             >
               <option selected>Seleccione una opción</option>
-              <option *ngFor="let carrera of carreras">{{ carrera.nombre_carrera}}</option>
+              <option *ngFor="let carrera of carreras">{{carrera.nombre_carrera}}</option>
             </select>
             <small  *ngIf="exform.get('carrera').invalid && exform.get('carrera').touched" class="text-danger">Carrera es requerido</small>
           
