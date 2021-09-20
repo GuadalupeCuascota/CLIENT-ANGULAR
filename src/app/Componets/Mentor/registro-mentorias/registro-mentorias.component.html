@@ -21,14 +21,19 @@
                 [(ngModel)]="mentoria.fecha"
               />
             </div>
-            <!-- <div class="col">
-              <label style=" font-weight: bold;">Tipo de mentoría:</label>
-              <select class="form-control" name="miselect" [(ngModel)]="mentoria.tipo_mentoria">
-                <option value="0">Selecciona una opción</option>
-                <option>Técnica</option>
-                <option>Apoyo motivacional </option>
-              </select>
-            </div> -->
+            <div class="col">
+              <label style="color: #161515">Materia:</label>
+              <input
+                type="text"
+                class="form-control"
+                name=""
+              
+                [(ngModel)]="mentoria.materia"
+              />
+              <!-- <input type="time" class="form-control" name="" placeholder="Ingrese apellido"
+                [(ngModel)]="mentoria.hora_inicio" /> -->
+            </div>
+            
   
             <div class="col">
               <label style="color: #161515">Hora inicio:</label>
@@ -47,6 +52,7 @@
               <!-- <input type="time" class="form-control" name="" placeholder="Ingrese apellido"
                 [(ngModel)]="mentoria.hora_fin" /> -->
             </div>
+            
           </div>
   
           <button class="btn btn-primary" (click)="saveMentoria()">
@@ -66,6 +72,7 @@
                   <thead>
                     <tr class="table-active">
                       <th scope="col">Fecha</th>
+                      <th scope="col">Materia</th>
                       <th scope="col">Hora inicio</th>
                       <th scope="col">Hora fin</th>
     
@@ -81,6 +88,7 @@
                       "
                     >
                       <td>{{ mentoria.fecha }}</td>
+                      <td>{{ mentoria.materia}}</td>
                       <td>{{ mentoria.hora_inicio }}</td>
                       <td>{{ mentoria.hora_fin }}</td>
     

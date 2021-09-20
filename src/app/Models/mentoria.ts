@@ -8,4 +8,6 @@ export interface Mentoria {
    tipo_mentoria:string;
    id_estado_mentoria:number;
    id_usuario:number;
+   carrera:string;
+   materia:string;
 }

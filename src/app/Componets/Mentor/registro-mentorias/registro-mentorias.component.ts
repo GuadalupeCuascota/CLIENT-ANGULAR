@@ -64,6 +64,8 @@ export class RegistroMentoriasComponent implements OnInit {
     tipo_mentoria: '',
     id_estado_mentoria: 2,
     id_usuario: 0,
+    carrera:'',
+    materia:'',
   };
   textoBuscar = '';
   p: number = 0;
@@ -115,13 +117,13 @@ export class RegistroMentoriasComponent implements OnInit {
     var UsuMentoria = [];
     this.registroMentoriaService.getMentorias().subscribe(
       (res: any) => {
-        console.log(res);
+        console.log("obtener mentorias",res);
         for (let usu1 of res) {
           if (usu1.id_usuario == this.datos.id_usuario) {
             this.localTime = moment(usu1.fecha).format('YYYY-MM-DD');
             // this.time = moment(usu1.hora_inicio).format('HH:mm');
             // this.time1 = moment(usu1.hora_fin).format('HH:mm');
-
+            usu1.carrera=res.materia
             usu1.fecha = this.localTime;
             // usu1.hora_inicio=this.time
             // usu1.hora_fin=this.time1
@@ -158,12 +160,16 @@ export class RegistroMentoriasComponent implements OnInit {
 
   saveMentoria() {
     console.log('el usuario2', this.mentoria);
+    console.log(this.mentoria.materia)
     if (this.mentoria.hora_fin > this.mentoria.hora_inicio) {
       this.registroMentoriaService.saveMentoria(this.mentoria).subscribe(
         (res) => {
+          this.alerts.showSuccess(
+            'Successfull Operation',
+            'Registro mentoria guardado'
+          );
           this.getMentorias();
-
-          console.log(res);
+         console.log(res);
         },
         (err) => {
           this.error = err;
