@@ -21,3 +21,14 @@
   
   
   }
+  
+  .iconoInput {
+    color: #646262;
+    font-size: 15px;
+    position: relative;
+    right: 30px;
+    padding-top:3px;}
+
+    .inputPadding {
+      padding-left: 70px;}
+    

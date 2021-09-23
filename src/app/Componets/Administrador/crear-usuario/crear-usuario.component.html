@@ -54,13 +54,10 @@
               placeholder="Ingrese contraseña"
               formControlName="contrasenia"
             />
+            <i [class]=" show_eye ? 'fa fa-eye iconoInput' : 'fa fa-eye-slash iconoInput' " (click)="toggleShow()"> </i>
             <small  *ngIf="exform.get('contrasenia').invalid && exform.get('contrasenia').touched" class="text-danger">Contraseña es requerido</small>
-            <i
-              [class]="
-                show_eye ? 'fa fa-eye iconoInput' : 'fa fa-eye-slash iconoInput'
-              "
-              (click)="toggleShow()"
-            ></i>
+            
+            
           </div>
 
           <div class="col">
@@ -71,7 +68,7 @@
               name="miselect"
               formControlName="id_rol"
             >
-            
+            <option selected>Seleccione una opción</option>
               <option *ngFor="let rol of roles">{{ rol.tipo_rol }}</option>
             </select>
             <small  *ngIf="exform.get('id_rol').invalid && exform.get('id_rol').touched" class="text-danger">tipo de rol es requerido</small>

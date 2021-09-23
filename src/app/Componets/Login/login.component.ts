@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     console.log(this.user);
     this.loginServices.login(this.user).subscribe(
       (res) => {
-        console.log(res);
+        console.log("la respuesta es",res);
         this.resp = res;
         console.log("datos usuario", this.resp.payload)
         localStorage.setItem('token', this.resp.Token);
