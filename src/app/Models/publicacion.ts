@@ -12,4 +12,5 @@ export interface Publicacion {
     id_estado_publicacion : number;
     id_usuario : number;
     id_carrera: number;
+    tipo_archivo:string;
 }

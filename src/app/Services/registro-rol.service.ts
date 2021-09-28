@@ -22,7 +22,7 @@ export class RegistroRolService {
   
   }
   deleteURol (id:String){
-    return this.http.delete(`${environment.API_URI}}/roles/${id}`);
+    return this.http.delete(`${environment.API_URI}/roles/${id}`);
   
   }
   updateRol (id:String, updateRol:Rol){

@@ -140,8 +140,8 @@ export class NoticiasComponent implements OnInit {
         },
     
          (err)=>
-           console.log(err)
-        
+         this.alerts.showError('Error Operation', 'No se puede guardar')
+          
       );
      }catch{
        console.log("error")
@@ -210,7 +210,7 @@ export class NoticiasComponent implements OnInit {
           this.getpublicaciones();
           console.log(res);
         },
-        (err) => console.log(err)
+        (err) => this.alerts.showError('Error Operation', 'No se puede actualizar')
       );
       
     } catch (error) {

@@ -125,6 +125,7 @@ export class OfertaAcademicaComponent implements OnInit {
         },
 
         (err) => console.log(err)
+        
       );
     } catch {
       console.log('No se ha seleccionado el archivo');
@@ -141,14 +142,16 @@ export class OfertaAcademicaComponent implements OnInit {
         for (let per1 of res) {
           if (per1.id_tipo_publicacion == 3) {
             per.push(per1);
-            console.log(per);
+          
           }
         }
-
         this.ofertas_academica = per;
+        console.log("oferta",this.ofertas_academica)
       },
       /*  res=> console.log(res), */
-      (err) => console.error(err)
+      
+      (err) =>this.alerts.showError('Error Operation', 'No se puede guardar')
+
     );
   }
   getpublicacion(id: String) {
@@ -209,19 +212,20 @@ export class OfertaAcademicaComponent implements OnInit {
   }
   ObtenerCarreras() {
     var auxper = [];
-  console.log("pasa2")
+ 
     this.registroCarreras.getCarreras().subscribe(
       (res: any) => {
         for (let aux of res) {
           if (aux.id_carrera != 1) {
             auxper.push(aux);
-            console.log(auxper)
+            
 
           }
         }
 
        
         this.carreras = auxper;
+        console.log("carreras",this.carreras)
       },
       (err) => console.error(err)
     );
