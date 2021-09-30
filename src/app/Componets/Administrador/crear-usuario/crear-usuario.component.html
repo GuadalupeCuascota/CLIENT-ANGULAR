@@ -1,7 +1,7 @@
 <app-registro-usuario></app-registro-usuario>
 <div class="contenido">
-<div class="content">
-  <div class="col-md-10 offset-md-1"> 
+<div class="container">
+  <div class="col-md-10 "> 
     <div class="list-group-item">
       <h5 class="text-center" style="color: #161515">Registro de Usuarios</h5>
       <form [formGroup]="exform">
@@ -46,15 +46,16 @@
         <div class="form-group row">
           <div class="col">
             <label style="color: #161515">Contraseña:</label>
-
+            <i  [class]=" show_eye ? 'fa fa-eye iconoInput' : 'fa fa-eye-slash iconoInput' " (click)="toggleShow()"> </i>
             <input
               [type]="showPassword ? 'text' : 'password'"
               class="form-control"
               name=""
               placeholder="Ingrese contraseña"
               formControlName="contrasenia"
+              
             />
-            <i [class]=" show_eye ? 'fa fa-eye iconoInput' : 'fa fa-eye-slash iconoInput' " (click)="toggleShow()"> </i>
+            
             <small  *ngIf="exform.get('contrasenia').invalid && exform.get('contrasenia').touched" class="text-danger">Contraseña es requerido</small>
             
             

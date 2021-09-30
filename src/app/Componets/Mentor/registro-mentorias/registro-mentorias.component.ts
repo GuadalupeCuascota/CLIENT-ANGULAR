@@ -204,7 +204,8 @@ export class RegistroMentoriasComponent implements OnInit {
     }
   }
   updateMentoria() {
-    console.log(this.mentoria1);
+
+    console.log("actualizar",this.mentoria1);
     this.registroMentoriaService
       .updateMentoria(this.mentoria1.id_registro_mentoria, this.mentoria1)
       .subscribe(

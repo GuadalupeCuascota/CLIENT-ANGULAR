@@ -10,6 +10,7 @@
 
 }
 .contenido {
+ 
   padding: 6% 0 0;
   background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(71, 69, 69, 0.5)),url(../../../../assets/admin.jpg );
   background-repeat: no-repeat center center fixed;

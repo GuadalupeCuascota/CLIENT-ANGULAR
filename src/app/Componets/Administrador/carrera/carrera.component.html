@@ -1,34 +1,38 @@
 <app-registro-usuario></app-registro-usuario>
 <div class="contenido">
-  <div class="content">
+  <div class="container p-5">
 
 
     <div class="row">
-      <div class="list-group">
-        <div class="list-group-item">
-          <h5 class="text-center" style="color: #161515">
-            Registro de Carreras Fica
-          </h5>
-          <form [formGroup]="carreraform">
-            <div class="form-group row">
-              <div class="col">
-                <input type="text" name="tipo_rol" class="form-control" formControlName="nombre_carrera"
-                  placeholder="Ingrese la carrera" />
-                <small *ngIf="
-                    carreraform.get('nombre_carrera').invalid &&
-                    carreraform.get('nombre_carrera').touched
-                  " class="text-danger">Carrera es requerido</small>
+      <div class="col-md-4">
+        <div class="list-group">
+          <div class="list-group-item">
+            <h5 class="text-center" style="color: #161515">
+              Registro de Carreras Fica
+            </h5>
+            <form [formGroup]="carreraform">
+              <div class="form-group row">
+                <div class="col">
+                  <input type="text" name="tipo_rol" class="form-control" formControlName="nombre_carrera"
+                    placeholder="Ingrese la carrera" />
+                  <small *ngIf="
+                      carreraform.get('nombre_carrera').invalid &&
+                      carreraform.get('nombre_carrera').touched
+                    " class="text-danger">Carrera es requerido</small>
+                </div>
+                <div class="col">
+                  <button [disabled]="!carreraform.valid" class="btn btn-primary" (click)="saveCarrera()">
+                    Agregar
+                    <i class="fas fa-plus-square"></i>
+                  </button>
+                </div>
               </div>
-              <div class="col">
-                <button [disabled]="!carreraform.valid" class="btn btn-primary" (click)="saveCarrera()">
-                  Agregar
-                  <i class="fas fa-plus-square"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
+        </div>
+
+     
       <div class="col-md-6">
         <div class="card">
           <div class="table-responsive">

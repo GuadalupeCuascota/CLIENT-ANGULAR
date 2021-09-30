@@ -2,14 +2,15 @@
     background: rgba(255, 255, 255, 0.952);
 
 }
-.content {
+/* .content {
   
     margin-left: 40px;
     padding-left: 20px;
     margin-right: 40px;
     padding-top: 55px;
-  }
+  } */
   .contenido {
+    margin-top:43px;
     padding: 6% 0 0;
     background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(71, 69, 69, 0.5)),url(../../../../assets/admin.jpg );
     background-repeat: no-repeat center center fixed;
@@ -22,13 +23,13 @@
   
   }
   
-  .iconoInput {
-    color: #646262;
-    font-size: 15px;
-    position: relative;
-    right: 30px;
-    padding-top:3px;}
-
+ 
+    .iconoInput {
+      color: #646262;
+      font-size: 15px;
+      position: absolute;
+      right: 30px;
+      padding-top: 36px;}
     .inputPadding {
       padding-left: 70px;}
     

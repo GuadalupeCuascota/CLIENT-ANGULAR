@@ -1,45 +1,32 @@
 <app-registro-usuario></app-registro-usuario>
+
 <div class="contenido">
-  <div class="content">
+  <div class="container">
+
     <div class="row">
-     
-      <div class="list-group">
+      <div class="col-md-4 ">
         <div class="list-group-item">
-         
+
           <h5 class="text-center" style="color: #161515">Registro de Roles</h5>
           <form [formGroup]="rolform">
             <div class="form-group row">
               <div class="col">
-                <input
-                  type="text"
-                  name="tipo_rol"
-                  class="form-control"
-                  formControlName="tipo_rol"
-                  [(ngModel)]="rol.tipo_rol"
-                  placeholder="Tipo Rol"
-                />
-                <small
-                  *ngIf="
-                    rolform.get('tipo_rol').invalid &&
-                    rolform.get('tipo_rol').touched
-                  "
-                  class="text-danger"
-                  >tipo de rol es requerido</small
-                >
+                <input type="text" name="tipo_rol" class="form-control" formControlName="tipo_rol"
+                  [(ngModel)]="rol.tipo_rol" placeholder="Tipo Rol" />
+                <small *ngIf="
+                      rolform.get('tipo_rol').invalid &&
+                      rolform.get('tipo_rol').touched
+                    " class="text-danger">tipo de rol es requerido</small>
               </div>
               <div class="col">
-                <button
-                  [disabled]="!rolform.valid"
-                  class="btn btn-primary"
-                  (click)="edit ? updateRol() : saveRol()"
-                >
+                <button [disabled]="!rolform.valid" class="btn btn-primary" (click)="edit ? updateRol() : saveRol()">
                   Guardar
                   <i class="fas fa-plus-square"></i>
                 </button>
               </div>
             </div>
           </form>
-          
+
         </div>
       </div>
 
@@ -59,17 +46,11 @@
                   <td>{{ rol.tipo_rol }}</td>
 
                   <td>
-                    <button
-                      class="btn btn-primary"
-                      (click)="getRol(rol.id_rol)"
-                    >
+                    <button class="btn btn-primary" (click)="getRol(rol.id_rol)">
                       <i class="fas fa-edit"></i>
                     </button>
                     |
-                    <button
-                      class="btn btn-danger"
-                      (click)="deleteRol(rol.id_rol)"
-                    >
+                    <button class="btn btn-danger" (click)="deleteRol(rol.id_rol)">
                       <i class="far fa-trash-alt"></i>
                     </button>
                   </td>
@@ -86,7 +67,7 @@
   <!-- Copyright -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
     © 2021 Copyright: W-STEM UTN
-    
+
   </div>
   <!-- Copyright -->
 </footer>
