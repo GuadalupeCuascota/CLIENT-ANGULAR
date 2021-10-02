@@ -62,10 +62,10 @@ export class RegistroMentoriasComponent implements OnInit {
     hora_inicio: '',
     hora_fin: '',
     tipo_mentoria: '',
-    id_estado_mentoria: 2,
     id_usuario: 0,
     carrera:'',
     materia:'',
+    estado_registro:'Sin agendar',
   };
   textoBuscar = '';
   p: number = 0;
@@ -199,7 +199,7 @@ export class RegistroMentoriasComponent implements OnInit {
           //this.toastr.success('Successfull Operation', 'Rol eliminado');
         },
 
-        (err) => console.log(err)
+        (err) => this.alerts.showError('Error Operation','No se puede eliminar')
       );
     }
   }

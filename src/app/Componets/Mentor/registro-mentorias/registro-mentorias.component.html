@@ -10,18 +10,6 @@
   
           <div class="form-group row">
             <div class="col">
-              <label style="color: #161515" 
-                >Fecha:</label
-              >
-              <input
-                type="date"
-                class="form-control"
-                name=""
-              
-                [(ngModel)]="mentoria.fecha"
-              />
-            </div>
-            <div class="col">
               <label style="color: #161515">Materia:</label>
               <input
                 type="text"
@@ -33,6 +21,19 @@
               <!-- <input type="time" class="form-control" name="" placeholder="Ingrese apellido"
                 [(ngModel)]="mentoria.hora_inicio" /> -->
             </div>
+            <div class="col">
+              <label style="color: #161515" 
+                >Fecha:</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                name=""
+              
+                [(ngModel)]="mentoria.fecha"
+              />
+            </div>
+           
             
   
             <div class="col">
@@ -71,11 +72,11 @@
                 <table class="table table-hover">
                   <thead>
                     <tr class="table-active">
-                      <th scope="col">Fecha</th>
                       <th scope="col">Materia</th>
+                      <th scope="col">Fecha</th>
                       <th scope="col">Hora inicio</th>
                       <th scope="col">Hora fin</th>
-    
+                      <th scope="col">Estado</th>
                       <th scope="col">Acciones</th>
                     </tr>
                   </thead>
@@ -87,11 +88,11 @@
                           | paginate: { itemsPerPage: 3, currentPage: p }
                       "
                     >
+                    <td>{{ mentoria.materia}}</td>
                       <td>{{ mentoria.fecha }}</td>
-                      <td>{{ mentoria.materia}}</td>
                       <td>{{ mentoria.hora_inicio }}</td>
                       <td>{{ mentoria.hora_fin }}</td>
-    
+                      <td>{{ mentoria.estado_registro}}</td>
                       <td>
                         <button
                           class="btn btn-primary"
@@ -140,7 +141,7 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label style="color: #161515">Fecha</label>
+      <label style="color: #161515">Fecha:</label>
       <input
         type="date"
         class="form-control"
@@ -149,7 +150,7 @@
       />
     </div>
     <div class="form-group">
-      <label style="color: #161515">Materia</label>
+      <label style="color: #161515">Materia_</label>
       <input
         type="text"
         class="form-control"
@@ -158,14 +159,21 @@
       />
     </div>
     <div class="form-group">
-      <label style="color: #161515">Hora inicio</label>
+      <label style="color: #161515">Hora inicio:</label>
       <select class="form-control" [(ngModel)]="mentoria1.hora_inicio">
         <option *ngFor="let n of horas">{{ n}}</option>
       </select>
     </div>
 
     <div class="form-group">  
-      <label style="color: #161515">Hora fin</label>
+      <label style="color: #161515">Hora fin:</label>
+      <select class="form-control" [(ngModel)]="mentoria1.hora_fin">
+        <option *ngFor="let n of horas">{{ n}}</option>
+      </select>
+     
+    </div>
+    <div class="form-group">  
+      <label style="color: #161515">Hora fin:</label>
       <select class="form-control" [(ngModel)]="mentoria1.hora_fin">
         <option *ngFor="let n of horas">{{ n}}</option>
       </select>
