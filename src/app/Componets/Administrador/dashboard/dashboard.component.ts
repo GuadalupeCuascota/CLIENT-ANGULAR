@@ -171,7 +171,7 @@ getEventos(){
 }
 getTotalMentorias(){
   var numMentorias = 0;
-  this.registroMentoria.getMentorias().subscribe(
+  this.registroMentoria.getAgendamientoMentorias().subscribe(
     (res:any) => {
       
       console.log("todos los eventos",res)
