@@ -62,11 +62,15 @@ export class MentoriasAgendadasComponent implements OnInit {
       .subscribe(
         (res: any) => {
           console.log(res);
-          this.getSolicitudMentorias();
+          // this.getSolicitudMentorias();
         },
 
         /*  res=> console.log(res), */
         (err) => console.error(err)
       );
+  }
+  selectRes(event: any) {
+    console.log("el evento",event);
+    
   }
 }

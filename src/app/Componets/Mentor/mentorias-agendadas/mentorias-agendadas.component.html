@@ -16,7 +16,7 @@
               <th scope="col">Hora inicio</th>
               <th scope="col">Hora fin</th>
               <!-- <th scope="col">Estado</th> -->
-              <!-- <th scope="col">Acciones</th> -->
+              <th scope="col">Asistencia</th>
             </tr>
           </thead>
 
@@ -28,6 +28,14 @@
               <td>{{mentoriaAgen.materia}}</td>
               <td>{{mentoriaAgen.hora_inicio}}</td>
               <td>{{mentoriaAgen.hora_fin}}</td>
+              <td>
+                <div class="form-check"  >
+                  <input type="button" class="form-check-input"  (click)="updateEstadoMentoria(mentoriaAgen.id_agendamiento_mentoria)" type="checkbox" defaultCheck1>
+                  <label class="form-check-label" for="defaultCheck1">
+                    
+                  </label>  
+                </div>
+              </td>
               <!-- <td>{{mentoriaAgen.nombre_estado_agen_mentoria}}</td> -->
               <!-- <td>{{mentoriaAgen.nombre_estado_agen_mentoria}}</td> -->
               

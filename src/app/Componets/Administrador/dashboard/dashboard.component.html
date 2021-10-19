@@ -1,40 +1,42 @@
 <app-registro-usuario></app-registro-usuario>
 <div class="contenido">
 
-  <div class="content">
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="container p-5">
+    <div class="row row-cols-1 row-cols-md-3 g-10">
       <div class="col">
         <div class="card text-center" style="width: 18rem">
           <div class="card-body">
-            <h5 class="card-title">Estudiantes registrados</h5>
+            <h5 class="card-title" color="success"> <i class="fa fa-users fa-1.5x fa-lg"  aria-hidden="true"></i> Estudiantes registrados</h5>
             <p class="card-text">{{countEstudiantes}}</p>
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col"> 
         <div class="card text-center" style="width: 18rem">
-          <div class="card-body">
-            <h5 class="card-title">Editores FICA-STEM</h5>
-            <p class="card-text">{{countEdit}}</p>
+          <div class="card-body"> 
+            <h5 class="card-title"> <i class="fas fa-heart fa-1.5x fa-l"></i>
+              Publicaciones Likes
+            </h5>
+            <p class="card-text">{{countLikes}}</p>
           </div>
         </div>
       </div>
       <div class="col">
         <div class="card text-center" style="width: 18rem">
           <div class="card-body">
-            <h5 class="card-title">Mentoras</h5>
-            <p class="card-text">{{countMent}}</p>
+            <h5 class="card-title"><i class="fas fa-book-open"></i> Mentorias agendadas</h5>
+            <p class="card-text">{{countMentoriaAgen}}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
   
-  <div class="content">
+  <div class="container">
     <div class="row">
       <div class="col-sm-6">
         <div class="card">
-          <div class="card-header">Estudiantes registrados por mes</div>
+          <div class="card-header" style="font-weight: 800;">Estudiantes registrados por mes</div>
           <div class="card-body">
             <table>
               <tr>
@@ -65,7 +67,7 @@
       </div>
       <div class="col-sm-6">
         <div class="card">
-          <div class="card-header">Mentorias Agendadas</div>
+          <div class="card-header" style="font-weight: 800;">Mentorias Agendadas por mes</div>
           <div class="card-body">
             <table>
               <tr>
@@ -84,7 +86,7 @@
                   [xAxisLabel]="xAxisLabel"
                   [animations]="animations"
                   
-                  [yAxisLabel]="yAxisLabel"
+                  [yAxisLabel]="yAxisLabel1"
                   (select)="onSelect($event)"
                   
                   ></ngx-charts-bar-vertical>

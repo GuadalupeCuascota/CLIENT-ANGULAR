@@ -143,7 +143,7 @@ export class RegistroMentoriasComponent implements OnInit {
     if (id_mentoria) {
       this.registroMentoriaService.getMentoria(id_mentoria).subscribe(
         (res) => {
-          console.log(res);
+          console.log("LAS MENTORIAS ",res);
           this.mentoria1 = res;
           this.localTime = moment(this.mentoria1.fecha).format('YYYY-MM-DD');
           // this.time = moment(this.mentoria1.hora_inicio).format('HH:mm:ss.SSS');

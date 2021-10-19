@@ -5,6 +5,10 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { RegistroUsuarioService } from '../../../Services/registro-usuario.service';
 import { ConsultasDashboardService } from '../../../Services/consultas-dashboard.service';
 import { Consultas } from 'src/app/Models/consultas';
+import { RegistroEventosService } from 'src/app/Services/registro-eventos.service';
+import { AlertsService } from 'src/app/Services/alerts/alerts.service';
+import { RegistroMentoriaService } from 'src/app/Services/registro-mentoria.service';
+import { ValueTransformer } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,9 +18,12 @@ import { Consultas } from 'src/app/Models/consultas';
 export class DashboardComponent implements OnInit {
   estudiantes: any = [];
   countEstudiantes = 0;
+  countLikes=0;
+  countMentoriaAgen=0;
+  countMentorias=0;
   countEdit = 0;
   countMent = 0;
-  view: any[] = [350, 300];
+  view: any[] = [250,350];
   registro = [
     {
       name: '',
@@ -39,13 +46,18 @@ export class DashboardComponent implements OnInit {
   legendPosition: string = 'below'; //rigth ,below
   showXAxisLabel = true;
   xAxisLabel = 'Mes';
+
   showYAxisLabel = true;
   yAxisLabel = 'Nro. de Estudiantes';
+  yAxisLabel1 = 'Nro. de mentorias';
   animations = true;
   showDataLabel = true;
   constructor(
     private registroUsuarioService: RegistroUsuarioService,
-    private consultasDashboardServices: ConsultasDashboardService
+    private consultasDashboardServices: ConsultasDashboardService,
+    private registroEvento: RegistroEventosService,
+    private alerts: AlertsService,
+    private registroMentoria:RegistroMentoriaService
   ) {
     // Object.assign(this, { mes });
   }
@@ -57,15 +69,20 @@ export class DashboardComponent implements OnInit {
     this.getUsuarios();
     this.getConsultas();
     this.getConsultaMentorias();
+    this.getEventos();                              
+    this.getTotalMentorias();
   }
   getConsultas() {
     var con = [];
+    var m=0;
     this.consultasDashboardServices.getEstudiantesMes().subscribe(
       (res: any) => {
         console.log(res);
         for (let c of res) {
           const mes = c.Mes;
-          const nro = c.NroEstudiantes;
+          const nro = c.NroEstudiantes+m;
+          m=nro;
+         
           let options = {
             name: mes,
             value: nro,
@@ -85,6 +102,7 @@ export class DashboardComponent implements OnInit {
         for (let c of res) {
           const mes = c.Mes;
           const nro = c.NroMentoriasAgendadas;
+         
           let options = {
             name: mes,
             value: nro,
@@ -92,6 +110,7 @@ export class DashboardComponent implements OnInit {
           con.push(options);
         }
         this.mentoria = con;
+      
         console.log("el arreglo",this.mentoria)
       },
       (err) => console.error(err)
@@ -118,7 +137,7 @@ export class DashboardComponent implements OnInit {
             ment = ment + 1;
           }
         }
-        this.countEstudiantes = est;
+        this.countEstudiantes= est;
         this.countEdit = edit;
         this.countMent = ment;
       },
@@ -126,4 +145,51 @@ export class DashboardComponent implements OnInit {
       (err) => console.error(err)
     );
   }
+getEventos(){
+  var likes = 0;
+  this.registroEvento.getEventos().subscribe(
+    (res:any) => {
+      
+      console.log("todos los eventos",res)
+      for (let usu1 of res) {
+        if(usu1.id_tipo_evento=="1"){
+          likes=likes+1;
+        }
+       
+
+      }
+      this.countLikes=likes;
+       
+     },
+     (err) => {
+       
+       console.log('no se puede obtener');
+       this.alerts.showError('Error Operation', 'No se puede guardar')
+     }
+    )
+
+}
+getTotalMentorias(){
+  var numMentorias = 0;
+  this.registroMentoria.getMentorias().subscribe(
+    (res:any) => {
+      
+      console.log("todos los eventos",res)
+      for (let usu1 of res) {
+          
+          numMentorias=res.length;
+      
+      } 
+      this.countMentoriaAgen=numMentorias;
+       
+     },
+     (err) => {
+       
+       console.log('no se puede obtener');
+       this.alerts.showError('Error Operation', 'No se puede guardar')
+     }
+    )
+
+}
+
 }
