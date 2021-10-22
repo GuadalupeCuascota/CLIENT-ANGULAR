@@ -9,6 +9,7 @@ import { RegistroEventosService } from 'src/app/Services/registro-eventos.servic
 import { AlertsService } from 'src/app/Services/alerts/alerts.service';
 import { RegistroMentoriaService } from 'src/app/Services/registro-mentoria.service';
 import { ValueTransformer } from '@angular/compiler/src/util';
+import { mes } from 'src/app/Models/estudiantes-registro';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,6 +37,13 @@ export class DashboardComponent implements OnInit {
       value: 0,
     },
   ];
+tipoMentoria = [
+  {
+    name: '',
+    value: 0,
+  },
+];
+
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
   };
@@ -71,6 +79,7 @@ export class DashboardComponent implements OnInit {
     this.getConsultaMentorias();
     this.getEventos();                              
     this.getTotalMentorias();
+    this.getNroMentoriasPorTipo();
   }
   getConsultas() {
     var con = [];
@@ -94,6 +103,29 @@ export class DashboardComponent implements OnInit {
       (err) => console.error(err)
     );
   }
+  getNroMentoriasPorTipo(){
+    var con = [];
+    var m=0;
+    this.consultasDashboardServices.getTipoMentoria().subscribe(
+      (res: any) => {
+        console.log("tipo",res);
+        for (let c of res) {
+          const mes = c.Mes;
+          const nro = c.NroEstudiantes+m;
+         
+         
+          let options = {
+            name: mes,
+            value: nro,
+          };
+          con.push(options);
+        }
+        this.tipoMentoria = con;
+      },
+      (err) => console.error(err)
+    );
+  }
+
   getConsultaMentorias() {
     var con = [];
     this.consultasDashboardServices.getMentoriasMes().subscribe(
@@ -116,6 +148,8 @@ export class DashboardComponent implements OnInit {
       (err) => console.error(err)
     );
   }
+
+  
   getUsuarios() {
     console.log('hol');
     var usuAE = [];
@@ -155,14 +189,10 @@ getEventos(){
         if(usu1.id_tipo_evento=="1"){
           likes=likes+1;
         }
-       
-
       }
-      this.countLikes=likes;
-       
+      this.countLikes=likes; 
      },
      (err) => {
-       
        console.log('no se puede obtener');
        this.alerts.showError('Error Operation', 'No se puede guardar')
      }
@@ -176,20 +206,16 @@ getTotalMentorias(){
       
       console.log("todos los eventos",res)
       for (let usu1 of res) {
-          
-          numMentorias=res.length;
-      
+           numMentorias=res.length;
       } 
       this.countMentoriaAgen=numMentorias;
-       
      },
-     (err) => {
+     (err) =>{
        
        console.log('no se puede obtener');
        this.alerts.showError('Error Operation', 'No se puede guardar')
      }
     )
-
 }
 
 }

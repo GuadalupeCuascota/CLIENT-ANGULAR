@@ -102,28 +102,39 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="card">
-          <div class="card-header">Contenido compartido</div>
+          <div class="card-header" style="font-weight: 800;">Gestión Mentorias</div>
           <div class="card-body">
             <table>
               <tr>
                 <td>
-                  <ngx-charts-pie-grid
-                    [results]="mentoria"
+                  <ngx-charts-bar-vertical
+                    [results]="tipoMentoria"
                     [view]="view"
-                    [scheme]="colorScheme"
-                   
+                    scheme="cool"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [legendPosition]="legendPosition"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLabel"
+                    
+                    [yAxisLabel]="yAxisLabel"
+                    (select)="onSelect($event)"
                   >
-                  </ngx-charts-pie-grid
+                  </ngx-charts-bar-vertical
                   >
                 </td>
               </tr>
             </table>
+           
           </div>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="card">
-          <div class="card-header">Contenido compartido</div>
+          <div class="card-header" style="font-weight: 800;">Contenido compartido</div>
           <div class="card-body">
             <table>
               <tr>

@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  // API_URI:'http://localhost:5000/api',
-  // API_URI1:'http://localhost:5000/login'
+  API_URI:'http://localhost:5000/api',
+  API_URI1:'http://localhost:5000/login'
 
-  API_URI:'https://server-app-stem-elreq.ondigitalocean.app/api',
-  API_URI1:'https://server-app-stem-elreq.ondigitalocean.app/login'
+  // API_URI:'https://server-app-stem-elreq.ondigitalocean.app/api',
+  // API_URI1:'https://server-app-stem-elreq.ondigitalocean.app/login'
   
 };
 

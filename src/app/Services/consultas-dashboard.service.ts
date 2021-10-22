@@ -12,5 +12,9 @@ export class ConsultasDashboardService {
   getMentoriasMes(){
     return this.http.get(`${environment.API_URI}/nroMentoriasMes`);
   }
+
+  getTipoMentoria(){
+    return this.http.get(`${environment.API_URI}/tipoMentoria`);
+  }
   
 }
