@@ -19,12 +19,12 @@ import { mes } from 'src/app/Models/estudiantes-registro';
 export class DashboardComponent implements OnInit {
   estudiantes: any = [];
   countEstudiantes = 0;
-  countLikes=0;
-  countMentoriaAgen=0;
-  countMentorias=0;
+  countLikes = 0;
+  countMentoriaAgen = 0;
+  countMentorias = 0;
   countEdit = 0;
   countMent = 0;
-  view: any[] = [250,350];
+  view: any[] = [250, 350];
   registro = [
     {
       name: '',
@@ -37,12 +37,12 @@ export class DashboardComponent implements OnInit {
       value: 0,
     },
   ];
-tipoMentoria = [
-  {
-    name: '',
-    value: 0,
-  },
-];
+  tipoMentoria = [
+    {
+      name: '',
+      value: 0,
+    },
+  ];
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
@@ -65,7 +65,7 @@ tipoMentoria = [
     private consultasDashboardServices: ConsultasDashboardService,
     private registroEvento: RegistroEventosService,
     private alerts: AlertsService,
-    private registroMentoria:RegistroMentoriaService
+    private registroMentoria: RegistroMentoriaService
   ) {
     // Object.assign(this, { mes });
   }
@@ -77,21 +77,21 @@ tipoMentoria = [
     this.getUsuarios();
     this.getConsultas();
     this.getConsultaMentorias();
-    this.getEventos();                              
+    this.getEventos();
     this.getTotalMentorias();
     this.getNroMentoriasPorTipo();
   }
   getConsultas() {
     var con = [];
-    var m=0;
+    var m = 0;
     this.consultasDashboardServices.getEstudiantesMes().subscribe(
       (res: any) => {
         console.log(res);
         for (let c of res) {
           const mes = c.Mes;
-          const nro = c.NroEstudiantes+m;
-          m=nro;
-         
+          const nro = c.NroEstudiantes + m;
+          m = nro;
+
           let options = {
             name: mes,
             value: nro,
@@ -103,17 +103,16 @@ tipoMentoria = [
       (err) => console.error(err)
     );
   }
-  getNroMentoriasPorTipo(){
+  getNroMentoriasPorTipo() {
     var con = [];
-    var m=0;
+    var m = 0;
     this.consultasDashboardServices.getTipoMentoria().subscribe(
       (res: any) => {
-        console.log("tipo",res);
+        console.log('tipo', res);
         for (let c of res) {
           const mes = c.Mes;
-          const nro = c.NroEstudiantes+m;
-         
-         
+          const nro = c.NroEstudiantes + m;
+
           let options = {
             name: mes,
             value: nro,
@@ -134,7 +133,7 @@ tipoMentoria = [
         for (let c of res) {
           const mes = c.Mes;
           const nro = c.NroMentoriasAgendadas;
-         
+
           let options = {
             name: mes,
             value: nro,
@@ -142,14 +141,13 @@ tipoMentoria = [
           con.push(options);
         }
         this.mentoria = con;
-      
-        console.log("el arreglo",this.mentoria)
+
+        console.log('el arreglo', this.mentoria);
       },
       (err) => console.error(err)
     );
   }
 
-  
   getUsuarios() {
     console.log('hol');
     var usuAE = [];
@@ -171,7 +169,7 @@ tipoMentoria = [
             ment = ment + 1;
           }
         }
-        this.countEstudiantes= est;
+        this.countEstudiantes = est;
         this.countEdit = edit;
         this.countMent = ment;
       },
@@ -179,43 +177,38 @@ tipoMentoria = [
       (err) => console.error(err)
     );
   }
-getEventos(){
-  var likes = 0;
-  this.registroEvento.getEventos().subscribe(
-    (res:any) => {
-      
-      console.log("todos los eventos",res)
-      for (let usu1 of res) {
-        if(usu1.id_tipo_evento=="1"){
-          likes=likes+1;
+  getEventos() {
+    var likes = 0;
+    this.registroEvento.getEventos().subscribe(
+      (res: any) => {
+        console.log('todos los eventos', res);
+        for (let usu1 of res) {
+          if (usu1.id_tipo_evento == '1') {
+            likes = likes + 1;
+          }
         }
+        this.countLikes = likes;
+      },
+      (err) => {
+        console.log('no se puede obtener');
+        this.alerts.showError('Error Operation', 'No se puede guardar');
       }
-      this.countLikes=likes; 
-     },
-     (err) => {
-       console.log('no se puede obtener');
-       this.alerts.showError('Error Operation', 'No se puede guardar')
-     }
-    )
-
-}
-getTotalMentorias(){
-  var numMentorias = 0;
-  this.registroMentoria.getAgendamientoMentorias().subscribe(
-    (res:any) => {
-      
-      console.log("todos los eventos",res)
-      for (let usu1 of res) {
-           numMentorias=res.length;
-      } 
-      this.countMentoriaAgen=numMentorias;
-     },
-     (err) =>{
-       
-       console.log('no se puede obtener');
-       this.alerts.showError('Error Operation', 'No se puede guardar')
-     }
-    )
-}
-
+    );
+  }
+  getTotalMentorias() {
+    var numMentorias = 0;
+    this.registroMentoria.getMentoriasAgendadas().subscribe(
+      (res: any) => {
+        console.log('todos los eventos hoy', res);
+        for (let usu1 of res) {
+          numMentorias = res.length;
+        }
+        this.countMentoriaAgen = numMentorias;
+      },
+      (err) => {
+        console.log('no se puede obtener');
+        this.alerts.showError('Error Operation', 'No se puede guardar');
+      }
+    );
+  }
 }

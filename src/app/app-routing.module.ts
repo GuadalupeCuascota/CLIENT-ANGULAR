@@ -126,7 +126,7 @@ const routes: Routes = [
     canActivate: [LoginGuard,IsMentorGuard]
   },
   {
-    path: 'mentorias-agendadas',
+    path: 'mentorias-agendadas/:id',
     component: MentoriasAgendadasComponent,
     canActivate: [LoginGuard,IsMentorGuard]
   },

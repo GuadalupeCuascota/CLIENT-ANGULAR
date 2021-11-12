@@ -10,5 +10,6 @@ export interface Mentoria {
    id_usuario:number;
    carrera:string;
    materia:string;
-   estado_registro:string;
+   id_estado_mentoria:number;
+  
 }

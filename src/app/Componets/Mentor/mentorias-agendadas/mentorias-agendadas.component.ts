@@ -5,6 +5,7 @@ import { AlertsService } from '../../../Services/alerts/alerts.service';
 import { Mentoria } from 'src/app/Models/mentoria';
 
 import * as moment from 'moment/moment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-mentorias-agendadas',
@@ -18,32 +19,29 @@ export class MentoriasAgendadasComponent implements OnInit {
   // time1 = moment().format('HH:mm');
   // time = moment().format('HH:mm ');
   p: number = 0;
-
+  params = this.actRoute.snapshot.params.id;
   datosM: any = {
     nombre_estado_agen_mentoria: 'Confirmada',
   };
 
-  constructor(private registroMentoriaService: RegistroMentoriaService) {}
+  constructor(private registroMentoriaService: RegistroMentoriaService,private router: Router,private actRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.datos = JSON.parse(localStorage.getItem('payload'));
-    this.getSolicitudMentorias();
+   this.getSolicitudMentorias();
   }
+ 
   getSolicitudMentorias() {
+
     var agenMentoria = [];
-    this.registroMentoriaService.getAgendamientoMentorias().subscribe(
+    this.registroMentoriaService.getAgendamientoMentorias(this.params).subscribe(
       (res: any) => {
-        console.log('el arreglo', res);
+        console.log('el arreglo de mentorias es ', res);
         for (let usu1 of res) {
           if (usu1.id_usuario == this.datos.id_usuario) {
             this.localTime = moment(usu1.fecha).format('YYYY-MM-DD');
-            // this.time = moment(usu1.hora_inicio).format('HH:mm');
-            // this.time1 = moment(usu1.hora_fin).format('HH:mm');
-
             usu1.fecha = this.localTime;
-            // usu1.hora_inicio=this.time
-            // usu1.hora_fin=this.time1
-            agenMentoria.push(usu1);
+           agenMentoria.push(usu1);
           }
         }
         this.mentoriasAgen = agenMentoria;

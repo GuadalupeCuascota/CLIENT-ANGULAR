@@ -18,8 +18,12 @@ export class RegistroMentoriaService {
     return this.http.get(`${environment.API_URI}/registro-mentorias`);
   
   }
-  getAgendamientoMentorias(){
+  getMentoriasAgendadas(){
     return this.http.get(`${environment.API_URI}/solicitudMentoria`);
+  
+  }
+  getAgendamientoMentorias(id:number){
+    return this.http.get(`${environment.API_URI}/solicitudMentoria/${id}`);
   
   }
   
