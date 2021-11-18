@@ -17,6 +17,7 @@ import {IsMentorGuard} from './Services/Login/is-mentor.guard'
 import { RegistroEditorComponent } from './Componets/Administrador/registro-editor/registro-editor.component';
 import { MenuPrincipalMComponent } from './Componets/Mentor/menu-principal-m/menu-principal-m.component';
 import { MentoriasAgendadasComponent } from './Componets/Mentor/mentorias-agendadas/mentorias-agendadas.component';
+import { SolicitudMentoriaComponent } from './Componets/Mentor/solicitud-mentoria/solicitud-mentoria.component';
 import {DashboardComponent} from './Componets/Administrador/dashboard/dashboard.component';
 import {CambioContraseniaComponent} from './Componets/cambio-contrasenia/cambio-contrasenia.component'
 import {CarreraComponent} from './Componets/Administrador/carrera/carrera.component'
@@ -131,6 +132,11 @@ const routes: Routes = [
     canActivate: [LoginGuard,IsMentorGuard]
   },
   {
+    path: 'solicitud-mentorias',
+    component: SolicitudMentoriaComponent,
+    canActivate: [LoginGuard,IsMentorGuard]
+  },
+  {
     path: 'dashboard',
     component:DashboardComponent,
     canActivate: [LoginGuard,RolesGuard],
@@ -156,6 +162,7 @@ const routes: Routes = [
     component:CrearUsuarioComponent,
     canActivate: [LoginGuard,RolesGuard],
   },
+
 
 ];
 

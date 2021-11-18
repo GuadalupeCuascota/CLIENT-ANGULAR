@@ -1,0 +1,26 @@
+.content {
+  
+    margin-left: 40px;
+    padding-left: 20px;
+    margin-right: 40px;
+    padding-top: 115px;
+    }
+      
+  .list-group-item {
+    background: rgba(255, 255, 255, 0.952);
+  }
+  .iconoInput {
+    color: #1a1818;
+    font-size: 15px;
+    position: absolute;
+    right: 30px;
+    top: 40px;
+  }
+  .contenido {
+    padding: 3% 0 0;
+    background-image: linear-gradient(rgba(255, 246, 246, 0.5),rgba(213, 195, 247, 0.5)),url(../../../../assets/mentor.jpg);
+    background-repeat: no-repeat center center fixed;
+    min-height: 100vh;
+    background-size:100% 100%;  
+    
+  }

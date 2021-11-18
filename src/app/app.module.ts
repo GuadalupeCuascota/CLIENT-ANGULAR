@@ -37,6 +37,7 @@ import { CrearUsuarioComponent } from './Componets/Administrador/crear-usuario/c
 import { FooterComponent } from './Componets/footer/footer.component';
 import { BienvenidaComponent } from './Componets/Mentor/bienvenida/bienvenida.component';
 import { BienvenidaAdminComponent } from './Componets/Administrador/bienvenida-admin/bienvenida-admin.component';
+import { SolicitudMentoriaComponent } from './Componets/Mentor/solicitud-mentoria/solicitud-mentoria.component';
 
 
  //módulo para el filtrado de información
@@ -69,6 +70,7 @@ import { BienvenidaAdminComponent } from './Componets/Administrador/bienvenida-a
     FooterComponent,
     BienvenidaComponent,
     BienvenidaAdminComponent,
+    SolicitudMentoriaComponent,
    
   
   ],

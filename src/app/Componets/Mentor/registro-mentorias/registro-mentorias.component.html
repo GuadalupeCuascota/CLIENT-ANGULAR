@@ -70,7 +70,7 @@
   
         <br />
   
-        <div class="row">
+        <div class="row" *ngIf="mentorias.length>0">
           <div class="col-sm-12">
   
             <div class="card">
@@ -94,11 +94,11 @@
                           | paginate: { itemsPerPage: 3, currentPage: p }
                       "
                     >
-                    <td>{{ mentoria.materia}}</td>
-                      <td>{{ mentoria.fecha }}</td>
-                      <td>{{ mentoria.hora_inicio }}</td>
-                      <td>{{ mentoria.hora_fin }}</td>
-                      <td>{{ mentoria.nombre_estado_mentoria}}</td>
+                    <td>{{mentoria.materia}}</td>
+                      <td>{{mentoria.fecha }}</td>
+                      <td>{{mentoria.hora_inicio }}</td>
+                      <td>{{mentoria.hora_fin }}</td>
+                      <td>{{mentoria.nombre_estado_mentoria}}</td>
                       <td>
                         <button
                           class="btn btn-primary"
