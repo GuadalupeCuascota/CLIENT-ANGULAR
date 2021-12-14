@@ -1,7 +1,9 @@
 <app-menu-principal-m></app-menu-principal-m>
 <div class="contenido">
   <div class="content">
-    <div class="col-md-12">
+
+    <div class="col-md-8 offset-md-2">
+    
       <div class="card">
         <div class="card-body text-center">
           <h5 class="text-center" style="color: #161515">
@@ -9,12 +11,12 @@
           </h5>
 
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-bordered">
               <thead>
                 <tr class="table-active">
                     <th scope="col">Fecha solicitud</th> 
                   <th scope="col">Nombre</th>
-                  <th scope="col">Apellido</th>
+                  
                   <th scope="col">Correo electrónico</th>
                   <th scope="col">Materia</th>
                   <th scope="col">Tema</th>
@@ -24,11 +26,10 @@
               <tbody>
                 <tr *ngFor="let solicitudMentoria of SolicitudMentorias | paginate: { itemsPerPage: 5, currentPage: p }" >
                   <td>{{solicitudMentoria.fecha_solicitud_mentoria}}</td>
-                  <td>{{solicitudMentoria.nombre}}</td>
-                  <td>{{solicitudMentoria.apellido }}</td>
+                  <td>{{solicitudMentoria.nombre}} {{solicitudMentoria.apellido }}</td>
                   <td>{{ solicitudMentoria.correo_electronico }}</td>
-                  <td>{{ solicitudMentoria.materia }}</td>
-                  <td>{{ solicitudMentoria.tema }}</td>
+                  <td>{{ solicitudMentoria.nombre_materia }}</td>
+                  <td>{{ solicitudMentoria.nombre_tema }}</td>
                 </tr>
               </tbody>
             </table>

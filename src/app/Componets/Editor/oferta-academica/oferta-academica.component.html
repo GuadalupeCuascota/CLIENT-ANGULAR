@@ -1,73 +1,79 @@
 <app-menu-principal-editor></app-menu-principal-editor>
 
 <div class="contenido">
-  <div class="content">
-    <div class="row">
-      <div class="col-sm-9 offset-md-2">
-        <h5 class="text-center" style="color: #161515">
-          Listado publicaciones oferta académica FICA
-        </h5>
-        <div class="form-group row">
-          <div class="col">
-            <button
+  <br />
+  <br />
+  <br />
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="text-center" style="color: #161515">
+            Listado publicaciones oferta académica FICA
+          </h5>
+          <div class="row">
+            <div class="col-md-3">
+              <button
               type="reset"
               class="btn btn-primary"
               (click)="open(contenido)"
             >
               CREAR PUBLICACIÓN <i class="fas fa-plus-square"></i>
             </button>
-          </div>
-          <div class="col">
-            <div class="col-md-8 offset-md-4">
+            </div>  
+            <div class="col-md-3"></div>
+            <div class="col-md-5">
               <div class="form-group row">
-                <!-- <div class="input-group">
-  
-                <input type="text" class="form-control" name="textoBuscar" placeholder="Buscar perfil">
-                <div class="input-group-text bg-white">
-                  <i class="fas fa-search"></i>
+                <div class="input-group">
+                  
+                  <input type="text" class="form-control" name="textoBuscar"[(ngModel)]="textoBuscar" placeholder="Buscar perfil" />
+                  <div class="input-group-text bg-white">
+                    <i class="fas fa-search"></i>
+                  </div>
                 </div>
-              </div> -->
               </div>
             </div>
           </div>
-        </div>
-        <div class="card">
-          <table class="table table-hover">
-            <thead>
-              <tr class="table-active">
-                <th scope="col">Titulo</th>
-                <th scope="col">Descripción</th>
 
-                <th scope="col">Imagen</th>
-                <th scope="col">Carrera</th>
+          
+          <div class="card">
+            <table class="table table-hover">
+              <thead>
+                <tr class="table-active">
+                  <th scope="col">Titulo</th>
+                  <th scope="col">Descripción</th>
 
-                <th scope="col">acciones</th>
-              </tr>
-            </thead>
+                  <th scope="col">Imagen</th>
+                  <th scope="col">Carrera</th>
 
-            <tbody>
-              <tr
-                *ngFor="
-                  let oferta_academica of ofertas_academica
-                    | paginate: { itemsPerPage: 3, currentPage: p }
-                "
-              >
-                <td>{{ oferta_academica.titulo }}</td>
-                <td>{{ oferta_academica.descripcion }}</td>
+                  <th scope="col">acciones</th>
+                </tr>
+              </thead>
 
-                <td>
-                  <img
-                    *ngIf=" oferta_academica.tipo_archivo == 'image/png' ||
-                      oferta_academica.tipo_archivo == 'image/jpeg'
-                    "
-                    width="100px"
-                    heigh="100px"
-                    [src]="oferta_academica.ruta_archivo"
-                    alt="no-image"
-                  />
-                </td>
-                <td>{{ oferta_academica.nombre_carrera }}</td>
-                <!-- <video
+              <tbody>
+                <tr
+                  *ngFor="
+                    let oferta_academica of ofertas_academica
+                      | paginate: { itemsPerPage: 3, currentPage: p }
+                  "
+                >
+                  <td>{{ oferta_academica.titulo }}</td>
+                  <td>{{ oferta_academica.descripcion }}</td>
+
+                  <td>
+                    <img
+                      *ngIf="
+                        oferta_academica.tipo_archivo == 'image/png' ||
+                        oferta_academica.tipo_archivo == 'image/jpeg'
+                      "
+                      width="100px"
+                      heigh="100px"
+                      [src]="oferta_academica.ruta_archivo"
+                      alt="no-image"
+                    />
+                  </td>
+                  <td>{{ oferta_academica.nombre_carrera }}</td>
+                  <!-- <video
                   *ngIf="
                     oferta_academica.tipo_archivo == 'video/mp4' ||
                     tipo_archivo == 'video/mov'
@@ -79,35 +85,38 @@
                   alt="no-image"
                 ></video> -->
 
-                <td>
-                  <button
-                    class="btn btn-primary"
-                    (click)="
-                      getpublicacion(oferta_academica.id_publicacion);
-                      open(contenido)
-                    "
-                  >
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  |
-                  <button
-                    class="btn btn-danger"
-                    (click)="deletePublicacion(oferta_academica.id_publicacion)"
-                  >
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  <td>
+                    <button
+                      class="btn btn-primary"
+                      (click)="
+                        getpublicacion(oferta_academica.id_publicacion);
+                        open(contenido)
+                      "
+                    >
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    |
+                    <button
+                      class="btn btn-danger"
+                      (click)="
+                        deletePublicacion(oferta_academica.id_publicacion)
+                      "
+                    >
+                      <i class="far fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+          <!-- [(ngModel)]="textoBuscar" -->
+
+          <!-- <video src="../../../../assets/Pregunta a.mp4" width="300" controls> -->
+          <!-- </video> -->
         </div>
-
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-
-        <!-- [(ngModel)]="textoBuscar" -->
-
-        <!-- <video src="../../../../assets/Pregunta a.mp4" width="300" controls> -->
-        <!-- </video> -->
       </div>
     </div>
   </div>
@@ -160,7 +169,43 @@
         required
       ></textarea>
     </div>
-    <div class="form-group">
+    <div class="buttons" *ngIf="edit">
+      <input
+        type="file"
+        class="d-none"
+        placeholder=""
+        (change)="onFileSelect($event)"
+        #photo
+      />
+
+      <button (click)="photo.click()" class="btn btn-primary">
+        Agregar imagen
+      </button>
+
+      <button class="btn btn-primary" (click)="open(imagen)">Ver imagen</button>
+    </div>
+
+    <div *ngIf="!edit">
+      <input
+        type="file"
+        class="d-none"
+        placeholder=""
+        (change)="onFileSelect($event)"
+        #photo
+      />
+
+      <button (click)="photo.click()" class="btn btn-primary">
+        Agregar imagen
+      </button>
+      <img
+        class="d-none"
+        [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
+        class="img-fluid"
+        alt="no-image"
+      />
+    </div>
+
+    <!-- <div class="form-group"> 
       <input
         type="file"
         name=""
@@ -177,7 +222,6 @@
       />
 
       <!-- <class="d-none"<img [src]="../../../../assets/noimage.png" class="img-fluid" alt="no-image" (click)="photo.click()"> -->
-    </div>
   </div>
 
   <div class="modal-footer">

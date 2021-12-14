@@ -16,7 +16,7 @@ export class NoticiasComponent implements OnInit {
   datos: any = {};
   noticias: any|Publicacion=[];
   
-  
+  textoBuscar='';
   noticia: any|Publicacion= {
     id_publicacion:0,
     tiulo:'',
@@ -64,16 +64,16 @@ export class NoticiasComponent implements OnInit {
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
-      this.edit=false
-      this.clear()
+      
+     
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      this.edit=false
-      this.clear()
+    
+  
       return 'by clicking on a backdrop';
     } else {
-      this.clear();
-      this.edit=false
+      
+     
       return `with: ${reason}`;
       
     }
@@ -84,7 +84,9 @@ export class NoticiasComponent implements OnInit {
    
   }
   ///////////////////////////////////////////////////////
-
+  estado(){
+    this.edit=false
+  }
   clear() {
     console.log("clear clicked")
     this.noticia.titulo=null
@@ -131,18 +133,18 @@ export class NoticiasComponent implements OnInit {
         fd.append('id_tipo_publicacion',this.id)
         fd.append('id_estado_publicacion',this.noticia.id_estado_publicacion)
         fd.append('id_carrera',this.noticia.id_carrera)
-      this.registroArchivo.saveArchivo(fd).subscribe(
-        (res)=>{
-          console.log(res)
-          this.getpublicaciones();
-          this.alerts.showSuccess('Successfull Operation', 'Noticia guardado')
+      // this.registroArchivo.saveArchivo(fd).subscribe(
+      //   (res)=>{
+      //     console.log(res)
+      //     this.getpublicaciones();
+      //     this.alerts.showSuccess('Successfull Operation', 'Noticia guardado')
          
-        },
+      //   },
     
-         (err)=>
-         this.alerts.showError('Error Operation', 'No se puede guardar')
+      //    (err)=>
+      //    this.alerts.showError('Error Operation', 'No se puede guardar')
           
-      );
+      // );
      }catch{
        console.log("error")
      }

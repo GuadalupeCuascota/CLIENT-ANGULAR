@@ -6,7 +6,7 @@
   padding-top: 115px;
   }
   .contenido {
-    padding: 2% 0 0;
+    padding: 6% 0 0;
     background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(163, 157, 157, 0.5)),url(../../../../assets/editor.jpg);
     background-repeat: no-repeat center center fixed;
     min-height: 100vh;
@@ -14,4 +14,10 @@
     
   
   
+  }
+  .form-control.ng-touched.ng-invalid{
+    border:1px solid red
+  }
+  .form-control.ng-touched.ng-valid{
+    border:1px solid purple
   }

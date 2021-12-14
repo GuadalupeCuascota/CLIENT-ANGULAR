@@ -1,6 +1,6 @@
 .contenido {
     padding: 30% 0 0;
-    background-image: linear-gradient(rgba(255, 246, 246, 0.5),rgba(213, 195, 247, 0.5)),url(../../../../assets/mentor.jpg);
+    background-image: linear-gradient(rgba(255, 246, 246, 0.7),rgba(149, 130, 184, 0.7)),url(../../../../assets/mentor.jpg);
     background-repeat: no-repeat center center fixed;
     min-height: 100vh;
     background-size:100% 100%;  

@@ -12,7 +12,7 @@ export class AlertsService {
 
   showSuccess(text, tittle){
     this.toast.success(text,tittle,{
-      timeOut:2500
+      timeOut:3000
     });
     
 
@@ -20,7 +20,7 @@ export class AlertsService {
   }
   showError(text, tittle){
     this.toast.error(text,tittle,{
-      timeOut:2500
+      timeOut:3000
     });
     
   }

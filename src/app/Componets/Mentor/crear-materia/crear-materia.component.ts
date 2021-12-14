@@ -20,7 +20,7 @@ export class CrearMateriaComponent implements OnInit {
   carreras: Carrera [] = [];
   materias: Materia [] = [];
   closeResult = '';
-  materia: Materia = {
+  materia: any={
     id_materia:0,
     nombre_materia:'',
   };
@@ -189,6 +189,7 @@ export class CrearMateriaComponent implements OnInit {
       (err) => console.error(err)
     );
   }
+ 
   guardar(){
     console.log("LA MATERIA",this.materia1)
     console.log("GUARDAR")
@@ -196,7 +197,7 @@ export class CrearMateriaComponent implements OnInit {
     console.log(this.materiaCarreraform.value);
     this.materia1.nombre_materia=this.materiaCarreraform.controls['nombre_materia'].value;
    
-    this.materia1.nombre_carrera=this.materiaCarreraform.controls['nombre_carrera'].value;
+   
    
  console.log("la m", this.materia1)
 

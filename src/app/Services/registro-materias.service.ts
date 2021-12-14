@@ -26,8 +26,14 @@ export class RegistroMateriasService {
     return this.http.delete(`${environment.API_URI}/materias/${id}`);
   
   }
-updateMateria(id:String, updateMateria:Materia){
+updateMateria(id:number, updateMateria:Materia){
     return this.http.put(`${environment.API_URI}/materias/${id}`,updateMateria);
   
+  }
+  updateEstadoMateria(id: number, updateMateria: Materia) {
+    return this.http.put(
+      `${environment.API_URI}/cambiarEstadoMateria/${id}`,
+      updateMateria
+    );
   }
 }

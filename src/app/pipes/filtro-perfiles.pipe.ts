@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FiltroPerfilesPipe implements PipeTransform {
 
-  transform(arreglo: any[],texto:string,page:number=0):any[] {
+  transform(arreglo: any[],texto:string):any[] {
     if(texto=='' || texto.length<2){
       
       return arreglo

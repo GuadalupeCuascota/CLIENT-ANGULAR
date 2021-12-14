@@ -29,6 +29,7 @@ export class OfertaAcademicaComponent implements OnInit {
     id_usuario: '',
     id_carrera: '',
   };
+  
   textoBuscar='';
   API_URI: string;
   edit: boolean = false;
@@ -54,6 +55,7 @@ export class OfertaAcademicaComponent implements OnInit {
   }
   ///////////////////////METODOS DEL MODAL///////////////////////////
   open(content) {
+    this.clear();
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
@@ -88,6 +90,18 @@ export class OfertaAcademicaComponent implements OnInit {
   //   this.leerArchivo = null;
   //   this.API_URI = null;
   // }
+
+  clear() {
+    console.log("clear clicked")
+    this.oferta_academica.titulo=null
+    this.oferta_academica.descripcion=null
+    this.oferta_academica.estado_profesion=null
+    this.oferta_academica.profesion=null
+    this.leerArchivo=null
+    this.archivosSeleccionado=null
+    this.API_URI=null
+
+  }
   onFileSelect(event) {
     console.log('el evento', event);
     if (event.target.files.length > 0) {
@@ -117,19 +131,20 @@ export class OfertaAcademicaComponent implements OnInit {
       fd.append('id_estado_publicacion', this.oferta_academica.id_estado_publicacion);
       fd.append('id_carrera', this.oferta_academica.id_carrera);
 
-      this.registroArchivo.saveArchivo(fd).subscribe(
-        (res) => {
-          console.log(res);
-          this.getpublicaciones();
-          this.alerts.showSuccess('Successfull Operation', 'Archivo guardado');
-        },
+      // this.registroArchivo.saveArchivo(fd).subscribe(
+      //   (res) => {
+      //     console.log(res);
+      //     this.getpublicaciones();
+      //     this.alerts.showSuccess('Successfull Operation', 'Archivo guardado');
+      //   },
 
-        (err) => console.log(err)
+      //   (err) => console.log(err)
         
-      );
+      // );
     } catch {
       console.log('No se ha seleccionado el archivo');
     }
+    this.clear();
   }
 
   getpublicaciones() {

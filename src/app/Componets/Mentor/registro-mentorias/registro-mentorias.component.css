@@ -5,6 +5,12 @@
   margin-right: 40px;
   padding-top: 115px;
   }
+  .form-control.ng-touched.ng-invalid{
+    border:1px solid red
+  }
+  .form-control.ng-touched.ng-valid{
+    border:1px solid purple
+  }
     
 .list-group-item {
   background: rgba(255, 255, 255, 0.952);
@@ -18,7 +24,7 @@
 }
 .contenido {
   padding: 3% 0 0;
-  background-image: linear-gradient(rgba(255, 246, 246, 0.5),rgba(213, 195, 247, 0.5)),url(../../../../assets/mentor.jpg);
+  background-image: linear-gradient(rgba(255, 246, 246, 0.8),rgba(213, 195, 247, 0.8)),url(../../../../assets/mentor.jpg);
   background-repeat: no-repeat center center fixed;
   min-height: 100vh;
   background-size:100% 100%;  

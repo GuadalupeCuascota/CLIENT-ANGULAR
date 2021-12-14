@@ -1,41 +1,46 @@
 <app-menu-principal-editor></app-menu-principal-editor>
 <div class="contenido">
-  <div class="content">
-    <div class="row">
-      <div class="col-md-10 offset-md-1" >
-        <h5 class="text-center" style="color: #161515">
-          Listado de Perfiles de Mujeres en STEM
-        </h5>
-        <div class="form-group row">
-          <div class="col">
-            <button type="reset" class="btn btn-primary" (click)="open(contenido); clear()">
+  <br>
+  <br>
+  <br>
+  <div class="container">
+    
+    
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="text-center" style="color: #161515">
+            Listado de Perfiles de Mujeres en STEM
+          </h5> 
+          <div class="row">
+            <div class="col-md-2">
+              <button type="reset" class="btn btn-primary" (click)="estado();open(contenido); clear(); ">
               CREAR PERFIL <i class="fas fa-plus-square"></i>
             </button>
-          </div>
-          <div class="col">
-            <!-- <div class="col-md-8 offset-md-4">
+            </div>  
+            <div class="col-md-4"></div>
+            <div class="col-md-5">
               <div class="form-group row">
                 <div class="input-group">
-                  <input type="text" class="form-control" name="textoBuscar" placeholder="Buscar perfil" />
+                  
+                  <input type="text" class="form-control" name="textoBuscar"[(ngModel)]="textoBuscar" placeholder="Buscar perfil" />
                   <div class="input-group-text bg-white">
                     <i class="fas fa-search"></i>
                   </div>
                 </div>
               </div>
-            </div> -->
+            </div>
           </div>
-        </div>
-  
-        <!-- [(ngModel)]="textoBuscar" -->
-        <div class="card">
           <div class="table-responsive">
-            <table class="table align-middle">
+            <table class="table table-striped">
               <thead>
                 <tr class="table-active">
                   <th scope="col">Nombre</th>
                   <th scope="col">Profesión</th>
       
                   <th scope="col">Descripción</th>
+                  <th scope="col">Perfil Linkedin</th>
                   <th scope="col">Imagen</th>
       
                   <th scope="col">acciones</th>
@@ -44,16 +49,17 @@
       
               <tbody>
                 <tr *ngFor="
-                    let perfil of perfiles
-                      | paginate: { itemsPerPage: 3, currentPage: p }
+                    let perfil of perfiles|filtroPerfiles:textoBuscar
+                      | paginate: { itemsPerPage: 5, currentPage: p }
                   ">
                   <td>{{ perfil.nombre_perfil }}</td>
                   <td>{{ perfil.profesion }}</td>
       
                   <td>{{ perfil.descripcion }}</td>
+                  <td>{{ perfil.enlace}}</td>
       
                   <td>
-                    <img *ngIf="perfil.tipo_archivo == 'image/png' || perfil.tipo_archivo=='image/jpeg'" width="100px" heigh="100px"
+                    <img *ngIf="perfil.tipo_archivo == 'image/png' || perfil.tipo_archivo=='image/jpeg'" width="60px" heigh="50px"
                       [src]="perfil.ruta_archivo" alt="no-image" />
                     <video *ngIf="perfil.tipo_archivo == 'video/mp4' || tipo_archivo=='video/mov'" width="100px" heigh="100px"
                       [src]="perfil.ruta_archivo" class="img-fluid" alt="no-image"></video>
@@ -70,20 +76,29 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+              </table>
           </div>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
-     
-        
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  
-        <!-- <video src="../../../../assets/Pregunta a.mp4" width="300" controls> -->
-        <!-- </video> -->
       </div>
     </div>
+
+
+    
   </div>
 </div>
+<ng-template #imagen let-modal>
+  <div class="modal-header">
+    <h4  ng class="modal-title" id="modal-basic-title">
+      Visualizar imagen
+    </h4>
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
+  <img   width="100%"  height="50px" class="d-none" [src]="leerArchivo || API_URI ||'../../../../assets/noimage.png'" class="img-fluid" alt="no-image" /> 
+</ng-template>
 
 <ng-template #contenido let-modal>
   <div class="modal-header">
@@ -124,10 +139,32 @@
         required></textarea>
     </div>
     <div class="form-group">
-      <input type="file" name="" placeholder="" (change)="onFileSelect($event)" #photo />
+      <label>Enlace linkedln: </label>
+      <input type="text" class="form-control" name="" placeholder="Ingrese enlace" [(ngModel)]="perfil.enlace"
+        required />
+    </div>
+    <div class="buttons" *ngIf="edit">
+      <input type="file" class="d-none" placeholder="" (change)="onFileSelect($event)" #photo />
 
-      <img   [src]="leerArchivo || API_URI ||'../../../../assets/noimage.png'" class="img-fluid" alt="no-image" />
-      <!-- <video max-width="250px" [src]="leerArchivo || API_URI" class="img-fluid" alt="no-image"></video> -->
+      <button (click)="photo.click()" class="btn btn-primary" >
+        Agregar imagen
+      </button>
+
+      <button  class="btn btn-primary" (click)="open(imagen)" >
+        Ver imagen
+      </button> 
+
+
+
+    </div>
+
+    <div *ngIf="!edit">
+      <input type="file" class="d-none" placeholder="" (change)="onFileSelect($event)" #photo />
+
+      <button (click)="photo.click()" class="btn btn-primary" >
+        Agregar imagen
+      </button>
+      <img  class="d-none" [src]="leerArchivo || API_URI ||'../../../../assets/noimage.png'" class="img-fluid" alt="no-image"   /> 
     </div>
   </div>
 
@@ -135,10 +172,10 @@
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(contenido)">
       Cerrar
     </button>
-    <button *ngIf="!edit" type="button" class="btn btn-primary" (click)="saveArchivo()">
+    <button *ngIf="!edit" type="button" class="btn btn-primary" (click)="saveArchivo();close(contenido)">
       PUBLICAR <i class="fas fa-save"></i>
     </button>
-    <button *ngIf="edit" type="button" class="btn btn-primary" (click)=" updatepublicacion()">
+    <button *ngIf="edit" type="button" class="btn btn-primary" (click)=" updatepublicacion();close(contenido)">
       GUARDAR <i class="fas fa-save"></i>
     </button>
   </div>

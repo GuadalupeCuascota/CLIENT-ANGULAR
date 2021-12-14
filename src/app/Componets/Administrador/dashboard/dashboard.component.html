@@ -1,47 +1,70 @@
 <app-registro-usuario></app-registro-usuario>
 <div class="contenido">
-
   <div class="container p-5">
     <div class="row row-cols-1 row-cols-md-3 g-10">
       <div class="col">
         <div class="card text-center" style="width: 18rem">
           <div class="card-body">
-            <h5 class="card-title" color="success"> <i class="fa fa-users fa-1.5x fa-lg"  aria-hidden="true"></i> Estudiantes registrados</h5>
-            <p class="card-text">{{countEstudiantes}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col"> 
-        <div class="card text-center" style="width: 18rem">
-          <div class="card-body"> 
-            <h5 class="card-title"> <i class="fas fa-heart fa-1.5x fa-l"></i>
-              Publicaciones Likes
+            <h5 class="card-title" color="success">
+              <i class="fa fa-users fa-1.5x fa-lg" aria-hidden="true"></i>
+              Estudiantes registrados
             </h5>
-            <p class="card-text">{{countLikes}}</p>
+            <p class="card-text">{{ countEstudiantes }}</p>
           </div>
         </div>
       </div>
       <div class="col">
         <div class="card text-center" style="width: 18rem">
           <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-book-open"></i> Mentorias agendadas</h5>
-            <p class="card-text">{{countMentoriaAgen}}</p>
+            <h5 class="card-title">
+              <i class="fas fa-heart fa-1.5x fa-l"></i>
+              Publicaciones Likes
+            </h5>
+            <p class="card-text">{{ countLikes }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-center" style="width: 18rem">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="fas fa-book-open"></i> Mentorias agendadas
+            </h5>
+            <p class="card-text">{{ countMentoriaAgen }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+
   <div class="container">
     <div class="row">
       <div class="col-sm-6">
         <div class="card">
-          <div class="card-header" style="font-weight: 800;">Estudiantes registrados</div>
+          <div class="card-header" style="font-weight: 800">
+            Estudiantes registrados
+          </div>
           <div class="card-body">
             <table>
               <tr>
                 <td>
-                  <ngx-charts-bar-vertical
+
+                  <ngx-charts-bar-vertical [view]="[210,350]"
+                  [results]="registro"
+                  
+                  [xAxis]="true"
+                  [yAxis]="true"
+                  [showXAxisLabel]="true"
+                  [showYAxisLabel]="true"
+                  [xAxisLabel]="'Mes'"[yAxisLabel]="'Nro. de Estudiantes'"
+                  [showDataLabel]="true"
+
+                  >
+                    
+                    
+                  </ngx-charts-bar-vertical>
+
+                  <!-- <ngx-charts-bar-vertical
                     [results]="registro"
                     [view]="view"
                     scheme="cool"
@@ -49,16 +72,16 @@
                     [xAxis]="showXAxis"
                     [yAxis]="showYAxis"
                     [legend]="showLegend"
+
+                    [legendTitle]="''"
                     [legendPosition]="legendPosition"
                     [showXAxisLabel]="showXAxisLabel"
                     [showYAxisLabel]="showYAxisLabel"
                     [xAxisLabel]="xAxisLabel"
-                    
                     [yAxisLabel]="yAxisLabel"
                     (select)="onSelect($event)"
                   >
-                  </ngx-charts-bar-vertical
-                  >
+                  </ngx-charts-bar-vertical> -->
                 </td>
               </tr>
             </table>
@@ -67,28 +90,93 @@
       </div>
       <div class="col-sm-6">
         <div class="card">
-          <div class="card-header" style="font-weight: 800;">Mentorias Agendadas</div>
+          <div class="card-header" style="font-weight: 800">
+            Estudiantes registrados por nivel académico
+          </div>
+          <div class="card-body">
+            <table>
+              <tr>
+                <td>
+                  <ngx-charts-pie-chart
+                  [view]="viewNro"
+                  [scheme]="colorScheme1"
+                  [results]="registroEst"
+                  [gradient]="gradientNro"
+                  [legend]="showLegendNro"
+                  [legendPosition]="legendPosition1"
+                  [labels]="showLabelsNro"
+                  
+                  (select)="onSelect($event)"
+                  (activate)="onActivate($event)"
+                  (deactivate)="onDeactivate($event)"
+                  >
+                </ngx-charts-pie-chart>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <br />
+    <br />
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header" style="font-weight: 800">
+            Gestión Mentorias
+          </div>
+          <div class="card-body">
+            <table>
+              <tr>
+                <td>
+                  <ngx-charts-bar-horizontal
+                  [view]="[280,300]"
+                  [scheme]="colorScheme"
+                  [results]="tipoMentoria"
+                  [gradient]="gradient1"
+                  [xAxis]="showXAxis1"
+                  [yAxis]="showYAxis1"
+                  [legend]="showLegend1"
+                  [legendPosition]="legendPosition1"
+                  [showXAxisLabel]="showXAxisLabel1"
+                  [showYAxisLabel]="showYAxisLabel1"
+                  [xAxisLabel]="xAxisLabel1"
+                  [yAxisLabel]="yAxisLabel2"
+                 
+                 >
+                </ngx-charts-bar-horizontal>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-header" style="font-weight: 800">
+            Mentorias Agendadas
+          </div>
           <div class="card-body">
             <table>
               <tr>
                 <td>
                   <ngx-charts-bar-vertical
-                  [results]="mentoria"
-                  [view]="view"
-                  [scheme]="colorScheme"
-                  [gradient]="gradient"
-                  [xAxis]="showXAxis"
-                  [yAxis]="showYAxis"
-                  [legend]="showLegend"
-                  [legendPosition]="legendPosition"
-                  [showXAxisLabel]="showXAxisLabel"
-                  [showYAxisLabel]="showYAxisLabel"
-                  [xAxisLabel]="xAxisLabel"
-                  [animations]="animations"
-                  
-                  [yAxisLabel]="yAxisLabel1"
-                  (select)="onSelect($event)"
-                  
+                    [results]="mentoria"
+                    [view]="view"
+                    [scheme]="colorScheme"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [legendPosition]="legendPosition"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLabel"
+                    [animations]="animations"
+                    [yAxisLabel]="yAxisLabel"
+                    
                   ></ngx-charts-bar-vertical>
                 </td>
               </tr>
@@ -96,57 +184,62 @@
           </div>
         </div>
       </div>
+      
     </div>
-    <br>
-    <br>
     <div class="row">
+
       <div class="col-sm-6">
         <div class="card">
-          <div class="card-header" style="font-weight: 800;">Gestión Mentorias</div>
+          <div class="card-header" style="font-weight: 800">
+            Carreras FICA-UTN likes
+          </div>
           <div class="card-body">
             <table>
               <tr>
                 <td>
-                  <ngx-charts-bar-vertical
-                    [results]="tipoMentoria"
-                    [view]="view"
-                    scheme="cool"
-                    [gradient]="gradient"
-                    [xAxis]="showXAxis"
-                    [yAxis]="showYAxis"
-                    [legend]="showLegend"
-                    [legendPosition]="legendPosition"
-                    [showXAxisLabel]="showXAxisLabel"
-                    [showYAxisLabel]="showYAxisLabel"
-                    [xAxisLabel]="xAxisLabel"
-                    
-                    [yAxisLabel]="yAxisLabel"
-                    (select)="onSelect($event)"
+                  <ngx-charts-pie-chart
+                  [view]="view"
+                  [scheme]="colorScheme"
+                  [results]="eventosCarrera"
+                  [gradient]="gradientC"
+                  [legend]="showLegendC"
+                  [legendPosition]="legendPositionC"
+                  [labels]="showLabels"
+                  [doughnut]="isDoughnut"
+                  (select)="onSelect($event)"
+                  (activate)="onActivate($event)"
+                  (deactivate)="onDeactivate($event)"
                   >
-                  </ngx-charts-bar-vertical
-                  >
+                </ngx-charts-pie-chart>
                 </td>
               </tr>
             </table>
-           
           </div>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="card">
-          <div class="card-header" style="font-weight: 800;">Contenido compartido</div>
+          <div class="card-header" style="font-weight: 800">
+            Perfiles mujeres en STEM 
+          </div>
           <div class="card-body">
             <table>
               <tr>
                 <td>
-                  <ngx-charts-number-card
-                    [results]="registro"
-                    [view]="view"
-                    [scheme]="colorScheme"
+                  <ngx-charts-bar-vertical [view]="[210,350]"
+                  [results]="LikesPerfil"
+                  
+                  [xAxis]="true"
+                  [yAxis]="true"
+                  [showXAxisLabel]="true"
+                  [showYAxisLabel]="true"
+                  [xAxisLabel]="'Perfil'"[yAxisLabel]="'Nro. de likes'"
+                  [showDataLabel]="true"
+
+                  >
                     
-                  >
-                  </ngx-charts-number-card
-                  >
+                    
+                  </ngx-charts-bar-vertical>
                 </td>
               </tr>
             </table>
@@ -155,13 +248,12 @@
       </div>
     </div>
   </div>
-  <BR>
+  <BR />
 </div>
 <footer class="bg-light text-center text-lg-start">
   <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
     © 2021 Copyright: W-STEM UTN
-    
   </div>
   <!-- Copyright -->
 </footer>

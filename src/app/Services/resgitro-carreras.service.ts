@@ -31,7 +31,7 @@ export class ResgitroCarrerasService {
     return this.http.delete(`${environment.API_URI}/carrerasFica/${id}`);
   
   }
-updateCarrera(id:String, updateCarrera:Carrera){
+updateCarrera(id:number, updateCarrera:Carrera){
     return this.http.put(`${environment.API_URI}/carrerasFica/${id}`,updateCarrera);
   
   }

@@ -15,20 +15,24 @@ import { Carrera } from '../../../Models/carreras';
 export class CrearUsuarioComponent implements OnInit {
   exform:FormGroup
   usuario: Usuario = {
+    id_usuario:0,
     nombre: '',
     apellido: '',
     nivel_academico: '',
-    carrera: '',
+    nombre_carrera:'',
+    id_carrera:0,
     unidad_educativa: '',
     correo_electronico: '',
     contrasenia: '',
     id_rol: 0,
+    tipo_rol:'',
   };
   carreras: Carrera [] = [];
   roles: any = [];
   estado: boolean;
   showPassword = false;
   show_eye: Boolean = false;
+  private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   constructor( private registroUsuarioService: RegistroUsuarioService, private alerts: AlertsService,private router: Router,
     private registroRolService: RegistroRolService,private registroCarreraService:  ResgitroCarrerasService) { }
 
@@ -36,12 +40,12 @@ export class CrearUsuarioComponent implements OnInit {
     this.ObtenerRoles();
     this.getCarreras();
     this.exform=new FormGroup({
-      nombre: new FormControl('', Validators.required),
-      apellido: new FormControl('', Validators.required),
-      correo_electronico: new FormControl('', Validators.required),
-      contrasenia: new FormControl('', Validators.required),
+      nombre: new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z a-zA-ZñÑáéíóúÁÉÍÓÚ]+')]),
+      apellido: new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z a-zA-ZñÑáéíóúÁÉÍÓÚ]+')]),
+      correo_electronico: new FormControl('', [Validators.required,Validators.pattern(this.emailPattern)]),
+      contrasenia: new FormControl('', [Validators.required, Validators.minLength(8)]),
       id_rol:new FormControl('', Validators.required),
-      carrera: new FormControl(''),
+      id_carrera: new FormControl('',Validators.required),
 
     })
   }
@@ -53,12 +57,13 @@ export class CrearUsuarioComponent implements OnInit {
   public optionsFn(event) { //here item is an object 
     console.log("pasa chage")
     console.log("el evento",event.target.value);
-    if (event.target.value =="Mentora") {
+    if (event.target.value =="Mentor") {
       this.estado = true
 
-    }
+    } 
     else {
       this.estado = false
+      this.exform.patchValue({id_carrera: "Sin asignar" });
     }
 
 
@@ -74,7 +79,7 @@ export class CrearUsuarioComponent implements OnInit {
     this.usuario.correo_electronico = this.exform.controls['correo_electronico'].value;
     this.usuario.contrasenia = this.exform.controls['contrasenia'].value;
     this.usuario.id_rol = this.exform.controls['id_rol'].value;
-    this.usuario.carrera=this.exform.controls['carrera'].value;
+    this.usuario.id_carrera=this.exform.controls['id_carrera'].value;
     this.registroUsuarioService.saveUsuario(this.usuario).subscribe(
       (res) => {
         
@@ -86,7 +91,7 @@ export class CrearUsuarioComponent implements OnInit {
       },
       (err) => {
         console.error(err)
-      this.alerts.showError('Error Operation', 'No se puede guardar')
+      this.alerts.showError( err.error.text,'Error Operation',)
       }
     );
     

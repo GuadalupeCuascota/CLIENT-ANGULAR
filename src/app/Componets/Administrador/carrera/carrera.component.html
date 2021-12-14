@@ -1,112 +1,166 @@
 <app-registro-usuario></app-registro-usuario>
 <div class="contenido">
-  <div class="container ">
-<br>
+  <div class="container">
+    <br />
 
-    <div class="row">
-      <div class="col-md-4">
-        <div class="list-group">
-          <div class="list-group-item">
-            <h5 class="text-center" style="color: #161515">
-              Registro de Carreras Fica
-            </h5>
-            <form [formGroup]="carreraform">
+    <div class="col-md-9 offset-md-2">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="text-center" style="color: #161515">Listado carreras</h5>
+          <div class="row">
+            <div class="col-md-3">
+              <button
+                (click)="open(contenido);clear();"
+                class="btn btn-primary"
+              >
+                CREAR NUEVO <i class="fas fa-plus-square"></i>
+              </button>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-5">
               <div class="form-group row">
-                <div class="col">
-                  <input type="text" name="tipo_rol" class="form-control" formControlName="nombre_carrera"
-                    placeholder="Ingrese la carrera" />
-                  <small *ngIf="
-                      carreraform.get('nombre_carrera').invalid &&
-                      carreraform.get('nombre_carrera').touched
-                    " class="text-danger">Carrera es requerido</small>
-                </div>
-                <div class="col">
-                  <button [disabled]="!carreraform.valid" class="btn btn-primary" (click)="saveCarrera()">
-                    Agregar
-                    <i class="fas fa-plus-square"></i>
-                  </button>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="textoBuscar"
+                    [(ngModel)]="textoBuscar"
+                    placeholder="Buscar materia"
+                  />
+                  <div class="input-group-text bg-white">
+                    <i class="fas fa-search"></i>
+                  </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
-        </div>
-        </div>
 
-     
-      <div class="col-md-6">
-        <div class="card">
+          <br />
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr class="table-active">
-  
                   <th scope="col">Nombre</th>
-  
+
                   <th scope="col">Acciones</th>
                 </tr>
               </thead>
-  
+
               <tbody>
-                <tr *ngFor="let carrera of carreras   | paginate: { itemsPerPage: 5, currentPage: p }">
-  
-                  <td>{{ carrera.nombre_carrera}}</td>
-  
+                <tr
+                  *ngFor="
+                    let carrera of carreras |filtroCarreras:textoBuscar
+                      | paginate: { itemsPerPage: 5, currentPage: p }
+                  "
+                >
+                  <td>{{ carrera.nombre_carrera }}</td>
+
                   <td>
-                    <button class="btn btn-primary" (click)="getCarrera(carrera.id_carrera);open(contenido)">
-                      <i class="fas fa-edit"></i>
+                    <button
+                      class="btn btn-primary"
+                      (click)="getCarrera(carrera.id_carrera); open(contenido)"
+                    >
+                      <i class="fas fa-edit"></i> Editar
                     </button>
                     |
-                    <button class="btn btn-danger" (click)="deleteCarrera(carrera.id_carrera)">
-                      <i class="far fa-trash-alt"></i>
+                    <button
+                      class="btn btn-danger"
+                      (click)="deleteCarrera(carrera.id_carrera)"
+                    >
+                      <i class="far fa-trash-alt"></i> Eliminar
                     </button>
                   </td>
                 </tr>
               </tbody>
             </table>
+            <pagination-controls
+              (pageChange)="p = $event"
+            ></pagination-controls>
           </div>
-          <pagination-controls (pageChange)="p= $event"></pagination-controls>
-          </div>
-      
+        </div>
       </div>
-
-
+    
+      
+     
     </div>
-
-
-
-
+    </div>
   </div>
-</div>
+
 
 <ng-template #contenido let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Editar información</h4>
-    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+    <h4 class="modal-title" *ngIf="!edit" id="modal-basic-title">Registro de información</h4>
+    <h4 *ngIf="edit" class="modal-title" id="modal-basic-title">Editar información</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <div class="form-group">
-      <label style="color: #161515">Carrera</label>
-      <input type="text" class="form-control" name="" placeholder="Ingrese nombre"
-        [(ngModel)]="carrera1.nombre_carrera" />
-    </div>
+    <form [formGroup]="carreraform">
+      <div class="form-group">
+        <label style="color: #161515; font-weight: 5  00;">Carrera :</label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese nombre"
+          formControlName="nombre_carrera"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            carreraform.get('nombre_carrera').hasError('required') &&
+            carreraform.get('nombre_carrera').touched
+          "
+          >campo es requerido</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+            carreraform.get('nombre_carrera').hasError('pattern') &&
+            carreraform.get('nombre_carrera').touched
+          "
+          >Ingrese solo letras</small
+        >
+      </div>
+    </form>
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(contenido)">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="close(contenido)"
+    > 
       Cerrar
     </button>
-    <button type="button" class="btn btn-primary" (click)="updateCarrera(); close(contenido)">
+    <button *ngIf="edit"
+      [disabled]="!carreraform.valid"
+      type="button"
+      class="btn btn-primary"
+      (click)="updateCarrera(); close(contenido)"
+    > <i class="fas fa-save"></i>
+      GUARDAR
+    </button>
+    <button *ngIf="!edit"
+      [disabled]="!carreraform.valid"
+      type="button"
+      class="btn btn-primary"
+      (click)="saveCarrera(); close(contenido)"
+    > <i class="fas fa-save"></i>
       GUARDAR
     </button>
   </div>
 </ng-template>
-<footer class="bg-light text-center text-lg-start">
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2021 Copyright: W-STEM UTN
 
+<footer class="bg-light text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    © 2021 Copyright: W-STEM UTN
   </div>
-  <!-- Copyright -->
 </footer>

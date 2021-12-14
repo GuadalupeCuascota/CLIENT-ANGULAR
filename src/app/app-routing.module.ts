@@ -21,8 +21,8 @@ import { SolicitudMentoriaComponent } from './Componets/Mentor/solicitud-mentori
 import {DashboardComponent} from './Componets/Administrador/dashboard/dashboard.component';
 import {CambioContraseniaComponent} from './Componets/cambio-contrasenia/cambio-contrasenia.component'
 import {CarreraComponent} from './Componets/Administrador/carrera/carrera.component'
-import {MateriaListComponent} from './Componets/Administrador/materia-list/materia-list.component';
-import {CrearMateriaComponent} from './Componets/Administrador/crear-materia/crear-materia.component';
+import {MateriaListComponent} from './Componets/Mentor/materia-list/materia-list.component';
+import {CrearMateriaComponent} from './Componets/Mentor/crear-materia/crear-materia.component';
 import {CrearUsuarioComponent} from './Componets/Administrador/crear-usuario/crear-usuario.component';
 import { BienvenidaComponent} from './Componets/Mentor/bienvenida/bienvenida.component';
 import { BienvenidaAdminComponent} from './Componets/Administrador/bienvenida-admin/bienvenida-admin.component';
@@ -150,12 +150,12 @@ const routes: Routes = [
   {
     path: 'materia',
     component:MateriaListComponent,
-    canActivate: [LoginGuard,RolesGuard],
+    canActivate: [LoginGuard,IsMentorGuard],
   },
   {
     path: 'crear-materia',
     component:CrearMateriaComponent,
-    canActivate: [LoginGuard,RolesGuard],
+    canActivate: [LoginGuard,IsMentorGuard],
   },
   {
     path: 'crear-usuario',

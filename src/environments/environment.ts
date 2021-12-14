@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  // API_URI:'http://localhost:5000/api',
-  // API_URI1:'http://localhost:5000/login'
+  API_URI:'http://localhost:5000/api',
+  API_URI1:'http://localhost:5000/login'
 
-  API_URI:'https://wstem-server.herokuapp.com/api',
-  API_URI1:'https://wstem-server.herokuapp.com/login'
+  // API_URI:'https://wstem-server.herokuapp.com/api',
+  // API_URI1:'https://wstem-server.herokuapp.com/login'
   
 };
 

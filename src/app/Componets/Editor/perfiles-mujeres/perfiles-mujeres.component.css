@@ -1,15 +1,16 @@
+.buttons{
+  display: flex;
+  justify-content: space-between;
+  
+}
+.form-control.ng-touched.ng-invalid{
+  border:1px solid red
+}
+.form-control.ng-touched.ng-valid{
+  border:1px solid purple
+}
 
 
-/*    
- img{
-        border:1px solid #ddd;
-        padding:10px;
-        border-radius:2px;
-        background:#fff;
-        max-width:130px;
-        max-height: 100px;
-        
-    } */
     .content {
   
       margin-left: 40px;
@@ -18,7 +19,8 @@
       padding-top: 115px;
       }
       .contenido {
-        padding: 2% 0 0;
+        
+        padding: 7% 0 0;
         background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(163, 157, 157, 0.5)),url(../../../../assets/editor.jpg);
         background-repeat: no-repeat center center fixed;
         min-height: 100vh;

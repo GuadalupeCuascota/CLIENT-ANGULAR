@@ -1,15 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filtroUsuarios'
+  name: 'filtroCarreras'
 })
-export class FiltroUsuariosPipe implements PipeTransform {
+export class FiltroCarrerasPipe implements PipeTransform {
 
   transform(arreglo: any[],texto:string):any[] {
 
-  console.log(arreglo)
 
-
+  
+  
     if(texto==''||texto.length<2){
       
       return arreglo
@@ -17,8 +17,8 @@ export class FiltroUsuariosPipe implements PipeTransform {
     }else{
      
       texto=texto.toLowerCase();
-      console.log(texto)
-      return arreglo.filter(item=>{ return  item.apellido.toLowerCase().includes(texto) || item.nombre.toLowerCase().includes(texto)
+      
+      return arreglo.filter(item=>{ return  item.nombre_carrera.toLowerCase().includes(texto)
        
       }
       );
@@ -27,5 +27,7 @@ export class FiltroUsuariosPipe implements PipeTransform {
 
     }
   }
+
+
 
 }

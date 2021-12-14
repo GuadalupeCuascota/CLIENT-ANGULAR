@@ -12,14 +12,17 @@ import { Router } from '@angular/router';
 })
 export class RegistroEditorComponent implements OnInit {
   usuario: Usuario = {
+    id_usuario:0,
     nombre: '',
     apellido: '',
     nivel_academico: '',
-    carrera: '',
+    nombre_carrera:'',
+    id_carrera:0,
     unidad_educativa: '',
     correo_electronico: '',
     contrasenia: '',
-    id_rol: 2,
+    id_rol: 0,
+    tipo_rol:'',
   };
   codigo_registro=123
   constructor(

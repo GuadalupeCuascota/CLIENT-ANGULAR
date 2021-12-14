@@ -15,14 +15,18 @@ const helper = new JwtHelperService();
 })
 export class LoginComponent implements OnInit {
   user :Usuario={
+   
+    id_usuario:0,
     nombre: '',
     apellido: '',
     nivel_academico: '',
-    carrera: '',
+    nombre_carrera:'',
+    id_carrera:0,
     unidad_educativa: '',
     correo_electronico: '',
     contrasenia: '',
     id_rol: 0,
+    tipo_rol:'',
   };
   resp: any = {};
 

@@ -31,13 +31,15 @@ import { DashboardComponent } from './Componets/Administrador/dashboard/dashboar
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CambioContraseniaComponent } from './Componets/cambio-contrasenia/cambio-contrasenia.component';
 import { CarreraComponent } from './Componets/Administrador/carrera/carrera.component';
-import { MateriaListComponent } from './Componets/Administrador/materia-list/materia-list.component';
-import { CrearMateriaComponent } from './Componets/Administrador/crear-materia/crear-materia.component';
+import { MateriaListComponent } from './Componets/Mentor/materia-list/materia-list.component';
+import { CrearMateriaComponent } from './Componets/Mentor/crear-materia/crear-materia.component';
 import { CrearUsuarioComponent } from './Componets/Administrador/crear-usuario/crear-usuario.component';
 import { FooterComponent } from './Componets/footer/footer.component';
 import { BienvenidaComponent } from './Componets/Mentor/bienvenida/bienvenida.component';
 import { BienvenidaAdminComponent } from './Componets/Administrador/bienvenida-admin/bienvenida-admin.component';
 import { SolicitudMentoriaComponent } from './Componets/Mentor/solicitud-mentoria/solicitud-mentoria.component';
+import { FiltroMateriasPipe } from './pipes/filtro-materias.pipe';
+import { FiltroCarrerasPipe } from './pipes/filtro-carreras.pipe';
 
 
  //módulo para el filtrado de información
@@ -71,6 +73,8 @@ import { SolicitudMentoriaComponent } from './Componets/Mentor/solicitud-mentori
     BienvenidaComponent,
     BienvenidaAdminComponent,
     SolicitudMentoriaComponent,
+    FiltroMateriasPipe,
+    FiltroCarrerasPipe,
    
   
   ],
