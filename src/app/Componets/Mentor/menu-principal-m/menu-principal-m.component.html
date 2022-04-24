@@ -1,12 +1,11 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <a class="navbar-brand" routerLink="/mentor">
-      <img  src="../../../../assets/utncbn.png" width="65" height="45" alt="">
+      <img  src="../../../../assets/logo-utn-blanco.webp"  width="50%"
+      height="50%" alt="">
+      <img  src="../../../../assets/LoFicaS.webp" width="70px" height="70px" alt="">
     </a>
       
-    <a class="navbar-brand" routerLink="/mentor">
-      <img  src="../../../../assets/LoFicaS.webp" width="70" height="70" alt="">
-    </a>
 
     <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed"
       aria-label="Toggle navigation" (click)="collapsed = !collapsed">
@@ -48,7 +47,7 @@
             <a ngbDropdownItem routerLink="/cambiarContraseña" (click)="$event.preventDefault()"><i
                 class="fas fa-key"></i> Cambiar
               contraseña</a>
-            <a ngbDropdownItem (click)="logOut()"><i class="far fa-arrow-alt-circle-left"></i> Cerrar Sesión</a>
+            <a ngbDropdownItem (click)="logOut()"><i class="fa fa-sign-out" aria-hidden="true"></i>  Cerrar Sesión</a>
 
           </div>
         </li>

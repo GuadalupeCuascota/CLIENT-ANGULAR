@@ -8,6 +8,7 @@ header {
 
 a{
     font-size: 120%;
+    font-weight: 700;
   }
   /* .contenido {
     padding: 6% 0 0;
@@ -20,3 +21,7 @@ a{
   
   
   } */
+  .navbar-nav li a{
+    
+    padding:15px;
+  }

@@ -16,6 +16,7 @@ export class SolicitudMentoriaComponent implements OnInit {
 
   ngOnInit(): void {
     this.datos = JSON.parse(localStorage.getItem('payload'));
+    console.log("los datos", this.datos)
     this.getSolicitudMentorias();
   }
   getSolicitudMentorias() {
@@ -24,9 +25,9 @@ export class SolicitudMentoriaComponent implements OnInit {
    
     this.registroSolicitudMentoriaService.getSolicitudMentorias().subscribe(
       (res: any) => {
-        
+        console.log("las solicitudes",res)
         for (let usu1 of res) {
-          if (usu1.carrera== this.datos.carrera) {
+          if (usu1.id_usuario== this.datos.id_usuario) {
             this.localTime = moment(usu1.fecha_solicitud_mentoria).format('YYYY-MM-DD');
             usu1.fecha_solicitud_mentoria = this.localTime;
             MentoriaSolicitud.push(usu1)

@@ -1,28 +1,24 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { LoginService } from './login.service';
-import {Router,Routes} from '@angular/router'
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RolesGuard implements CanActivate {
-    constructor( 
-    private loginService: LoginService,
-    private router:Router){
-
-  }
-  canActivate():boolean{
-    if(this.loginService.IsAdmin()==1){
-      console.log("es admin")
-      
-      return true
-
-    }else{
-     this.router.navigate(['/editor'])
-     return false 
+  constructor(private loginService: LoginService, private router: Router) {}
+  canActivate(): boolean {
+    if (this.loginService.IsAdmin() == 1) {
+      return true;
+    } else {
+      this.router.navigate(['/editor']);
+      return false;
     }
-
   }
 }

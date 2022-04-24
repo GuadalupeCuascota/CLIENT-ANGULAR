@@ -40,6 +40,8 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    
+        
   },
   {
     path: 'cambiarContraseña',
@@ -158,7 +160,7 @@ const routes: Routes = [
     canActivate: [LoginGuard,IsMentorGuard],
   },
   {
-    path: 'crear-usuario',
+    path: 'estudiantes',
     component:CrearUsuarioComponent,
     canActivate: [LoginGuard,RolesGuard],
   },

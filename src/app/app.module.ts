@@ -41,6 +41,9 @@ import { SolicitudMentoriaComponent } from './Componets/Mentor/solicitud-mentori
 import { FiltroMateriasPipe } from './pipes/filtro-materias.pipe';
 import { FiltroCarrerasPipe } from './pipes/filtro-carreras.pipe';
 
+import { FiltroNoticiasPipe } from './pipes/filtro-noticias.pipe';
+import { FiltroOfertaAcadPipe } from './pipes/filtro-oferta-acad.pipe';
+
 
  //módulo para el filtrado de información
 // import {TokenInterceptorService} from './Login/Services/token-interceptor.service'
@@ -75,6 +78,10 @@ import { FiltroCarrerasPipe } from './pipes/filtro-carreras.pipe';
     SolicitudMentoriaComponent,
     FiltroMateriasPipe,
     FiltroCarrerasPipe,
+  
+    FiltroNoticiasPipe,
+  
+    FiltroOfertaAcadPipe,
    
   
   ],

@@ -3,10 +3,15 @@
   <div class="container">
     <br />
 
-    <div class="col-md-9 offset-md-2">
+    <div class="col-md-12">
       <div class="card">
+        <div class="card-header  " >
+          <h5  style="color: #4b4949;font-weight: 700;">
+            Listado Carreras FICA UTN
+          </h5>
+        </div>
         <div class="card-body text-center">
-          <h5 class="text-center" style="color: #161515">Listado carreras</h5>
+
           <div class="row">
             <div class="col-md-3">
               <button
@@ -16,8 +21,8 @@
                 CREAR NUEVO <i class="fas fa-plus-square"></i>
               </button>
             </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-5">
+            <div class="col-md-5"></div>
+            <div class="col-md-3">
               <div class="form-group row">
                 <div class="input-group">
                   <input
@@ -25,7 +30,7 @@
                     class="form-control"
                     name="textoBuscar"
                     [(ngModel)]="textoBuscar"
-                    placeholder="Buscar materia"
+                    placeholder="Buscar carrera"
                   />
                   <div class="input-group-text bg-white">
                     <i class="fas fa-search"></i>
@@ -79,9 +84,9 @@
           </div>
         </div>
       </div>
-    
-      
-     
+
+
+
     </div>
     </div>
   </div>
@@ -89,7 +94,7 @@
 
 <ng-template #contenido let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" *ngIf="!edit" id="modal-basic-title">Registro de información</h4>
+    <h4 class="modal-title" *ngIf="!edit" id="modal-basic-title">Registro carrera</h4>
     <h4 *ngIf="edit" class="modal-title" id="modal-basic-title">Editar información</h4>
     <button
       class="close"
@@ -137,7 +142,7 @@
       class="btn btn-secondary"
       data-dismiss="modal"
       (click)="close(contenido)"
-    > 
+    >
       Cerrar
     </button>
     <button *ngIf="edit"
@@ -159,8 +164,4 @@
   </div>
 </ng-template>
 
-<footer class="bg-light text-center text-lg-start">
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-    © 2021 Copyright: W-STEM UTN
-  </div>
-</footer>
+<app-footer></app-footer>

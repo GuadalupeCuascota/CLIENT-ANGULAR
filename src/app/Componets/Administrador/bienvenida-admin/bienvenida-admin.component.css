@@ -7,14 +7,12 @@
   }
   .contenido {
     padding: 30% 0 0;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(163, 157, 157, 0.5)),url(../../../../assets/admin.jpg);
+    background-image: linear-gradient(rgba(139, 134, 134, 0.5),rgba(171, 79, 199, 0.5)),url(../../../../assets/20200812104300.foto-1.jpg);
     background-repeat: no-repeat center center fixed;
     min-height: 100vh;
     background-size:100% 100%;  
-    
-  
-  
   }
+
   h1{
     margin: 0 0 10px 0;
          font-weight: 800;

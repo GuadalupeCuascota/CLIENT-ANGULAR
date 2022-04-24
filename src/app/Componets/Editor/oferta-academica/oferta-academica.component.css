@@ -5,6 +5,11 @@
   margin-right: 40px;
   padding-top: 115px;
   }
+  .buttons{
+    display: flex;
+    justify-content: space-between;
+    
+  }
   .contenido {
     padding: 6% 0 0;
     background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(163, 157, 157, 0.5)),url(../../../../assets/editor.jpg);

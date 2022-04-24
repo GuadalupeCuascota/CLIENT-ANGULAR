@@ -7,4 +7,9 @@
   }
   a{
     font-size: 120%;
+    font-weight: 700;
+  }
+  .navbar-nav li a{
+    
+    padding:15px;
   }

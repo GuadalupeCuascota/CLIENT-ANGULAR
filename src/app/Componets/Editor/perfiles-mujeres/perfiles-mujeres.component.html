@@ -1,30 +1,38 @@
 <app-menu-principal-editor></app-menu-principal-editor>
 <div class="contenido">
-  <br>
-  <br>
-  <br>
+  <br />
+  <br />
+  <br />
   <div class="container">
-    
-    
-
     <div class="col-md-12">
       <div class="card">
-        <div class="card-body text-center">
-          <h5 class="text-center" style="color: #161515">
+        <div class="card-header">
+          <h5 style="color: #4b4949; font-weight: 700">
             Listado de Perfiles de Mujeres en STEM
-          </h5> 
+          </h5>
+        </div>
+        <div class="card-body text-center">
           <div class="row">
             <div class="col-md-2">
-              <button type="reset" class="btn btn-primary" (click)="estado();open(contenido); clear(); ">
-              CREAR PERFIL <i class="fas fa-plus-square"></i>
-            </button>
-            </div>  
+              <button
+                type="reset"
+                class="btn btn-primary"
+                (click)="estado(); open(contenido); clear()"
+              >
+                CREAR PERFIL <i class="fas fa-plus-square"></i>
+              </button>
+            </div>
             <div class="col-md-4"></div>
             <div class="col-md-5">
               <div class="form-group row">
                 <div class="input-group">
-                  
-                  <input type="text" class="form-control" name="textoBuscar"[(ngModel)]="textoBuscar" placeholder="Buscar perfil" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="textoBuscar"
+                    [(ngModel)]="textoBuscar"
+                    placeholder="Ingrese nombre"
+                  />
                   <div class="input-group-text bg-white">
                     <i class="fas fa-search"></i>
                   </div>
@@ -38,90 +46,200 @@
                 <tr class="table-active">
                   <th scope="col">Nombre</th>
                   <th scope="col">Profesión</th>
-      
+
                   <th scope="col">Descripción</th>
                   <th scope="col">Perfil Linkedin</th>
                   <th scope="col">Imagen</th>
-      
+
                   <th scope="col">acciones</th>
                 </tr>
               </thead>
-      
+
               <tbody>
-                <tr *ngFor="
-                    let perfil of perfiles|filtroPerfiles:textoBuscar
+                <tr
+                  *ngFor="
+                    let perfil of perfiles
+                      | filtroPerfiles: textoBuscar
                       | paginate: { itemsPerPage: 5, currentPage: p }
-                  ">
+                  "
+                >
                   <td>{{ perfil.nombre_perfil }}</td>
                   <td>{{ perfil.profesion }}</td>
-      
+
                   <td>{{ perfil.descripcion }}</td>
-                  <td>{{ perfil.enlace}}</td>
-      
+                  <td>{{ perfil.enlace }}</td>
+
                   <td>
-                    <img *ngIf="perfil.tipo_archivo == 'image/png' || perfil.tipo_archivo=='image/jpeg'" width="60px" heigh="50px"
-                      [src]="perfil.ruta_archivo" alt="no-image" />
-                    <video *ngIf="perfil.tipo_archivo == 'video/mp4' || tipo_archivo=='video/mov'" width="100px" heigh="100px"
-                      [src]="perfil.ruta_archivo" class="img-fluid" alt="no-image"></video>
+                    <img
+                      *ngIf="
+                        perfil.tipo_archivo == 'image/png' ||
+                        perfil.tipo_archivo == 'image/jpeg'
+                      "
+                      width="60px"
+                      heigh="50px"
+                      [src]="perfil.ruta_archivo"
+                      alt="no-image"
+                    />
+                    <video
+                      *ngIf="
+                        perfil.tipo_archivo == 'video/mp4' ||
+                        tipo_archivo == 'video/mov'
+                      "
+                      width="100px"
+                      heigh="100px"
+                      [src]="perfil.ruta_archivo"
+                      class="img-fluid"
+                      alt="no-image"
+                    ></video>
                   </td>
-      
+
                   <td>
-                    <button class="btn btn-primary" (click)="getpublicacion(perfil.id_publicacion); open(contenido)">
+                    <button
+                      class="btn btn-primary"
+                      (click)="
+                        getpublicacion(perfil.id_publicacion); open(contenido)
+                      "
+                    >
                       <i class="fas fa-edit"></i>
                     </button>
                     |
-                    <button class="btn btn-danger" (click)="deletePublicacion(perfil.id_publicacion)">
+                    <button
+                      class="btn btn-danger"
+                      (click)="deletePublicacion(perfil.id_publicacion)"
+                    >
                       <i class="far fa-trash-alt"></i>
                     </button>
                   </td>
                 </tr>
               </tbody>
-              </table>
+            </table>
           </div>
           <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
       </div>
     </div>
-
-
-    
   </div>
 </div>
 <ng-template #imagen let-modal>
   <div class="modal-header">
-    <h4  ng class="modal-title" id="modal-basic-title">
-      Visualizar imagen
-    </h4>
-    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+    <h4 ng class="modal-title" id="modal-basic-title">Visualizar imagen</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
-  <img   width="100%"  height="50px" class="d-none" [src]="leerArchivo || API_URI ||'../../../../assets/noimage.png'" class="img-fluid" alt="no-image" /> 
+  <img
+    width="100%"
+    height="50px"
+    class="d-none"
+    [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
+    class="img-fluid"
+    alt="no-image"
+  />
 </ng-template>
 
 <ng-template #contenido let-modal>
   <div class="modal-header">
     <h4 *ngIf="!edit" ng class="modal-title" id="modal-basic-title">
-      Mujeres en STEM
+      Crear perfil de mujeres en STEM 
     </h4>
     <h4 *ngIf="edit">Actualizar información del perfil</h4>
 
-    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
   <div class="modal-body">
-    <div class="form-group">
-      <label>Nombre: </label>
-      <input type="text" class="form-control" name="" placeholder="Ingrese nombre" [(ngModel)]="perfil.nombre_perfil"
-        required />
+    <form [formGroup]="perfilform">
+      <div class="form-group">
+        <label>Nombre: </label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese nombre y apellido"
+          formControlName="nombre_perfil"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            perfilform.get('nombre_perfil').hasError('required') &&
+            perfilform.get('nombre_perfil').touched
+          "
+          >campo es requerido</small
+        >
+        <small
+        class="text-danger"
+        *ngIf="
+          perfilform.get('nombre_perfil').hasError('pattern') &&
+          perfilform.get('nombre_perfil').touched
+        "
+        >Ingrese solo letras</small
+      >
+        
+      </div>
+      <div class="form-group">
+        <label>Campo de trabajo/estudio: </label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese campo de trabajo o estudio"
+          formControlName="profesion"
+        />
+        <small
+        class="text-danger"
+        *ngIf="
+          perfilform.get('profesion').hasError('required') &&
+          perfilform.get('profesion').touched
+        "
+        >campo es requerido</small
+      >
+      <small
+        class="text-danger"
+        *ngIf="
+          perfilform.get('profesion').hasError('pattern') &&
+          perfilform.get('profesion').touched
+        "
+        >Ingrese solo letras</small
+      >
+      </div>
 
-      <label>Campo de trabajo/estudio: </label>
-      <input type="text" class="form-control" name="" placeholder="Ingrese campo de trabajo o estudio"
-        [(ngModel)]="perfil.profesion" required />
-      <div class="form-check form-check-inline">
+     
+
+      <div class="form-group">
+        
+        <select
+          name="miselect"
+          formControlName="estado_profesion"
+          class="form-control"
+        >
+          <option value="" selected>Seleccione una opción</option>
+          <option value="Graduado">Graduado</option>
+          <option value="Estudiante">Estudiante</option>
+        </select>
+        <small
+        class="text-danger"
+        *ngIf="
+          perfilform.get('estado_profesion').hasError('required') &&
+          perfilform.get('estado_profesion').touched
+        "
+        >campo es requerido</small
+      >
+      </div>
+
+      <!-- <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" value="Graduada" name="estado_profesion"
           [(ngModel)]="perfil.estado_profesion" />
         <label class="form-check-label">Graduada</label>
@@ -130,21 +248,40 @@
         <input class="form-check-input" type="radio" value="Estudiante" name="estado_profesion"
           [(ngModel)]="perfil.estado_profesion" />
         <label class="form-check-label" for="inlineRadio2">Estudiante</label>
-      </div>
-    </div>
+      </div> -->
 
-    <div class="form-group">
-      <label>Descripción:</label>
-      <textarea rows="2" class="form-control" [(ngModel)]="perfil.descripcion" placeholder="Ingrese descripción"
-        required></textarea>
-    </div>
-    <div class="form-group">
-      <label>Enlace linkedln: </label>
-      <input type="text" class="form-control" name="" placeholder="Ingrese enlace" [(ngModel)]="perfil.enlace"
-        required />
-    </div>
-    <div class="buttons" *ngIf="edit">
-      <input type="file" class="d-none" placeholder="" (change)="onFileSelect($event)" #photo />
+      <div class="form-group">
+        <label>Descripción hoy:</label>
+        <textarea
+          rows="2"
+          class="form-control"
+          formControlName="descripcion"
+          placeholder="Ingrese descripción"
+          required
+        ></textarea>
+        <small  class="text-danger" *ngIf="perfilform.get('descripcion').hasError('minlength') && perfilform.get('descripcion').touched" >Cantidad minima de caracteres es (30)</small>
+        <small
+        class="text-danger"
+        *ngIf="
+          perfilform.get('descripcion').hasError('required') &&
+          perfilform.get('descripcion').touched
+        "
+        >campo es requerido</small
+      >
+      </div>
+      <div class="form-group">
+        <label>Enlace linkedln: </label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese enlace"
+          formControlName="enlace"
+        />
+        
+      </div>
+      <div class="buttons" *ngIf="edit">
+      <input type="file"  class="d-none" placeholder="" (change)="onFileSelect($event)" #photo />
 
       <button (click)="photo.click()" class="btn btn-primary" >
         Agregar imagen
@@ -158,34 +295,57 @@
 
     </div>
 
-    <div *ngIf="!edit">
-      <input type="file" class="d-none" placeholder="" (change)="onFileSelect($event)" #photo />
+      <div *ngIf="!edit">
+        <input
+          type="file"
+          class="d-none"
+          placeholder=""
+          (change)="onFileSelect($event)"
+          #photo
+        />
 
-      <button (click)="photo.click()" class="btn btn-primary" >
-        Agregar imagen
-      </button>
-      <img  class="d-none" [src]="leerArchivo || API_URI ||'../../../../assets/noimage.png'" class="img-fluid" alt="no-image"   /> 
-    </div>
+        <button (click)="photo.click()" class="btn btn-primary">
+          Agregar imagen
+        </button>
+        <img
+          class="d-none"
+          [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
+          class="img-fluid"
+          alt="no-image"
+        />
+      </div>
+    </form>
   </div>
 
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(contenido)">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="close(contenido)"
+    >
       Cerrar
     </button>
-    <button *ngIf="!edit" type="button" class="btn btn-primary" (click)="saveArchivo();close(contenido)">
+    <button
+      *ngIf="!edit"
+      type="button"
+      [disabled]="!perfilform.valid"
+      class="btn btn-primary"
+      (click)="saveArchivo(); close(contenido)"
+    >
       PUBLICAR <i class="fas fa-save"></i>
     </button>
-    <button *ngIf="edit" type="button" class="btn btn-primary" (click)=" updatepublicacion();close(contenido)">
+    <button
+      *ngIf="edit"
+      type="button"
+      [disabled]="!perfilform.valid"
+      class="btn btn-primary"
+      (click)="updatepublicacion(); close(contenido)"
+    >
       GUARDAR <i class="fas fa-save"></i>
     </button>
   </div>
 </ng-template>
-
-
-
-
-
-
 
 <!-- <footer class="bg-light text-center text-lg-start">
  
@@ -195,3 +355,4 @@
   </div>
   
 </footer> -->
+<app-footer></app-footer>

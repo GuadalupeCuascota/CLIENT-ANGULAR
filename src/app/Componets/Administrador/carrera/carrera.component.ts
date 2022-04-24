@@ -66,18 +66,18 @@ export class CarreraComponent implements OnInit {
       this.clear();
       this.edit = false;
       return 'by pressing ESC';
-   
+
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       this.clear();
       this.edit = false;
       return 'by clicking on a backdrop';
-   
+
 
     } else {
       this.clear();
       this.edit = false;
       return `with: ${reason}`;
-      
+
     }
   }
   close(content) {
@@ -85,10 +85,9 @@ export class CarreraComponent implements OnInit {
     this.getCarreras();
   }
   clear() {
-    console.log('clear clicked');
     this.carrera.nombre_carrera=null
     this.carreraform.controls['nombre_carrera'].setValue(
-      this.carrera.nombre_carrera)
+    this.carrera.nombre_carrera)
   }
   getCarreras() {
     var Carrera = [];
@@ -110,7 +109,7 @@ export class CarreraComponent implements OnInit {
   }
   saveCarrera() {
     this.carrera.nombre_carrera=this.carreraform.controls['nombre_carrera'].value;
-  
+
 
     this.registroCarreraService.saveCarrera(this.carrera).subscribe(
       (res) => {
@@ -133,8 +132,8 @@ export class CarreraComponent implements OnInit {
           this.carrera = res;
          this.carreraform.controls['nombre_carrera'].setValue(
           this.carrera.nombre_carrera)
-        
-          
+
+
         },
 
         (err) => (err) =>  this.alerts.showError('Error Operation', 'No se puede actualizar')

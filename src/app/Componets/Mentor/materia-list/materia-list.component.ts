@@ -9,7 +9,10 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertsService } from 'src/app/Services/alerts/alerts.service';
 import { TemaMateria } from 'src/app/Models/tema_materia';
-
+interface ButtonStyle {
+  fill: string;
+  color: string;
+}
 @Component({
   selector: 'app-materia-list',
   templateUrl: './materia-list.component.html',
@@ -23,21 +26,20 @@ export class MateriaListComponent implements OnInit {
     id_estado_materia: 1,
     id_usuario: 0,
   };
-  tema: TemaMateria={
+  tema: TemaMateria = {
     id_tema_materia: 0,
-    nombre_tema:'',
-    id_materia: 0
-  
+    nombre_tema: '',
+    id_materia: 0,
   };
   datosM: any = {
-    id_estado_materia: 2,
+    id_estado_materia: 0,
   };
   p: number = 0;
   estado: boolean;
   materias: Materia[] = [];
   textoBuscar = '';
-  id_materia=0
-  nombre_materia='';
+  id_materia = 0;
+  nombre_materia = '';
   exform: FormGroup;
   temform: FormGroup;
   temas: any = [];
@@ -45,13 +47,14 @@ export class MateriaListComponent implements OnInit {
 
   edit: boolean = false;
   closeResult = '';
+  color = '';
+  msjErr = '';
   constructor(
     private router: Router,
     private registroMateriaService: RegistroMateriasService,
     private modalService: NgbModal,
     private alerts: AlertsService,
-    private registroTemaService: RegistroTemaService,
-    
+    private registroTemaService: RegistroTemaService
   ) {}
 
   ngOnInit(): void {
@@ -71,8 +74,10 @@ export class MateriaListComponent implements OnInit {
       ]),
     });
   }
+
   open(content) {
     this.clear();
+    this.cleartema();
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
@@ -88,19 +93,25 @@ export class MateriaListComponent implements OnInit {
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       this.clear();
+      this.cleartema();
       this.edit = false;
       return 'by pressing ESC';
+
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       this.clear();
+      this.cleartema();
       this.edit = false;
       return 'by clicking on a backdrop';
     } else {
       this.clear();
+      this.cleartema();
       this.edit = false;
       return `with: ${reason}`;
     }
   }
   close(content) {
+
+    this.cleartema();
     this.modalService.dismissAll(content);
     this.getMaterias();
     this.estado = false;
@@ -109,21 +120,23 @@ export class MateriaListComponent implements OnInit {
   Crear() {
     this.router.navigate(['/crear-materia']);
   }
-  getidMateria(id:number, nombre_materia:string){
-    this.id_materia=id
-    this.nombre_materia=nombre_materia
-    
-
+  getidMateria(id: number, nombre_materia: string) {
+    this.id_materia = id;
+    this.nombre_materia = nombre_materia;
   }
   clear() {
+    this.ngOnInit();
+
     console.log('clear clicked');
-    this.materia.nombre_materia = '';
+    this.materia.nombre_materia = null;
+    this.exform.controls['nombre_materia'].setValue(
+      this.materia.nombre_materia)
+
   }
-  saveTema(){
-  
-    this.tema.nombre_tema=this.temform.controls['nombre_tema'].value;
-    this.tema.id_materia=this.id_materia
-    
+  saveTema() {
+    this.tema.nombre_tema = this.temform.controls['nombre_tema'].value;
+    this.tema.id_materia = this.id_materia;
+
     this.registroTemaService.saveTema(this.tema).subscribe(
       (res) => {
         this.alerts.showSuccess('Successfull Operation', 'Tema guardado');
@@ -134,20 +147,29 @@ export class MateriaListComponent implements OnInit {
       }
     );
   }
-
-  getTemaMateria(id_materia: number){
+  cleartema() {
+    this.temas.length=0;
+    console.log('clear clicked tema');
+    this.tema.nombre_tema = null;
+    // this.tema.id_materia = null;
+    this.temform.controls['nombre_tema'].setValue(this.tema.nombre_tema);
+  }
+  getTemaMateria(id_materia: number) {
+    console.log('el id es', id_materia);
     if (id_materia) {
       this.registroTemaService.getTema(id_materia).subscribe(
         (res: any) => {
-          this.temas= res;
-          this.temform.controls['nombre_tema'].setValue(
-            this.tema.nombre_tema
-          );
-          console.log("los temas",res);
+          this.temas = res;
+          this.temform.controls['nombre_tema'].setValue(this.tema.nombre_tema);
+          console.log('los temas', res);
+
         },
         (err) => {
-          this.alerts.showError(err.error.text, 'Error Operation');
+          this.msjErr = err.error.text;
+          // this.alerts.showError(err.error.text, 'Error Operation');
+          console.log('el error', err.error.text);
         }
+
       );
     }
   }
@@ -177,14 +199,13 @@ export class MateriaListComponent implements OnInit {
             subjet.push(mat);
           }
         }
-        this.materias=subjet
+        this.materias = subjet;
       },
       /*  res=> console.log(res), */
       (err) => console.error(err)
     );
   }
   editMateria() {
-    
     this.materia.nombre_materia = this.exform.controls['nombre_materia'].value;
 
     this.registroMateriaService
@@ -222,20 +243,19 @@ export class MateriaListComponent implements OnInit {
       );
     }
   }
-  deleteTemaMateria(id:number){
+  deleteTemaMateria(id: number) {
     if (confirm('Esta seguro que desea eliminar esto?')) {
       this.registroTemaService.deleteTema(id).subscribe(
         (res) => {
           console.log(res);
-         
+
           this.alerts.showSuccess('Successfull Operation', 'Dato eliminado');
         },
         (err) => {
           this.alerts.showError(err.error.text, 'Error Operation');
         }
       );
-    } 
-
+    }
   }
   deleteCarrera(id: String) {
     if (confirm('Esta seguro que desea eliminar esto?')) {
@@ -250,16 +270,8 @@ export class MateriaListComponent implements OnInit {
         }
       );
     }
-    
   }
-  // button1: ButtonStyle = {
-  //   fill: 'outline',
-  //   color: 'primary',
-  // };
-  // button2: ButtonStyle = {
-  //   fill: 'outline',
-  //   color: 'primary',
-  // };
+
   // applyButtonSelectedStyle(buttonSelect: number) {
   //   switch (buttonSelect) {
   //     case 1:
@@ -278,22 +290,31 @@ export class MateriaListComponent implements OnInit {
   //       break;
   //   }
   // }
-  updateEstadoMateria(id: number) {
-   
-console.log("el id", id)
+  updateEstadoMateria(id: number, idestado: number) {
+    console.log('el id', id);
+    console.log('el idestado', idestado);
+
     if (confirm('Esta seguro que desea activar/desactivar la materia?')) {
+      if (idestado == 1) {
+        this.datosM.id_estado_materia = 2;
+        // this.color='btn btn-danger'
+      } else {
+        if (idestado == 2) {
+          this.datosM.id_estado_materia = 1;
+        }
+
+        // this.color='btn btn-primary'
+      }
+
       this.registroMateriaService
         .updateEstadoMateria(id, this.datosM)
         .subscribe(
           (res) => {
-            this.alerts.showSuccess(
-              'Successfull Operation',
-              'Estado de materia actualizado'
-              
-              
-            );
+            // this.alerts.showSuccess(
+            //   'Successfull Operation',
+            //   'Estado de materia actualizado'
+            // );
             this.getMaterias();
-            
           },
           (err) => console.log(err)
         );

@@ -25,6 +25,11 @@ export class RegistroArchivoService {
     return this.http.post(`${environment.API_URI}/publicaciones`,formData);
   
   }
+  // saveArchivo (publicacion:Publicacion){
+    
+  //   return this.http.post(`${environment.API_URI}/publicaciones`,publicacion);
+  
+  // }
   deleteArchivo (id:String){
     return this.http.delete(`${environment.API_URI}/publicaciones/${id}`);
   

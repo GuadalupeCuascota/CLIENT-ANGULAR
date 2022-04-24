@@ -35,7 +35,7 @@ export class UsuarioListComponent implements OnInit {
     id_usuario: 0,
     nombre: '',
     apellido: '',
-    nivel_academico: '',
+
     nombre_carrera: '',
     id_carrera: 0,
     unidad_educativa: '',
@@ -106,7 +106,7 @@ export class UsuarioListComponent implements OnInit {
         Validators.minLength(8),
       ]),
       id_rol: new FormControl('', Validators.required),
-      id_carrera: new FormControl('', Validators.required),
+      nombre_carrera: new FormControl('', Validators.required),
     });
   }
   toggleShow(): void {
@@ -153,22 +153,23 @@ export class UsuarioListComponent implements OnInit {
   Crear() {
     this.router.navigate(['/crear-usuario']);
   }
-  public optionsFn1(event) { // guardar  
+  public optionsFn1(event) { // guardar
     console.log("pasa chage guardar")
     console.log("el evento",event.target.value);
-    if (event.target.value =="Mentor") {
+    if (event.target.value ==3) {
       this.estado = true
 
-    } 
+    }
     else {
       this.estado = false
-      this.saveForm.patchValue({id_carrera: "Sin asignar" });
+      this.saveForm.patchValue({nombre_carrera: "Sin asignar" });
     }
 
 
   }
 
   clear() {
+    this.ngOnInit();
     console.log('clear clicked');
     this.usuario1.nombre = null;
     this.usuario1.apellido = null;
@@ -197,14 +198,14 @@ export class UsuarioListComponent implements OnInit {
     this.usuario.correo_electronico = this.saveForm.controls['correo_electronico'].value;
     this.usuario.contrasenia = this.saveForm.controls['contrasenia'].value;
     this.usuario.id_rol = this.saveForm.controls['id_rol'].value;
-    this.usuario.id_carrera=this.saveForm.controls['id_carrera'].value;
+    this.usuario.nombre_carrera=this.saveForm.controls['nombre_carrera'].value;
     this.registroUsuarioService.saveUsuario(this.usuario).subscribe(
       (res) => {
-        
+
        this.getUsuarios();
         console.log(res);
         this.alerts.showSuccess('Successfull Operation', 'Usuario guardado')
-       
+
         this.saveForm.reset();
       },
       (err) => {
@@ -221,6 +222,12 @@ export class UsuarioListComponent implements OnInit {
       (res: any) => {
         for (let usu1 of res) {
           if (usu1.id_rol == 1 || usu1.id_rol == 2 || usu1.id_rol == 3) {
+
+            if(usu1.id_carrera==1 || usu1.id_carrera==12){
+              usu1.nombre_carrera="";
+
+            }
+
             usuAE.push(usu1);
             c = c + 1;
           }
@@ -239,7 +246,7 @@ export class UsuarioListComponent implements OnInit {
     this.registroCarreraService.getCarreras().subscribe(
       (res: any) => {
         for (let n of res) {
-          if (n.id_carrera != 1) {
+          if (n.id_carrera != 1 ) {
             Carrera.push(n);
           }
         }
@@ -256,13 +263,19 @@ export class UsuarioListComponent implements OnInit {
 
     console.log('el evento ES', event.target.value);
     if (event.target.value == 'Mentor') {
-      // this.estado = true;
+
+       this.estado = true;
+       this.exform.controls['nombre_carrera'].setValue(
+        this.usuario.nombre_carrera
+      );
     } else {
       this.exform.patchValue({ nombre_carrera: 'Sin asignar' });
+
       this.estado = false;
     }
   }
   getUsuario(id_usuario: String, id_rol: number) {
+    console.log("el id del rol",id_rol)
     // this.edit = true;
     if (id_usuario) {
       this.registroUsuarioService.getUsuario(id_usuario).subscribe(
@@ -282,9 +295,13 @@ export class UsuarioListComponent implements OnInit {
           this.exform.controls['nombre_carrera'].setValue(
             this.usuario.nombre_carrera
           );
+
           if (id_rol == 3) {
+
             this.estado = true;
+
           }
+          this.estado=false;
         },
         (err) =>
           this.alerts.showError('Error Operation', 'No se puede actualizar')
@@ -306,7 +323,7 @@ export class UsuarioListComponent implements OnInit {
     );
   }
 
- 
+
   deleteUsuario(id_usuario: string) {
     if (confirm('Esta seguro que desea eliminar esto?')) {
       this.registroUsuarioService.deleteUsuario(id_usuario).subscribe(

@@ -27,7 +27,7 @@ export class RegistroMentoriaService {
   
   }
   
-  getMentoria (id:String){
+  getMentoria (id:number){
     return this.http.get(`${environment.API_URI}/registro-mentorias/${id}`);
   
   }

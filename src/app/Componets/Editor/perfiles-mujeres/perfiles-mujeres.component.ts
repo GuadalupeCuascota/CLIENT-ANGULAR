@@ -38,7 +38,7 @@ export class PerfilesMujeresComponent implements OnInit {
     id_tipo_publicacion: '',
     id_estado_publicacion: '1',
     id_usuario: '',
-    id_carrera: 'sin asignar',
+    nombre_carrera: 'Sin asignar',
   };
   textoBuscar = '';
   estadoSeleccion: boolean = false;
@@ -61,24 +61,24 @@ export class PerfilesMujeresComponent implements OnInit {
     this.id = this.router.snapshot.paramMap.get('id'); //obtener el valor de la ruta
     this.datos = JSON.parse(localStorage.getItem('payload')); //obtener los datos  almacenados
 
-    // this.perfilform = new FormGroup({
-    //   nombre_perfil: new FormControl('', [
-    //     Validators.required,
-    //     Validators.pattern('[a-zA-Z a-zA-ZñÑáéíóúÁÉÍÓÚ]+'),
-    //   ]),
-    //   profesion: new FormControl('', [
-    //     Validators.required,
-    //     Validators.pattern('[a-zA-Z a-zA-ZñÑáéíóúÁÉÍÓÚ]+'),
-    //   ]),
-    //   descripcion: new FormControl('', [
-    //     Validators.required,
-    //     Validators.minLength(8),
-    //   ]),
+    this.perfilform = new FormGroup({
+      nombre_perfil: new FormControl('', [
+        Validators.required,
+        Validators.pattern('[a-zA-Z a-zA-ZñÑáéíóúÁÉÍÓÚ]+'),
+      ]),
+      profesion: new FormControl('', [
+        Validators.required,
+        Validators.pattern('[a-zA-Z a-zA-ZñÑáéíóúÁÉÍÓÚ.]+'),
+      ]),
+      descripcion: new FormControl('', [
+        Validators.required,
+        Validators.minLength(30),
+      ]),
 
-    //   enlace: new FormControl('', [Validators.required]),
-    //   estado_profesion:new FormControl('',[Validators.required]),
-    //   ruta_archivo: new FormControl('',[Validators.required]),
-    // });
+      enlace: new FormControl('', ),
+      estado_profesion:new FormControl('',[Validators.required]),
+      // ruta_archivo: new FormControl('',[Validators.required]),
+    });
     this.getpublicaciones();
   }
   ///////////////////////METODOS DEL MODAL///////////////////////////
@@ -129,6 +129,12 @@ export class PerfilesMujeresComponent implements OnInit {
     this.API_URI = null;
     this.perfil.enlace = null;
     this.archivosSeleccionado = null;
+    this.perfilform.controls['nombre_perfil'].setValue(this.perfil.nombre_perfil);
+    this.perfilform.controls['profesion'].setValue(this.perfil.profesion);
+    this.perfilform.controls['estado_profesion'].setValue(this.perfil.estado_profesion);
+    this.perfilform.controls['descripcion'].setValue(this.perfil.descripcion);
+    this.perfilform.controls['enlace'].setValue(this.perfil.enlace);
+    
   }
   onFileSelect(event: HtmlInputEvent) {
     console.log('el evento', event);
@@ -136,21 +142,20 @@ export class PerfilesMujeresComponent implements OnInit {
     if (event.target.files.length > 0 && event.target.files) {
       this.archivosSeleccionado = <File>event.target.files[0];
       console.log('Archivo cargado', this.archivosSeleccionado);
-      console.log('el', event.target.files[0].type);
-      if (event.target.files[0].type == 'image/jpeg' || 'image/png') {
-        this.tipo = true;
+      console.log('el typoo', event.target.files[0].type);
+      if (event.target.files[0].type == 'image/png' || event.target.files[0].type == 'image/jpeg' || event.target.files[0].type == 'image/jpg')  {
+        const reader = new FileReader(); //Crear un objeto de tipo FileReader  para leer la imagen
+        reader.readAsDataURL(this.archivosSeleccionado); //leemos la imagen pasado por parametro
+        reader.onload = (e) => (this.leerArchivo = reader.result); //Comprobamos la carga del archivo y enviamos el resultado
       } else {
-        if (event.target.files[0].type == 'image/jpeg' || 'image/png') {
-          this.tipo = true;
-        }
+        
+        this.alerts.showError('Error Operation', 'Seleccione imagen');
       }
 
-      const reader = new FileReader(); //Crear un objeto de tipo FileReader  para leer la imagen
-      reader.readAsDataURL(this.archivosSeleccionado); //leemos la imagen pasado por parametro
-      reader.onload = (e) => (this.leerArchivo = reader.result); //Comprobamos la carga del archivo y enviamos el resultado
+    
     } else {
-      console.log('seleccione imagen');
-      this.alerts.showError('Error Operation', 'Seleccione imagen');
+      // console.log('seleccione imagen');
+      // this.alerts.showError('Error Operation', 'Seleccione imagen');
     }
   }
   estado() {
@@ -158,27 +163,30 @@ export class PerfilesMujeresComponent implements OnInit {
   }
 
   saveArchivo() {
-    console.log(this.perfil);
 
+    console.log("GUARDAR")
+   
     try {
-      const fd = new FormData(); //objeto que almacena datos de un formulario
+      const fd = new FormData(); //objeto que almacena datos de un formulari
       // for( let i=0; i<this.archivosSeleccionado.length; i++){
-      fd.append('nombre_perfil', this.perfil.nombre_perfil);
+
+      fd.append('nombre_perfil', this.perfilform.controls['nombre_perfil'].value);
       fd.append('ruta_archivo', this.archivosSeleccionado);
-      fd.append('profesion', this.perfil.profesion);
-      fd.append('estado_profesion', this.perfil.estado_profesion);
-      fd.append('descripcion', this.perfil.descripcion);
+      fd.append('profesion',this.perfilform.controls['profesion'].value);
+      fd.append('estado_profesion', this.perfilform.controls['estado_profesion'].value);
+      fd.append('descripcion', this.perfilform.controls['descripcion'].value);
       fd.append('id_usuario', this.datos.id_usuario);
       fd.append('id_tipo_publicacion', this.id);
       fd.append('id_estado_publicacion', this.perfil.id_estado_publicacion);
-      fd.append('id_carrera', this.perfil.id_carrera);
-      fd.append('enlace', this.perfil.enlace);
-      console.log('el archivo es', fd);
+      fd.append('nombre_carrera', this.perfil.nombre_carrera);
+      fd.append('enlace', this.perfilform.controls['enlace'].value);
+      
       this.registroArchivo.saveArchivo(fd).subscribe(
         (res) => {
-          console.log(res);
+          
           this.getpublicaciones();
           this.alerts.showSuccess('Successfull Operation', 'Archivo guardado');
+          this.ngOnInit();
         },
 
         (err) => console.log(err)
@@ -194,6 +202,7 @@ export class PerfilesMujeresComponent implements OnInit {
     console.log('pasa obter');
     this.registroArchivo.getArchivos().subscribe(
       (res: any) => {
+        console.log("las publicaciones",res)
         for (let per1 of res) {
           if (per1.id_tipo_publicacion == 1) {
             console.log('es perfil');
@@ -213,10 +222,21 @@ export class PerfilesMujeresComponent implements OnInit {
     if (id) {
       this.registroArchivo.getArchivo(id).subscribe(
         (res) => {
-          console.log(res);
+
           this.perfil = res;
+          console.log("el perfil",this.perfil)
+          
+          this.perfilform.controls['nombre_perfil'].setValue(this.perfil.nombre_perfil);
+          this.perfilform.controls['profesion'].setValue(this.perfil.profesion);
+          this.perfilform.controls['estado_profesion'].setValue(this.perfil.estado_profesion);
+          this.perfilform.controls['descripcion'].setValue(this.perfil.descripcion);
+          this.perfilform.controls['enlace'].setValue(this.perfil.enlace);
+          
+
+          
+         
           this.API_URI = this.perfil.ruta_archivo;
-          console.log('enlace', this.API_URI);
+        
           this.edit = true;
         },
         (err) => console.error(err)
@@ -233,11 +253,13 @@ export class PerfilesMujeresComponent implements OnInit {
         // for( let i=0; i<this.archivosSeleccionado.length; i++){
 
         fda.append('ruta_archivo', this.archivosSeleccionado);
-        fda.append('profesion', this.perfil.profesion);
-        fda.append('estado_profesion', this.perfil.estado_profesion);
-        fda.append('descripcion', this.perfil.descripcion);
-        fda.append('nombre_perfil', this.perfil.nombre_perfil);
-        fda.append('enlace', this.perfil.enlace);
+        fda.append('profesion', this.perfilform.controls['profesion'].value);
+        fda.append('estado_profesion', this.perfilform.controls['estado_profesion'].value);
+        fda.append('descripcion', this.perfilform.controls['descripcion'].value);
+        fda.append('nombre_perfil',this.perfilform.controls['nombre_perfil'].value);
+        fda.append('enlace', this.perfilform.controls['enlace'].value);
+        fda.append('nombre_carrera', this.perfil.nombre_carrera);
+        
         this.registroArchivo
           .updateArchivo(this.perfil.id_publicacion, fda)
           .subscribe(
@@ -258,11 +280,13 @@ export class PerfilesMujeresComponent implements OnInit {
         // for( let i=0; i<this.archivosSeleccionado.length; i++){
 
         fda.append('ruta_archivo', this.perfil.ruta_archivo);
-        fda.append('profesion', this.perfil.profesion);
-        fda.append('estado_profesion', this.perfil.estado_profesion);
-        fda.append('descripcion', this.perfil.descripcion);
-        fda.append('nombre_perfil', this.perfil.nombre_perfil);
-        fda.append('enlace', this.perfil.enlace);
+        fda.append('profesion', this.perfilform.controls['profesion'].value);
+        fda.append('estado_profesion',  this.perfilform.controls['estado_profesion'].value);
+        fda.append('descripcion', this.perfilform.controls['descripcion'].value);
+        fda.append('nombre_perfil', this.perfilform.controls['nombre_perfil'].value);
+        fda.append('enlace', this.perfilform.controls['enlace'].value);
+        fda.append('nombre_carrera', this.perfil.nombre_carrera);
+
 
         this.registroArchivo
           .updateArchivo(this.perfil.id_publicacion, fda)
@@ -295,7 +319,9 @@ export class PerfilesMujeresComponent implements OnInit {
             'Publicación eliminado'
           );
         },
-        (err) => console.log(err)
+        (err) => {
+          this.alerts.showError('Error Operation', 'No se puede eliminar');
+        }
       );
     }
   }

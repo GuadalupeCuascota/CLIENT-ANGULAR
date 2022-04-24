@@ -4,15 +4,21 @@
     <br />
     <br />
 
-    <div class="col-md-10 offset-md-1">
+    <div class="col-md-12 ">
       <div class="card">
-        <div class="card-body text-center">
-          <h5 class="text-center" style="color: #161515">
+        <div class="card-header  " >
+          <h5  style="color: #4b4949;font-weight: 700;">
             Listado de materias
           </h5>
+        </div>
+        <div class="card-body text-center">
+         
           <div class="row">
             <div class="col-md-3">
-              <button (click)=" open(contenido); clear()" class="btn btn-primary">
+              <button
+                (click)="open(contenido); clear()"
+                class="btn btn-primary"
+              >
                 CREAR NUEVO <i class="fas fa-plus-square"></i>
               </button>
             </div>
@@ -34,7 +40,7 @@
               </div>
             </div>
           </div>
-<br>
+          <br />
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
@@ -48,36 +54,77 @@
               <tbody>
                 <tr
                   *ngFor="
-                    let materia of materias|filtroMaterias:textoBuscar
-                     | paginate: { itemsPerPage: 5, currentPage: p }
+                    let materia of materias
+                      | filtroMaterias: textoBuscar
+                      | paginate: { itemsPerPage: 5, currentPage: p }
                   "
                 >
                   <td>{{ materia.nombre_materia }}</td>
                   <td>
-                    <button (click)="updateEstadoMateria(materia.id_materia)" class="btn btn-primary">
-                      {{materia.nombre_estado_materia}}
+                    <button
+                      *ngIf="materia.id_estado_materia == 1"
+                      (click)="
+                        updateEstadoMateria(
+                          materia.id_materia,
+                          materia.id_estado_materia
+                        )
+                      "
+                      class="btn btn-primary"
+                    >
+                      {{ materia.nombre_estado_materia }}
                     </button>
-                    </td>
+                    <button
+                      *ngIf="materia.id_estado_materia == 2"
+                      (click)="
+                        updateEstadoMateria(
+                          materia.id_materia,
+                          materia.id_estado_materia
+                        )
+                      "
+                      class="btn btn-danger"
+                    >
+                      {{ materia.nombre_estado_materia }}
+                    </button>
+                  </td>
                   <td>
-                    <button (click)="open(asignar); getidMateria(materia.id_materia,materia.nombre_materia)" class="btn btn-success">Agregar</button> | <button  (click)="open(ver); getTemaMateria(materia.id_materia)" class="btn btn-warning"> Ver</button>
+                    <button
+                      (click)="cleartema();
+                        open(asignar);
+                        getidMateria(materia.id_materia, materia.nombre_materia)
+                      "
+                      class="btn btn-success"
+                    >
+                    <i class="fa fa-plus-square" aria-hidden="true"></i> Agregar 
+                    </button>
+                    |
+                    <button
+                      (click)="open(ver); getTemaMateria(materia.id_materia)"
+                      class="btn btn-warning"
+                    >
+                    <i class="fa fa-eye" aria-hidden="true"></i> Ver
+                    </button>
                   </td>
 
                   <td>
-                    
-            
-                    <button (click)="open(contenido);getMateria(materia.id_materia);"class="btn btn-primary">
-                      <i class="fas fa-edit">Editar</i>
+                    <button
+                      (click)="open(contenido); getMateria(materia.id_materia)"
+                      class="btn btn-primary"
+                    >
+                      <i class="fas fa-edit"></i> Editar
                     </button>
                     |
-                    <button (click)="deleteCarrera(materia.id_materia)"class="btn btn-danger">
-                      <i class="far fa-trash-alt">Eliminar</i>
+                    <button
+                      (click)="deleteCarrera(materia.id_materia)"
+                      class="btn btn-danger"
+                    >
+                      <i class="far fa-trash-alt"></i> Eliminar
                     </button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <pagination-controls (pageChange)="p=$event"></pagination-controls> 
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
       </div>
     </div>
@@ -132,14 +179,22 @@
 </div> -->
 </div>
 
-
 <ng-template #contenido let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" *ngIf="!edit" id="modal-basic-title">Registro de información</h4>
-    <h4 class="modal-title" *ngIf="edit" id="modal-basic-title">Actualizar información   </h4>
-    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+    <h4 class="modal-title" *ngIf="!edit" id="modal-basic-title">
+      Registro de información
+    </h4>
+    <h4 class="modal-title" *ngIf="edit" id="modal-basic-title">
+      Actualizar información
+    </h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
       <span aria-hidden="true">&times;</span>
-    </button> 
+    </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="exform">
@@ -147,64 +202,121 @@
         <div class="col">
           <label style="color: #161515">Nombre materia:</label>
           <input
-          formControlName="nombre_materia"
+            formControlName="nombre_materia"
             type="text"
             class="form-control"
-           
             placeholder="Ingrese materia"
-          />  
-          <small  class="text-danger" *ngIf="exform.get('nombre_materia').hasError('required') && exform.get('nombre_materia').touched" >campo es requerido</small>
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              exform.get('nombre_materia').hasError('required') &&
+              exform.get('nombre_materia').touched
+            "
+            >campo es requerido</small
+          >
         </div>
-        <small class="text-danger"  *ngIf="exform.get('nombre_materia').hasError('pattern') && exform.get('nombre_materia').touched" >Ingrese solo letras</small>
-       
-
+        <small
+          class="text-danger"
+          *ngIf="
+            exform.get('nombre_materia').hasError('pattern') &&
+            exform.get('nombre_materia').touched
+          "
+          >Ingrese solo letras</small
+        >
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(contenido)">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="close(contenido)"
+    >
       Cerrar
     </button>
-    <button  [disabled]="!exform.valid" *ngIf="!edit" type="button" class="btn btn-primary" (click)="saveMateria(); close(contenido)">
+    <button
+      [disabled]="!exform.valid"
+      *ngIf="!edit"
+      type="button"
+      class="btn btn-primary"
+      (click)="saveMateria(); close(contenido)"
+    >
       GUARDAR
     </button>
-    <button  [disabled]="!exform.valid" *ngIf="edit" type="button" class="btn btn-primary" (click)="editMateria(); close(contenido)">
-    ACTUALIZAR
+    <button
+      [disabled]="!exform.valid"
+      *ngIf="edit"
+      type="button"
+      class="btn btn-primary"
+      (click)="editMateria(); close(contenido)"
+    >
+      ACTUALIZAR
     </button>
   </div>
 </ng-template>
 <ng-template #asignar let-modal>
   <div class="modal-header">
-    <h4 class="modal-title"  id="modal-basic-title">Registro temas  </h4>
-    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+    <h4 class="modal-title" id="modal-basic-title">Registro temas</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="temform">
-      
-      <label style="color: #161515">Materia: {{nombre_materia}}</label>
+      <label style="color: #161515">Materia: {{ nombre_materia }}</label>
 
       <div class="form-group">
         <label style="color: #161515">Tema</label>
-        <input type="text" class="form-control" name="" placeholder="Ingrese nombre"   formControlName="nombre_tema" />
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese nombre"
+          formControlName="nombre_tema"
+        />
 
-        <small  class="text-danger" *ngIf="temform.get('nombre_tema').hasError('required') && temform.get('nombre_tema').touched" >campo es requerido</small>
-           
-            <small  class="text-danger" *ngIf="temform.get('nombre_tema').hasError('pattern') && temform.get('nombre_tema').touched" >Ingrese solo letras</small>
+        <small
+          class="text-danger"
+          *ngIf="
+            temform.get('nombre_tema').hasError('required') &&
+            temform.get('nombre_tema').touched
+          "
+          >campo es requerido</small
+        >
+
+        <small
+          class="text-danger"
+          *ngIf="
+            temform.get('nombre_tema').hasError('pattern') &&
+            temform.get('nombre_tema').touched
+          "
+          >Ingrese solo letras</small
+        >
       </div>
-        
-       
-       
-
-    
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(contenido)">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="close(contenido)"
+    >
       Cerrar
     </button>
-    <button  [disabled]="!temform.valid" type="button" class="btn btn-primary" (click)="saveTema(); close(contenido)">
+    <button
+      [disabled]="!temform.valid"
+      type="button"
+      class="btn btn-primary"
+      (click)="saveTema(); close(contenido)"
+    >
       GUARDAR
     </button>
     <!-- <button  [disabled]="!temform.valid" *ngIf="edit" type="button" class="btn btn-primary" (click)="editMateria(); close(contenido)">
@@ -215,59 +327,58 @@
 
 <ng-template #ver let-modal>
   <div class="modal-header">
-    <h4 class="modal-title"  id="modal-basic-title"> Temas  </h4>
-    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+    <h4 class="modal-title" id="modal-basic-title">Temas</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    
-      
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr class="table-active">
-            <th scope="col">Tema</th>
-            
-            <th scope="col">Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="
-              let tema of temas
-            "
-          >
-            <td>{{ tema.nombre_tema}}</td>
-            <td>
-              <button  (click)="deleteTemaMateria(tema.id_tema_materia)" class="btn btn-danger">
-                <i class="far fa-trash-alt"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div *ngIf="temas.length > 0">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr class="table-active">
+              <th scope="col">Tema</th>
+
+              <th scope="col">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tema of temas">
+              <td>{{ tema.nombre_tema }}</td>
+              <td>
+                <button
+                  (click)="deleteTemaMateria(tema.id_tema_materia)"
+                  class="btn btn-danger"
+                >
+                  <i class="far fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-
-     
-        
-       
-       
-
     
-    
+    <div *ngIf="temas.length ==0">
+      {{ msjErr }}
+    </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(contenido)">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="close(contenido)"
+    >
       Cerrar
     </button>
-  
   </div>
 </ng-template>
 
-
-<footer class="bg-light text-center text-lg-start">
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-    © 2021 Copyright: W-STEM UTN
-  </div>
-</footer>
+<app-footer></app-footer>

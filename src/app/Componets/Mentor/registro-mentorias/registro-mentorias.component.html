@@ -10,146 +10,224 @@
           <form [formGroup]="exform">
             <div class="form-group row">
               <div class="col">
-                <label style="color: #161515">Materia:</label>
-                <input
-                  type="text"
+                <label style="color: #161515" class="required">Materia:</label>
+                <select
                   class="form-control"
-                  name=""
-                  formControlName="materia"
-                
-                 
-                />
-                <small  *ngIf="exform.get('materia').invalid && exform.get('materia').touched" class="text-danger">Dato es requerido</small>
+                  name="miselect"
+                  formControlName="nombre_materia"
+                  x
+                >
+                  <option value="" selected>Seleccione una opción</option>
+                  <option *ngFor="let materia of materias">
+                    {{ materia.nombre_materia }}
+                  </option>
+                </select>
+
+                <small
+                  *ngIf="
+                    exform.get('nombre_materia').invalid &&
+                    exform.get('nombre_materia').touched
+                  "
+                  class="text-danger"
+                  >Dato es requerido</small
+                >
+
                 <!-- <input type="time" class="form-control" name="" placeholder="Ingrese apellido"
                   [(ngModel)]="mentoria.hora_inicio" /> -->
               </div>
               <div class="col">
-                <label style="color: #161515" 
-                  >Fecha:</label
-                >
+                <label class="required" style="color: #161515">Fecha:</label>
                 <input
                   type="date"
                   class="form-control"
                   name=""
                   formControlName="fecha"
-                 
                 />
-                <small  *ngIf="exform.get('fecha').invalid && exform.get('fecha').touched" class="text-danger">Dato es requerido</small>
+                <small
+                  *ngIf="
+                    exform.get('fecha').invalid && exform.get('fecha').touched
+                  "
+                  class="text-danger"
+                  >Dato es requerido</small
+                >
               </div>
-             
-              
-    
+
               <div class="col">
-                <label style="color: #161515">Hora inicio:</label>
-                <select class="form-control"  formControlName="hora_inicio" >
+                <label class="required" style="color: #161515"
+                  >Hora inicio:</label
+                >
+
+                <select class="form-control" formControlName="hora_inicio">
+                  <option value="" selected>Seleccione una opción</option>
                   <option *ngFor="let n of horas">{{ n }}</option>
                 </select>
-                <small  *ngIf="exform.get('hora_inicio').invalid && exform.get('hora_inicio').touched" class="text-danger">Dato es requerido</small>
+                <small
+                  *ngIf="
+                    exform.get('hora_inicio').invalid &&
+                    exform.get('hora_inicio').touched
+                  "
+                  class="text-danger"
+                  >Dato es requerido</small
+                >
                 <!-- <input type="time" class="form-control" name="" placeholder="Ingrese apellido"
                   [(ngModel)]="mentoria.hora_inicio" /> -->
               </div>
-    
+
               <div class="col">
-                <label style="color: #161515">Hora Fin:</label>
-                <select class="form-control"  formControlName="hora_fin">
+                <label class="required" style="color: #161515">Hora Fin:</label>
+                <select class="form-control" formControlName="hora_fin">
+                  <option value="" selected>Seleccione una opción</option>
                   <option *ngFor="let n of horas">{{ n }}</option>
-                  <small  *ngIf="exform.get('hora_fin').invalid && exform.get('hora_fin').touched" class="text-danger">Dato es requerido</small>
                 </select>
-          
+                <small
+                  *ngIf="
+                    exform.get('hora_fin').invalid &&
+                    exform.get('hora_fin').touched
+                  "
+                  class="text-danger"
+                  >Dato es requerido</small
+                >
               </div>
-              
             </div>
           </form>
-         
-  
-          <button  [disabled]="!exform.valid"class="btn btn-primary" (click)="saveMentoria()">
+
+          <button
+            [disabled]="!exform.valid"
+            class="btn btn-primary"
+            (click)="saveMentoria()"
+          >
             GUARDAR
             <i class="fas fa-plus-square"></i>
           </button>
         </div>
-  
+
         <br />
+
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Registradas</a>
+            <a
+              class="nav-link active"
+              id="home-tab"
+              data-toggle="tab"
+              href="#home"
+              role="tab"
+              aria-controls="home"
+              aria-selected="true"
+              >Registradas</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Agendadas</a>
+            <a
+              class="nav-link"
+              id="profile-tab"
+              data-toggle="tab"
+              href="#profile"
+              role="tab"
+              aria-controls="profile"
+              aria-selected="false"
+              >Agendadas</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Canceladas</a>
+            <a
+              class="nav-link"
+              id="contact-tab"
+              data-toggle="tab"
+              href="#contact"
+              role="tab"
+              aria-controls="contact"
+              aria-selected="false"
+              >Canceladas</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              id="ejec-tab"
+              data-toggle="tab"
+              href="#ejec"
+              role="tab"
+              aria-controls="contact"
+              aria-selected="false"
+              >Ejecutadas</a
+            >
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            
-            <div class="row" *ngIf="mentorias.length>0">
+          <div
+            class="tab-pane fade show active"
+            id="home"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <div class="row" *ngIf="mentorias.length > 0">
               <div class="col-sm-12">
-      
                 <div class="card">
                   <div class="table-responsive">
                     <table class="table table-hover">
                       <thead>
                         <tr class="table-active">
                           <th scope="col">Materia</th>
-                          <th scope="col">Fecha</th>
+                          <th scope="col">Fechas</th>
                           <th scope="col">Hora inicio</th>
                           <th scope="col">Hora fin</th>
                           <th scope="col">Estado</th>
                           <th scope="col">Acciones</th>
                         </tr>
                       </thead>
-        
+
                       <tbody>
                         <tr
                           *ngFor="
                             let mentoria of mentorias
-                              | paginate: { itemsPerPage: 3, currentPage: p }
+                              | paginate: { itemsPerPage: 5, currentPage: p }
                           "
                         >
-                        <td>{{mentoria.materia}}</td>
-                          <td>{{mentoria.fecha }}</td>
-                          <td>{{mentoria.hora_inicio }}</td>
-                          <td>{{mentoria.hora_fin }}</td>
-                          <td>{{mentoria.nombre_estado_mentoria}}</td>
+                          <td>{{ mentoria.nombre_materia }}</td>
+                          <td>{{ mentoria.fecha }}</td>
+                          <td>{{ mentoria.hora_inicio }}</td>
+                          <td>{{ mentoria.hora_fin }}</td>
+                          <td>{{ mentoria.nombre_estado_mentoria }}</td>
                           <td>
                             <button
                               class="btn btn-primary"
                               (click)="
                                 getMentoria(mentoria.id_registro_mentoria);
-                                open(contenido)"
+                                open(contenido)
+                              "
                             >
-                              <i class="fas fa-edit">Editar</i>
+                              <i class="fas fa-edit"></i> Editar
                             </button>
                             |
                             <button
                               class="btn btn-danger"
-                              (click)="deleteMentoria(mentoria.id_registro_mentoria)"
+                              (click)="
+                                deleteMentoria(mentoria.id_registro_mentoria)
+                              "
                             >
-                             <i class="far fa-trash-alt"> Eliminar</i>
+                              <i class="far fa-trash-alt"></i> Eliminar
                             </button>
-                            
-                           
-        
-                         
                           </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
-                
-      
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+                <pagination-controls
+                  (pageChange)="p = $event"
+                ></pagination-controls>
               </div>
-            </div> 
-            
             </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            
-            <div class="row" *ngIf="mentoriasAgendadas.length>0">
+          </div>
+          <div
+            class="tab-pane fade"
+            id="profile"
+            role="tabpanel"
+            aria-labelledby="profile-tab"
+          >
+            <div class="row" *ngIf="mentoriasAgendadas.length > 0">
               <div class="col-sm-12">
-      
                 <div class="card">
                   <div class="table-responsive">
                     <table class="table table-hover">
@@ -163,62 +241,78 @@
                           <th scope="col">Acciones</th>
                         </tr>
                       </thead>
-        
+
                       <tbody>
                         <tr
                           *ngFor="
                             let mentoria of mentoriasAgendadas
-                              | paginate: { itemsPerPage: 3, currentPage: p }
+                              | paginate: { itemsPerPage: 5, currentPage: p }
                           "
                         >
-                        <td>{{mentoria.materia}}</td>
-                          <td>{{mentoria.fecha }}</td>
-                          <td>{{mentoria.hora_inicio }}</td>
-                          <td>{{mentoria.hora_fin }}</td>
-                          <td>{{mentoria.nombre_estado_mentoria}}</td>
+                          <td>{{ mentoria.nombre_materia }}</td>
+                          <td>{{ mentoria.fecha }}</td>
+                          <td>{{ mentoria.hora_inicio }}</td>
+                          <td>{{ mentoria.hora_fin }}</td>
+                          <td>{{ mentoria.nombre_estado_mentoria }}</td>
                           <td>
                             <button
                               class="btn btn-primary"
                               (click)="
                                 getMentoria(mentoria.id_registro_mentoria);
-                                open(contenido)"
+                                open(contenido)
+                              "
                             >
-                              <i class="fas fa-edit">Editar</i>
+                              <i class="fas fa-edit"></i> Editar
                             </button>
                             |
                             <button
-                            class="btn btn-success"
-                            (click)="getSolicitudMentorias(mentoria.id_registro_mentoria)"
+                              class="btn btn-success"
+                              (click)="
+                                open(ver);
+                                getSolicitudMentorias(
+                                  mentoria.id_registro_mentoria
+                                )
+                              "
+                            >
+                              <i class="fas fa-eye"></i> Ver
+                            </button>
+                            |
+                            <button
+                              class="btn btn-danger"
+                              (click)="
+                                cancelarMentoria(mentoria.id_registro_mentoria)
+                              "
+                            >
+                              <i class="fas fa-times-circle"></i> Cancelar
+                            </button>
+
+                            |
+                            <button
+                              class="btn btn-warning"
                           >
-                          <i class="fas fa-eye">Ver</i>
+                          <i class="fa fa-check-circle-o"aria-hidden="true"></i> Ejecutar
                           </button>
-                          |
-                          <button
-                          class="btn btn-danger"
-                          (click)="cancelarMentoria(mentoria.id_registro_mentoria)"
-                        >
-                        <i class="fas fa-times-circle">Cancelar</i>
-                         
-                        </button>
-                          
                           </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
-                
-      
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
-              </div>
-            </div> 
-            
-          </div>
-          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
-            <div class="row" *ngIf="mentoriasCanceladas.length>0"> 
+                <pagination-controls
+                  (pageChange)="p = $event"
+                ></pagination-controls>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="contact"
+            role="tabpanel"
+            aria-labelledby="contact-tab"
+          >
+            <div class="row" *ngIf="mentoriasCanceladas.length > 0">
               <div class="col-sm-12">
-      
                 <div class="card">
                   <div class="table-responsive">
                     <table class="table table-hover">
@@ -232,19 +326,19 @@
                           <!-- <th scope="col">Acciones</th> -->
                         </tr>
                       </thead>
-        
+
                       <tbody>
                         <tr
                           *ngFor="
                             let mentoria of mentoriasCanceladas
-                              | paginate: { itemsPerPage: 3, currentPage: p }
+                              | paginate: { itemsPerPage: 5, currentPage: p }
                           "
                         >
-                        <td>{{mentoria.materia}}</td>
-                          <td>{{mentoria.fecha }}</td>
-                          <td>{{mentoria.hora_inicio }}</td>
-                          <td>{{mentoria.hora_fin }}</td>
-                          <td>{{mentoria.nombre_estado_mentoria}}</td>
+                          <td>{{ mentoria.nombre_materia }}</td>
+                          <td>{{ mentoria.fecha }}</td>
+                          <td>{{ mentoria.hora_inicio }}</td>
+                          <td>{{ mentoria.hora_fin }}</td>
+                          <td>{{ mentoria.nombre_estado_mentoria }}</td>
                           <!-- <td>
                             <button
                               class="btn btn-primary"
@@ -261,34 +355,95 @@
                             >
                               Eliminar<i class="far fa-trash-alt"></i>
                             </button>
-                          
-                           
-              
-                         
+
+
+
+
                           </td> -->
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
-                
-      
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+                <pagination-controls
+                  (pageChange)="p = $event"
+                ></pagination-controls>
               </div>
-            </div> 
-            
+            </div>
+          </div>
+          <div
+          class="tab-pane fade"
+          id="ejec"
+          role="tabpanel"
+          aria-labelledby="contact-tab"
+        >
+          <div class="row" *ngIf="mentoriasCanceladas.length > 0">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr class="table-active">
+                        <th scope="col">Materia</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora inicio</th>
+                        <th scope="col">Hora fin</th>
+                        <th scope="col">Estado</th>
+                        <!-- <th scope="col">Acciones</th> -->
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let mentoria of mentoriasCanceladas
+                            | paginate: { itemsPerPage: 5, currentPage: p }
+                        "
+                      >
+                        <td>{{ mentoria.nombre_materia }}</td>
+                        <td>{{ mentoria.fecha }}</td>
+                        <td>{{ mentoria.hora_inicio }}</td>
+                        <td>{{ mentoria.hora_fin }}</td>
+                        <td>{{ mentoria.nombre_estado_mentoria }}</td>
+                        <!-- <td>
+                          <button
+                            class="btn btn-primary"
+                            (click)="
+                              getMentoria(mentoria.id_registro_mentoria);
+                              open(contenido)"
+                          >Editar
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          |
+                          <button
+                            class="btn btn-danger"
+                            (click)="deleteMentoria(mentoria.id_registro_mentoria)"
+                          >
+                            Eliminar<i class="far fa-trash-alt"></i>
+                          </button>
+
+
+
+
+                        </td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <pagination-controls
+                (pageChange)="p = $event"
+              ></pagination-controls>
+            </div>
           </div>
         </div>
-        
-
-
-  
-      
+        </div>
       </div>
     </div>
   </div>
 </div>
-
 
 <ng-template #contenido let-modal>
   <div class="modal-header">
@@ -303,39 +458,74 @@
     </button>
   </div>
   <div class="modal-body">
-    <div class="form-group">
-      <label style="color: #161515">Fecha:</label>
-      <input
-        type="date"
-        class="form-control"
-        name="fecha"
-        [(ngModel)]="mentoria1.fecha"
-      />
-    </div>
-    <div class="form-group">
-      <label style="color: #161515">Materia</label>
-      <input
-        type="text"
-        class="form-control"
-        name="materia"
-        [(ngModel)]="mentoria1.materia"
-      />
-    </div>
-    <div class="form-group">
-      <label style="color: #161515">Hora inicio:</label>
-      <select class="form-control" [(ngModel)]="mentoria1.hora_inicio">
-        <option *ngFor="let n of horas">{{ n}}</option>
-      </select>
-    </div>
+    <form [formGroup]="exformEdit">
+      <div class="form-group">
+        <label style="color: #161515">Fecha:</label>
+        <input
+          type="date"
+          class="form-control"
+          name="fecha"
+          formControlName="fecha"
+        />
+        <small
+          *ngIf="exformEdit.get('fecha').invalid && exformEdit.get('fecha').touched"
+          class="text-danger"
+          >Dato es requerido</small
+        >
+      </div>
+      <div class="form-group">
+        <label style="color: #161515">Materia</label>
 
-    <div class="form-group">  
-      <label style="color: #161515">Hora fin:</label>
-      <select class="form-control" [(ngModel)]="mentoria1.hora_fin">
-        <option *ngFor="let n of horas">{{n}}</option>
-      </select>
-     
-    </div>
-   
+        <select
+          class="form-control"
+          name="miselect"
+          formControlName="nombre_materia"
+        >
+          <option value="" selected>Seleccione una opción</option>
+          <option *ngFor="let materia of materias">
+            {{ materia.nombre_materia }}
+          </option>
+        </select>
+        <small
+          *ngIf="
+            exformEdit.get('nombre_materia').invalid &&
+            exformEdit.get('nombre_materia').touched
+          "
+          class="text-danger"
+          >Dato es requerido</small
+        >
+      </div>
+      <div class="form-group">
+        <label style="color: #161515">Hora inicio:</label>
+        <select class="form-control" formControlName="hora_inicio">
+          <option value="" selected>Seleccione una opción</option>
+          <option *ngFor="let n of horas">{{ n }}</option>
+        </select>
+        <small
+          *ngIf="
+            exformEdit.get('hora_inicio').invalid &&
+            exformEdit.get('hora_inicio').touched
+          "
+          class="text-danger"
+          >Dato es requerido</small
+        >
+      </div>
+
+      <div class="form-group">
+        <label style="color: #161515">Hora fin:</label>
+        <select class="form-control" formControlName="hora_fin">
+          <option value="" selected>Seleccione una opción</option>
+          <option *ngFor="let n of horas">{{ n }}</option>
+        </select>
+        <small
+          *ngIf="
+            exformEdit.get('hora_fin').invalid && exformEdit.get('hora_fin').touched
+          "
+          class="text-danger"
+          >Dato es requerido</small
+        >
+      </div>
+    </form>
   </div>
   <div class="modal-footer">
     <button
@@ -351,15 +541,65 @@
       class="btn btn-primary"
       (click)="updateMentoria(); close(contenido)"
     >
-      GUARDAR
+      ACTUALIZAR
     </button>
   </div>
 </ng-template>
-<footer class="bg-light text-center text-lg-start">
 
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2021 Copyright: W-STEM UTN
-    
+<ng-template #ver let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      <i class="fa fa-users" aria-hidden="true"></i> Estudiantes registrados
+    </h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr class="table-active">
+            <th scope="col">Estudiante</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Materia</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="
+              let mentoriaAgen of mentoriasAgen
+                | paginate: { itemsPerPage: 5, currentPage: p }
+            "
+          >
+            <td>{{ mentoriaAgen.nombre }} {{ mentoriaAgen.apellido }}</td>
+            <td>{{ mentoriaAgen.correo_electronico }}</td>
+            <td>{{ mentoriaAgen.fecha }}</td>
+            <td>{{ mentoriaAgen.nombre_materia }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
 
-</footer>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="close(contenido)"
+    >
+      Cerrar
+    </button>
+  </div>
+</ng-template>
+<app-footer></app-footer>

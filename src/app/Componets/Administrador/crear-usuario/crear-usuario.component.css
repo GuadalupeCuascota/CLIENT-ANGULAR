@@ -1,6 +1,26 @@
 .list-group-item{
-    background: rgba(255, 255, 255, 0.952);
+  background: rgba(255, 255, 255, 0.952);
 
+}
+label{
+color: #646262;
+font-size: 1rem;
+margin: 0 0 10px 0;
+font-weight: 500;
+}
+.iconoInput {
+color: #1a1818;
+font-size: 15px;
+position: absolute;
+right: 30px;
+top: 40px;
+}
+.content {
+
+  margin-left: 60px;
+  padding-left: 20px;
+  margin-right: 60px;
+  padding-top: 5px;
 }
 .form-control.ng-touched.ng-invalid{
   border:1px solid red
@@ -8,34 +28,16 @@
 .form-control.ng-touched.ng-valid{
   border:1px solid purple
 }
-/* .content {
-  
-    margin-left: 40px;
-    padding-left: 20px;
-    margin-right: 40px;
-    padding-top: 55px;
-  } */
-  .contenido {
-    margin-top:43px;
-    padding: 6% 0 0;
-    /* background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(71, 69, 69, 0.5)),url(../../../../assets/admin.jpg ); */
-    background-repeat: no-repeat center center fixed;
-    min-height: 100vh;
-    background-size:100% 100%;
-  
-    /* background-attachment: fixed; */
-    /* width: 100%; */
-  
-  
-  }
-  
- 
-    .iconoInput {
-      color: #646262;
-      font-size: 15px;
-      position: absolute;
-      right: 30px;
-      padding-top: 36px;}
-    .inputPadding {
-      padding-left: 70px;}
-    
+.contenido {
+  padding: 6% 0 0;
+  /* background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(71, 69, 69, 0.5)),url(../../../../assets/admin.jpg); */
+  background-repeat: no-repeat center center fixed;
+  min-height: 100vh;
+  background-size:100% 100%;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(71, 69, 69, 0.5));
+
+  /* background-attachment: fixed; */
+  /* width: 100%; */
+
+
+}

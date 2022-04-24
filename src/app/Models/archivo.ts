@@ -1,6 +1,10 @@
 export interface Archivo {
-   id_archivo:number;
-   nombre_archivo: string;
-   tipo_archivo: string;
-   ruta: string;
+   
+   nombre_perfil: string;
+   profesion: string;
+   estado_profesion: string;
+   descripcion: string;
+   enlace: string;
+   ruta_archivo: string;
+
 }

@@ -16,8 +16,7 @@
               <th scope="col">Materia</th>
               <th scope="col">Hora inicio</th>
               <th scope="col">Hora fin</th>
-              <!-- <th scope="col">Estado</th> -->
-              <!-- <th scope="col">Asistencia</th> -->
+              
             </tr>
           </thead>
 
@@ -29,25 +28,6 @@
               <td>{{mentoriaAgen.materia}}</td>
               <td>{{mentoriaAgen.hora_inicio}}</td>
               <td>{{mentoriaAgen.hora_fin}}</td>
-              <!-- <td>
-                <div class="form-check"  >
-                  <input type="button" class="form-check-input"  (click)="updateEstadoMentoria(mentoriaAgen.id_agendamiento_mentoria)" type="checkbox" defaultCheck1>
-                  <label class="form-check-label" for="defaultCheck1">
-                    
-                  </label>  
-                </div>
-              </td> -->
-              <!-- <td>{{mentoriaAgen.nombre_estado_agen_mentoria}}</td> -->
-              <!-- <td>{{mentoriaAgen.nombre_estado_agen_mentoria}}</td> -->
-              
-<!--  
-                <button class="btn btn-primary" (click)="updateEstadoMentoria(mentoriaAgen.id_agendamiento_mentoria)">
-                  <i class="fas fa-check-circle" > Confirmar</i>
-                </button>
-                |
-                <button class="btn btn-danger">
-                  <i class="far fa-trash-alt">Anular</i>
-                </button> -->
               
             </tr>
           </tbody>
@@ -62,11 +42,4 @@
 </div>
 </div>
 
-<footer class="bg-light text-center text-lg-start">
-
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2021 Copyright: W-STEM UTN
-    
-  </div>
-
-</footer>
+<app-footer></app-footer>

@@ -1,129 +1,275 @@
 <app-registro-usuario></app-registro-usuario>
+<br>
 <div class="contenido">
-<div class="container">
-  <div class="col-md-9 offset-md-2"> 
-    
-    <div class="list-group-item">
-      <h5 class="text-center" style="color: #161515">Registro de Usuarios</h5>
-      <form [formGroup]="exform">
-        <div class="form-group row">
-          <div class="col">
-            <label style="color: #161515">Nombre:</label>
-            <input
-            formControlName="nombre"
-              type="text"
-              class="form-control"
-             
-              placeholder="Ingrese nombre"
-            />
-            <small  class="text-danger" *ngIf="exform.get('nombre').hasError('required') && exform.get('nombre').touched" >campo es requerido</small>
-            <small class="text-danger"  *ngIf="exform.get('nombre').hasError('pattern') && exform.get('nombre').touched" >Ingrese solo letras</small>
+  <div class="container">
+    <div class="card">
+      <div class="card-header" >
+        <h5  style="color: #4b4949;font-weight: 700;">
+          Listado de Estudiantes
+        </h5>
+      </div>
+      <div class="card-body text-center">
             
-          </div>
-          
-
-          <div class="col">
-            <label style="color: #161515">Apellido:</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="apellido"
-              placeholder="Ingrese apellido"
-              
-            />
-            <small  class="text-danger" *ngIf="exform.get('apellido').hasError('required') && exform.get('apellido').touched" >campo es requerido</small>
-           
-            <small  class="text-danger" *ngIf="exform.get('apellido').hasError('pattern') && exform.get('apellido').touched" >Ingrese solo letras</small>
-          </div>
-          <div class="col">
-            <label style="color: #161515">Correo:</label>
-            <input
-              type="text"
-              class="form-control"
-              name="cedula"
-              formControlName="correo_electronico"
-              placeholder="Ingrese correo electrónico"
-            />
-            <small  *ngIf="exform.get('correo_electronico').hasError('required') && exform.get('correo_electronico').touched" class="text-danger">Campo es requerido</small>
-            <small class="text-danger" *ngIf="exform.get('correo_electronico').hasError('pattern') && exform.get('correo_electronico').touched" >Ingrese correo valido</small>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <div class="col">
-            <label style="color: #161515">Contraseña:</label>
-            <i  [class]=" show_eye ? 'fa fa-eye iconoInput' : 'fa fa-eye-slash iconoInput' " (click)="toggleShow()"> </i>
-            <input
-              [type]="showPassword ? 'text' : 'password'"
-              class="form-control"
-              name=""
-              placeholder="Ingrese contraseña"
-              formControlName="contrasenia"
-              
-            />
-            
-            <small  *ngIf="exform.get('contrasenia').hasError('required') && exform.get('contrasenia').touched"  class="text-danger">Campo es requerido</small>
-            <small   class="text-danger" *ngIf="exform.get('contrasenia').hasError('minlength') && exform.get('contrasenia').touched" >Cantidad minima de caracteres es (8)</small>
-            
-            
-          </div>
-
-          <div class="col">
-            <label style="color: #161515">Tipo rol:</label>
-            <select
-              (change)="optionsFn($event)"
-              class="form-control"
-              name="miselect"
-              formControlName="id_rol"
-            >
-            <option selected>Seleccione una opción</option>
-              <option *ngFor="let rol of roles">{{ rol.tipo_rol }}</option>
-            </select>
-            <small  *ngIf="exform.get('id_rol').hasError('required') && exform.get('id_rol').touched"  class="text-danger">Campo es requerido</small>
-          </div>
-          <div class="col" *ngIf="estado">
-            <label style="color: #161515">Carrera:</label>
-            <select
-              class="form-control"
-              aria-label="Default select example"
-              formControlName="id_carrera"
-            >
-              <option selected>Seleccione una opción</option>
-              <option *ngFor="let carrera of carreras">{{carrera.nombre_carrera}}</option>
-            </select>
-            <small  *ngIf="exform.get('id_carrera').invalid && exform.get('id_carrera').touched" class="text-danger">Campo es requerido</small>
-          
-          </div>
-        </div>
-        
         <div class="row">
-          <div class="col-md-2" >
-           
-            <button routerLink="/usuarios"   class="btn btn-primary">REGRESAR</button>
-          </div>
-          <div class="col-md-4">
-           
-          </div>
+          <div class="col-md-2">
+            <!-- <button (click)="open(save);clear();" class="btn btn-primary">
+              CREAR NUEVO <i class="fas fa-plus-square"></i>
+            </button> -->
+          </div>  
+          <div class="col-md-4"></div>
           <div class="col-md-5">
-           
-            <button [disabled]="!exform.valid" class="btn btn-primary" (click)="saveUsuario()" ><i class="fas fa-save"></i> GUARDAR
-              <i class="fas fa-p  lus-square"></i>
-            </button>
-           
+            <div class="form-group row">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="textoBuscar"
+                  [(ngModel)]="textoBuscar"
+                  placeholder="Buscar usuario"
+                />
+                <div class="input-group-text bg-white">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+            </div>
           </div>
-       
         </div>
-      </form>
+  
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr class="table-active">
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Correo electrónico</th>
+                <th scope="col">Nivel Académico</th>
+                <th scope="col">Carrera</th>
+                
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              <tr
+                *ngFor="
+                  let usuario of usuarios
+                    | filtroUsuarios: textoBuscar
+                    | paginate: { itemsPerPage: 5, currentPage: p }
+                "
+              >
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.apellido }}</td>
+                <td>{{ usuario.correo_electronico }}</td>
+                
+                <td>{{ usuario.tipo_rol}}</td>
+                <td>{{ usuario.nombre_carrera}}</td>
+                <td>
+                  <button
+                    class="btn btn-primary"
+                    (click)="
+                      getUsuario(usuario.id_usuario, usuario.id_rol);
+                      open(contenido)
+                    "
+                  >
+                    <i class="fas fa-edit"></i> 
+                  </button>
+                  |
+                  <button
+                    class="btn btn-danger"
+                    (click)="deleteUsuario(usuario.id_usuario)"
+                  >
+                    <i class="far fa-trash-alt"> </i> 
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
     </div>
-  </div> 
+    </div>
 </div>
-</div>
-<footer class="bg-light text-center text-lg-start">
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2021 Copyright: W-STEM UTN
-    
-  </div>
-  <!-- Copyright -->
-</footer>
+ 
 
+
+<ng-template #contenido let-modal>
+  <div class="modal-header ">
+   
+    <h4 class="modal-title" id="modal-basic-title">Editar información</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="exform">
+      <div class="form-group">
+        <label style="color: #161515">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese nombre"
+          formControlName="nombre"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            exform.get('nombre').hasError('required') &&
+            exform.get('nombre').touched
+          "
+          >campo es requerido</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+            exform.get('nombre').hasError('pattern') &&
+            exform.get('nombre').touched
+          "
+          >Ingrese solo letras</small
+        >
+      </div>
+      <div class="form-group">
+        <label style="color: #161515">Apellido</label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese apellido"
+          formControlName="apellido"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            exform.get('apellido').hasError('required') &&
+            exform.get('apellido').touched
+          "
+          >campo es requerido</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+            exform.get('apellido').hasError('pattern') &&
+            exform.get('apellido').touched
+          "
+          >Ingrese solo letras</small
+        >
+      </div>
+      <div class="form-group row">
+        <div class="col">
+          <label style="color: #161515">Correo</label>
+          <input
+            type="text"
+            class="form-control"
+            name="correo_electronico"
+            formControlName="correo_electronico"
+            placeholder="Ingrese correo electrónico"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              exform.get('correo_electronico').hasError('required') &&
+              exform.get('correo_electronico').touched
+            "
+            >campo es requerido</small
+          >
+          <small
+            class="text-danger"
+            *ngIf="
+              exform.get('correo_electronico').hasError('pattern') &&
+              exform.get('correo_electronico').touched
+            "
+            >Ingrese correo valido</small
+          >
+        </div>
+        <div class="col">
+          <label style="color: #161515">Contraseña</label>
+          <input 
+            type="password"
+            class="form-control"
+            name=""
+            placeholder="Ingrese contraseña"
+            formControlName="contrasenia"
+            
+          />
+          <small
+          class="text-danger"
+          *ngIf="
+            exform.get('contrasenia').hasError('required') &&
+            exform.get('contrasenia').touched
+          "
+          >campo es requerido</small
+        >
+        <small  class="text-danger" *ngIf="exform.get('contrasenia').hasError('minlength') && exform.get('contrasenia').touched" >Cantidad minima de caracteres es (8)</small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col">
+          <label style="color: #161515">Tipo rol</label>
+          <select
+            (change)="optionsFn($event)"
+            class="form-control"
+            name="miselect"
+            formControlName="tipo_rol"
+          >
+          <option value="" selected>Seleccione una opción</option>
+          <option *ngFor="let rol of roles" value="{{rol.tipo_rol}}">{{rol.tipo_rol }}</option>
+        </select>
+        <small  *ngIf="exform.get('tipo_rol').hasError('required') && exform.get('tipo_rol').touched"  class="text-danger">Campo es requerido</small>
+        </div>
+
+        
+        <!-- <div class="col" *ngIf="estado" >
+          <label style="color: #161515">Carrera:</label>
+          <select
+          
+          class="form-control"
+          name="miselect"
+          formControlName="nombre_carrera"
+        >
+        <option value="" selected>Seleccione una opción</option>
+        <option *ngFor="let carrera of carreras">{{carrera.nombre_carrera}}</option>
+      </select>
+          
+         
+          <small  
+          class="text-danger"
+          *ngIf="
+            exform.get('nombre_carrera').hasError('required') &&
+            exform.get('nombre_carrera').touched
+          "
+          >campo es requerido</small
+        >
+        </div> -->
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="close(contenido)"
+    >
+      Cerrar
+    </button>
+    <button
+      [disabled]="!exform.valid"
+      type="button"
+      class="btn btn-primary"
+      (click)="updateUsuario(); close(contenido)"
+    >
+      <i class="fas fa-save"></i> GUARDAR
+    </button>
+  </div>
+</ng-template>
+
+
+<app-footer></app-footer>

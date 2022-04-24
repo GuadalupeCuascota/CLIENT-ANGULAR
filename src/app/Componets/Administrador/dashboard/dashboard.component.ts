@@ -78,31 +78,17 @@ export class DashboardComponent implements OnInit {
     },
   ];
 
-  single = [
-    {
-      "name": "Germany",
-      "value": 8940000
-    },
-    {
-      "name": "USA",
-      "value": 5000000
-    },
-    {
-      "name": "France",
-      "value": 7200000
-    }
-  ];
-
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
   };
+
   view: any[] = [210, 350];
   //////GRAFICO NRO DE ESTUDIANTES POR MES////
   showXAxis = true;
   showYAxis = true;
   gradient = false;
   showLegend = true;
- legendPosition : string = 'left'; //rigth ,below
+  legendPosition: string = 'left'; //rigth ,below
   showXAxisLabel = true;
   xAxisLabel = 'Mes';
 
@@ -111,34 +97,42 @@ export class DashboardComponent implements OnInit {
 
   animations = true;
   showDataLabel = true;
-/////nro/
-// options
-viewNro: any[] = [300, 300];
-gradientNro: boolean = true;
-showLegendNro: boolean = true;
-showLabelsNro: boolean = true;
+  /////nro/
+  // options
+  viewNro: any[] = [300, 300];
+  gradientNro: boolean = true;
+  showLegendNro: boolean = true;
+  showLabelsNro: boolean = true;
 
-legendPosition1: string = 'below';
-colorScheme1 = {
-  domain: [ '#A10A28', '#C7B42C', '#AAAAAA']
-};
   ///////TIPO MENTORIA ////
+  viewt: any[] = [550, 380];
+  gradientm: boolean = true;
+  showLegendm: boolean = true;
+  showLabelsm: boolean = true;
+  isDoughnutm: boolean = false;
 
-  showXAxis1: boolean = true;
-  showYAxis1: boolean = true;
-  gradient1: boolean = false;
-  showLegend1: boolean = true;
-  showXAxisLabel1: boolean = true;
-  yAxisLabel2: string = 'Tipo mentoria';
-  showYAxisLabel1: boolean = true;
-  xAxisLabel1: string = 'Nro de mentorias';
 
   ////////grafico circular//
-  gradientC: boolean = true;
+  legendPosition1: string = 'below';
+  colorScheme1 = {
+    domain: ['#A10A28', '#C7B42C', '#AAAAAA'],
+  };
+  colorSchemeMA = {
+    domain: [ '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5','#5AA454'],
+  };
+  viewC: any[] = [420, 300];
+
   showLegendC: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
   legendPositionC: string = 'below';
+
+  ///LIKES CARRERAS//
+
+
+  colorSchemeLC = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
 
   constructor(
     private registroUsuarioService: RegistroUsuarioService,
@@ -166,8 +160,8 @@ colorScheme1 = {
       (res: any) => {
         for (let c of res) {
           const mes = c.Mes;
-          const nro = c.NroEstudiantes + m;
-          m = nro;
+          const nro = c.NroEstudiantes;
+          // m = nro;
 
           let options = {
             name: mes,
@@ -195,39 +189,7 @@ colorScheme1 = {
           };
           con.push(options);
 
-          // if (c.Mes == 'noviembre') {
-          //   console.log('PASA');
-          //   this.mes1 = c.Mes;
-          //   const tip = c.TipoMentoria;
-          //   const nro = c.NroMentoriasAgendadas;
 
-          //   let options = {
-          //     name: tip,
-          //     value: nro,
-          //   };
-
-          //   series.push(options);
-          // } else {
-          //   if (c.Mes == 'diciembre') {
-          //     console.log('es diciembre');
-          //     this.mes2 = c.Mes;
-          //     const tip = c.TipoMentoria;
-          //     const nro = c.NroMentoriasAgendadas;
-
-          //     let options1 = {
-          //       name: tip,
-          //       value: nro,
-          //     };
-
-          //     series1.push(options1);
-          //   }
-          // }
-          // var a = [
-          //   {
-          //     name: this.mes1,
-          //     series,
-          //   },
-          // ];
         }
 
         this.tipoMentoria = con;
@@ -265,12 +227,12 @@ colorScheme1 = {
       (res: any) => {
         console.log('los usuarios', res);
         for (let usu1 of res) {
-          if (usu1.id_rol == 4) {
+          if (usu1.id_rol == 4 || usu1.id_rol == 5) {
             est = est + 1;
-            if (usu1.nivel_academico == 'secundaria') {
+            if (usu1.id_rol == 4) {
               this.NroEstBachillerato = this.NroEstBachillerato + 1;
             }
-            if (usu1.nivel_academico == 'superior') {
+            if (usu1.id_rol == 5) {
               this.NroEstUniversidad = this.NroEstUniversidad + 1;
             }
           }
@@ -282,10 +244,10 @@ colorScheme1 = {
 
         let options1 = {
           name: 'Estudiantes FICA',
-          value: this.NroEstBachillerato,
+          value: this.NroEstUniversidad,
         };
         con.push(options, options1);
-        this.registroEst=con
+        this.registroEst = con;
         this.countEstudiantes = est;
         console.log('el resgistro', this.registroEst);
       },
@@ -310,6 +272,7 @@ colorScheme1 = {
           }
         }
         this.eventosCarrera = con;
+        console.log("el evento por carrera",this.eventosCarrera)
       },
       (err) => console.error(err)
     );
@@ -348,7 +311,6 @@ colorScheme1 = {
     );
   }
 
-
   getNroLikesPorPerfil() {
     var con = [];
     this.consultasDashboardServices.getNroLikesPorPerfil().subscribe(
@@ -366,7 +328,7 @@ colorScheme1 = {
           }
         }
         this.LikesPerfil = con;
-        console.log("likes perfil",this.LikesPerfil)
+        console.log('likes perfil', this.LikesPerfil);
       },
       (err) => console.error(err)
     );

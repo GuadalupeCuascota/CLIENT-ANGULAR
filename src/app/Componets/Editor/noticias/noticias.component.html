@@ -1,22 +1,24 @@
 <app-menu-principal-editor></app-menu-principal-editor>
 <div class="contenido">
-  <br />
-  <br />
-  <br />
+  
+
+
   <div class="container">
-    <div class="col-md-12">
+    
       <div class="card">
-        <div class="card-body text-center">
-          <h5 class="text-center" style="color: #161515">
+        <div class="card-header  " >
+          <h5  style="color: #4b4949;font-weight: 700;">
             Listado de Noticias en STEM
           </h5>
-
+        </div>
+        <div class="card-body text-center">
+         
           <div class="row">
             <div class="col-md-3">
               <button
                 type="reset"
                 class="btn btn-primary"
-                (click)="estado(); open(contenido); clear()"
+                (click)=" estado(); open(contenido); clear()"
               >
                 CREAR NOTICIAS <i class="fas fa-plus-square"></i>
               </button>
@@ -30,7 +32,7 @@
                     class="form-control"
                     name="textoBuscar"
                     [(ngModel)]="textoBuscar"
-                    placeholder="Buscar perfil"
+                    placeholder="Ingrese título"
                   />
                   <div class="input-group-text bg-white">
                     <i class="fas fa-search"></i>
@@ -42,9 +44,9 @@
 
           <br />
           <br />
-          <div class="card">
+          
             <div class="table-responsive">
-              <table class="table align-middle">
+              <table class="table table-striped">
                 <thead>
                   <tr class="table-active">
                     <th scope="col">Titulo</th>
@@ -60,7 +62,7 @@
                   <tr
                     *ngFor="
                       let noticia of noticias
-                        | paginate: { itemsPerPage: 5, currentPage: p }
+                        |filtroNoticias:textoBuscar | paginate: { itemsPerPage: 5, currentPage: p }
                     "
                   >
                     <td>{{ noticia.titulo }}</td>
@@ -121,10 +123,10 @@
                 (pageChange)="p = $event"
               ></pagination-controls>
             </div>
-          </div>
+          
         </div>
       </div>
-    </div>
+    
   </div>
 </div>
 <ng-template #imagen let-modal>
@@ -165,16 +167,28 @@
     </button>
   </div>
   <div class="modal-body">
+    <form [formGroup]="noticiaform">
     <div class="form-group">
       <label>Titulo: </label>
       <input
         type="text"
         class="form-control"
         name=""
-        placeholder="Ingrese Titulo"
-        [(ngModel)]="noticia.titulo"
-        required
+        placeholder="Ingrese Titulo (Máximo 25 palabras)"
+        formControlName="titulo"
+        
+        
       />
+      <small
+      class="text-danger"
+      *ngIf="
+        noticiaform.get('titulo').hasError('required')  &&
+        noticiaform.get('titulo').touched
+      "
+      >campo es requerido</small
+    >
+    <small  class="text-danger" *ngIf="noticiaform.get('titulo').hasError('maxlength') && noticiaform.get('titulo').touched" >Cantidad máxima de palabras es (25)</small>
+      
     </div>
 
     <div class="form-group">
@@ -182,10 +196,19 @@
       <textarea
         rows="2"
         class="form-control"
-        [(ngModel)]="noticia.descripcion"
+        formControlName="descripcion"
         placeholder="Ingrese descripción"
-        required
+       
       ></textarea>
+      <small
+      class="text-danger"
+      *ngIf="
+        noticiaform.get('descripcion').hasError('required') &&
+        noticiaform.get('descripcion').touched
+      "
+      >campo es requerido</small
+    >
+    <small  class="text-danger" *ngIf="noticiaform.get('descripcion').hasError('minlength') && noticiaform.get('descripcion').touched" >Cantidad minima de caracteres es (10)</small>
     </div>
     <div class="form-group">
       <label>Enlace: </label>
@@ -194,13 +217,15 @@
         class="form-control"
         name=""
         placeholder="Ingrese Enlace"
-        [(ngModel)]="noticia.enlace"
-        required
+        formControlName="enlace"
+        
+      
       />
     </div>
     <div class="buttons" *ngIf="edit">
       <input
         type="file"
+        accept="image/*"
         class="d-none"
         placeholder=""
         (change)="onFileSelect($event)"
@@ -246,6 +271,7 @@
        
         
       </div> -->
+    </form>
   </div>
 
   <div class="modal-footer">
@@ -259,6 +285,7 @@
     </button>
     <button
       *ngIf="!edit"
+      [disabled]="!noticiaform.valid"
       type="button"
       class="btn btn-primary"
       (click)="edit ? updatepublicacion() : saveArchivo(); close(contenido)"
@@ -266,7 +293,9 @@
       PUBLICAR
     </button>
     <button
+
       *ngIf="edit"
+      [disabled]="!noticiaform.valid"
       type="button"
       class="btn btn-primary"
       (click)="edit ? updatepublicacion() : saveArchivo(); close(contenido)"
@@ -287,3 +316,4 @@
     </div>
    
   </footer> -->
+  <app-footer></app-footer>

@@ -15,7 +15,7 @@ export class RegistroEditorComponent implements OnInit {
     id_usuario:0,
     nombre: '',
     apellido: '',
-    nivel_academico: '',
+    
     nombre_carrera:'',
     id_carrera:0,
     unidad_educativa: '',

@@ -1,78 +1,141 @@
 <header>
-  
   <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <a class="navbar-brand" routerLink="/administrador">
+      <img
+        src="../../../../assets/logo-utn-blanco.webp"
+        width="50%"
+        height="50%"
+      />
+      <img  src="../../../../assets/LoFicaS.webp" width="60px" height="60px">
+    </a>
+    <!-- <a class="navbar-brand" routerLink="/administrador">
      
-      <img  src="../../../../assets/utncbn.png" width="65" height="45" alt="">
-      
-      </a>
-      <a class="navbar-brand" routerLink="/administrador">
-     
-        <img  src="../../../../assets/LoFicaS.webp" width="70" height="70" alt="">
+        <img  src="../../../../assets/LoFicaS.webp" width="70px" height="70px">
         
-        </a>
-   
-    <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed"
-      aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+        </a> -->
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      aria-controls="navbarContent"
+      [attr.aria-expanded]="!collapsed"
+      aria-label="Toggle navigation"
+      (click)="collapsed = !collapsed"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
-   
-    <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
-     
-       
+
+    <div
+      class="navbar-collapse"
+      [class.collapse]="collapsed"
+      id="navbarContent"
+    >
       <ul class="navbar-nav">
-      
-          
         <li class="nav-item">
-          <a class="nav-link" routerLink="/administrador" routerLinkActive="active"><i
-              class="fas fa-home fa-1.5x fa-lg"></i> Inicio
+          <a
+            class="nav-link"
+            routerLink="/administrador"
+            routerLinkActive="active"
+            ><i class="fas fa-home fa-1.5x fa-lg"></i> Inicio
           </a>
         </li>
+
        
         <!-- <li class="nav-item">
-          <a class="nav-link" routerLink="/roles" routerLinkActive="active"><i class="fas fa-pencil-ruler"></i> Roles
-          </a>
+          <a class="nav-link" routerLink="/usuarios" routerLinkActive="active" 
+            ><i class="fas fa-user-plus"></i> Usuarios</a
+          >
         </li> -->
+        <li
+        class="nav-item"
+        ngbDropdown
+        display="dynamic"
+        placement="bottom-right"
+      >
+        <a
+          style="font-size: 120%"
+          class="nav-link"
+          tabindex="0"
+          ngbDropdownToggle
+          id="navbarDropdown2"
+          role="button"
+        >
+        
+        <i class="fa fa-users fa-1.5x" aria-hidden="true"></i>
+         Gestionar
+         
+        </a>
+        <div
+          ngbDropdownMenu
+          aria-labelledby="navbarDropdown2"
+          class="dropdown-menu"
+        >
+          <a
+            ngbDropdownItem
+            routerLink="/usuarios"
+            (click)="$event.preventDefault()" 
+            ><i class="fas fa-user-plus"></i> Usuarios</a
+          >
+          <a ngbDropdownItem 
+          routerLink="/estudiantes"
+            ><i class="fa fa-user" ></i>  Estudiantes</a
+          >
+        </div>
+      </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/usuarios" routerLinkActive="active"><i class="fas fa-user-plus"></i>
-            Usuarios</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/carrera" routerLinkActive="active"><i class="fas fa-user-plus"></i>
-            Carreras</a>
+          <a class="nav-link" routerLink="/carrera" routerLinkActive="active"
+            ><i class="fa fa-graduation-cap" aria-hidden="true"></i> Carreras</a
+          >
         </li>
         <!-- <li class="nav-item">
           <a clas""s="nav-link" routerLink="/materia" routerLinkActive="active"><i class="fas fa-user-plus"></i>
             Materias</a>
         </li> -->
-        <li class="nav-item" >
-          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active"><i class="fas fa-chart-bar"></i> Dashboard
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active"
+            ><i class="fas fa-chart-bar"></i> Dashboard
           </a>
         </li>
+        
       </ul>
 
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
-          <a style="font-size: 120%;" class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown3" role="button">
-           {{ datos.nombre }} {{ datos.apellido }}
+        <li
+          class="nav-item"
+          ngbDropdown
+          display="dynamic"
+          placement="bottom-right"
+        >
+          <a
+            style="font-size: 120%"
+            class="nav-link"
+            tabindex="0"
+            ngbDropdownToggle
+            id="navbarDropdown3"
+            role="button"
+          >
+            {{ datos.nombre }} {{ datos.apellido }}
             <i class="fas fa-users-cog fa-1.5x"></i>
           </a>
-          <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
-            <a ngbDropdownItem routerLink="/cambiarContraseña" (click)="$event.preventDefault()"><i
-                class="fas fa-key"></i> Cambiar contraseña</a>
-            <a ngbDropdownItem (click)="logOut()"><i class="far fa-arrow-alt-circle-left"></i> Cerrar Sesión</a>
+          <div
+            ngbDropdownMenu
+            aria-labelledby="navbarDropdown3"
+            class="dropdown-menu"
+          >
+            <a
+              ngbDropdownItem
+              routerLink="/cambiarContraseña"
+              (click)="$event.preventDefault()"
+              ><i class="fas fa-key"></i> Cambiar contraseña</a
+            >
+            <a ngbDropdownItem (click)="logOut()"
+              ><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar Sesión</a
+            >
           </div>
         </li>
       </ul>
     </div>
   </nav>
 </header>
-<footer class="bg-light text-center text-lg-start">
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2021 Copyright: W-STEM UTN
-    
-  </div>
-  <!-- Copyright -->
-</footer>
+<app-footer></app-footer>

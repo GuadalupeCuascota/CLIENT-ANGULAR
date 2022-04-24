@@ -6,10 +6,10 @@ export interface Mentoria {
    hora_inicio: string;
    hora_fin: string;
    tipo_mentoria:string;
-   
+   nombre_materia;
    id_usuario:number;
    carrera:string;
-   materia:string;
+   id_materia:string;
    id_estado_mentoria:number;
   
 }

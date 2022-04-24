@@ -7,26 +7,33 @@
   <div class="container">
     <div class="col-sm-12">
       <div class="card">
-        <div class="card-body text-center">
-          <h5 class="text-center" style="color: #161515">
+        <div class="card-header">
+          <h5 style="color: #4b4949; font-weight: 700">
             Listado publicaciones oferta académica FICA
           </h5>
+        </div>
+        <div class="card-body text-center">
           <div class="row">
             <div class="col-md-3">
               <button
-              type="reset"
-              class="btn btn-primary"
-              (click)="open(contenido)"
-            >
-              CREAR PUBLICACIÓN <i class="fas fa-plus-square"></i>
-            </button>
-            </div>  
+                type="reset"
+                class="btn btn-primary"
+                (click)="estado();open(contenido);clear()"
+              >
+                CREAR PUBLICACIÓN <i class="fas fa-plus-square"></i>
+              </button>
+            </div>
             <div class="col-md-3"></div>
             <div class="col-md-5">
               <div class="form-group row">
                 <div class="input-group">
-                  
-                  <input type="text" class="form-control" name="textoBuscar"[(ngModel)]="textoBuscar" placeholder="Buscar perfil" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="textoBuscar"
+                    [(ngModel)]="textoBuscar"
+                    placeholder="Ingrese titulo"
+                  />
                   <div class="input-group-text bg-white">
                     <i class="fas fa-search"></i>
                   </div>
@@ -35,17 +42,14 @@
             </div>
           </div>
 
-          
-          <div class="card">
-            <table class="table table-hover">
+          <div class="table-responsive">
+            <table class="table table-striped">
               <thead>
                 <tr class="table-active">
                   <th scope="col">Titulo</th>
                   <th scope="col">Descripción</th>
-
-                  <th scope="col">Imagen</th>
                   <th scope="col">Carrera</th>
-
+                  <th scope="col">Imagen</th>
                   <th scope="col">acciones</th>
                 </tr>
               </thead>
@@ -54,12 +58,15 @@
                 <tr
                   *ngFor="
                     let oferta_academica of ofertas_academica
+                      | filtroOfertaAcad: textoBuscar
                       | paginate: { itemsPerPage: 3, currentPage: p }
                   "
                 >
                   <td>{{ oferta_academica.titulo }}</td>
                   <td>{{ oferta_academica.descripcion }}</td>
 
+              
+                  <td>{{ oferta_academica.nombre_carrera }}</td>
                   <td>
                     <img
                       *ngIf="
@@ -72,7 +79,6 @@
                       alt="no-image"
                     />
                   </td>
-                  <td>{{ oferta_academica.nombre_carrera }}</td>
                   <!-- <video
                   *ngIf="
                     oferta_academica.tipo_archivo == 'video/mp4' ||
@@ -88,7 +94,7 @@
                   <td>
                     <button
                       class="btn btn-primary"
-                      (click)="
+                      (click)="estadoedit();
                         getpublicacion(oferta_academica.id_publicacion);
                         open(contenido)
                       "
@@ -121,10 +127,34 @@
     </div>
   </div>
 </div>
+<ng-template #imagen let-modal>
+  <div class="modal-header">
+    <h4 ng class="modal-title" id="modal-basic-title">Visualizar imagen</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
+  <img
+    width="100%"
+    height="50px"
+    class="d-none"
+    [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
+    class="img-fluid"
+    alt="no-image"
+  />
+</ng-template>
 <ng-template #contenido let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">oferta académica FICA</h4>
+    <h4 *ngIf="!edit" class="modal-title" id="modal-basic-title">
+      Crear publicación oferta académica FICA
+    </h4>
+    <h4 *ngIf="edit">Actualizar información </h4>
 
     <button
       class="close"
@@ -136,92 +166,107 @@
     </button>
   </div>
   <div class="modal-body">
-    <label style="color: #161515">Carrera</label>
+    <form [formGroup]="ofertaAform">
+      
+      <div  class="form-group">
+        <label style="color: #161515">Carrera</label>
 
-    <select
-      class="form-control"
-      name="miselect"
-      [(ngModel)]="oferta_academica.id_carrera"
-    >
-      <!-- <option selected>Seleccione una opción</option> -->
-      <option *ngFor="let carrera of carreras">
-        {{ carrera.nombre_carrera }}
-      </option>
-    </select>
-    <div class="form-group">
-      <label>Titulo: </label>
-      <input
-        type="text"
-        class="form-control"
-        name=""
-        placeholder="Ingrese titulo"
-        [(ngModel)]="oferta_academica.titulo"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label>Descripción:</label>
-      <textarea
-        rows="2"
-        class="form-control"
-        [(ngModel)]="oferta_academica.descripcion"
-        placeholder="Ingrese descripción"
-        required
-      ></textarea>
-    </div>
-    <div class="buttons" *ngIf="edit">
-      <input
-        type="file"
-        class="d-none"
-        placeholder=""
-        (change)="onFileSelect($event)"
-        #photo
-      />
+        <select
+          class="form-control"
+          name="miselect"
+          formControlName="nombre_carrera"
+        >
+          <!-- <option selected>Seleccione una opción</option> -->
+          <option value="" selected>Seleccione una opción</option>
+          <option *ngFor="let carrera of carreras" >
+            {{ carrera.nombre_carrera }}
+          </option>
+        </select>
+        <small
+          class="text-danger"
+          *ngIf="
+            ofertaAform.get('nombre_carrera').hasError('required') &&
+            ofertaAform.get('nombre_carrera').touched
+          "
+          >campo es requerido</small
+        >
+      </div>
+      <div class="form-group">
+        <label>Titulo: </label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese titulo"
+          formControlName="titulo"
+        />
+        <small
+        class="text-danger"
+        *ngIf="
+          ofertaAform.get('titulo').hasError('required') &&
+          ofertaAform.get('titulo').touched
+        "
+        >campo es requerido</small
+      >
+      </div>
+      
+      <div class="form-group">
+        <label>Descripción:</label>
+        <textarea
+          rows="2"
+          class="form-control"
+          formControlName="descripcion"
+          placeholder="Ingrese descripción"
+          required
+        ></textarea>
+        <!-- <small
+        class="text-danger"
+        *ngIf="
+          ofertaAform.get('descripcion').hasError('required') &&
+          ofertaAform.get('descripcion').touched
+        "
+        >campo es requerido</small
+      > -->
+      </div>
+      <div class="buttons" *ngIf="edit">
+        <input
+          type="file"
+          class="d-none"
+          placeholder=""
+          (change)="onFileSelect($event)"
+          #photo
+        />
 
-      <button (click)="photo.click()" class="btn btn-primary">
-        Agregar imagen
-      </button>
+        <button (click)="photo.click()" class="btn btn-primary">
+          Agregar imagen
+        </button>
 
-      <button class="btn btn-primary" (click)="open(imagen)">Ver imagen</button>
-    </div>
+        <button class="btn btn-primary" (click)="open(imagen)">
+          Ver imagen
+        </button>
+      </div>
 
-    <div *ngIf="!edit">
-      <input
-        type="file"
-        class="d-none"
-        placeholder=""
-        (change)="onFileSelect($event)"
-        #photo
-      />
+      <div *ngIf="!edit">
+        <input
+          type="file"
+          class="d-none"
+          placeholder=""
+          (change)="onFileSelect($event)"
+          #photo
+        />
 
-      <button (click)="photo.click()" class="btn btn-primary">
-        Agregar imagen
-      </button>
-      <img
-        class="d-none"
-        [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
-        class="img-fluid"
-        alt="no-image"
-      />
-    </div>
+        <button (click)="photo.click()" class="btn btn-primary">
+          Agregar imagen
+        </button>
+        <img
+          class="d-none"
+          [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
+          class="img-fluid"
+          alt="no-image"
+        />
+      </div>
 
-    <!-- <div class="form-group"> 
-      <input
-        type="file"
-        name=""
-        placeholder=""
-        (change)="onFileSelect($event)"
-        #photo
-      />
-
-      <img
-        max-width="250px"
-        [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
-        class="img-fluid"
-        alt="no-image"
-      />
-
-      <!-- <class="d-none"<img [src]="../../../../assets/noimage.png" class="img-fluid" alt="no-image" (click)="photo.click()"> -->
+    </form>
   </div>
 
   <div class="modal-footer">
@@ -233,21 +278,27 @@
     >
       Cerrar
     </button>
+   
     <button
+    *ngIf="!edit"
       type="button"
+      [disabled]="!ofertaAform.valid"
       class="btn btn-primary"
-      (click)="edit ? updatepublicacion() : saveArchivo()"
+      (click)=" saveArchivo(); close(contenido)"
     >
       PUBLICAR
     </button>
+    <button
+    *ngIf="edit"
+      type="button"
+      [disabled]="!ofertaAform.valid"
+      class="btn btn-primary"
+      (click)=" updatepublicacion() ; close(contenido)"
+    >
+      GUARDAR
+    </button>
+
   </div>
 </ng-template>
 
-<!-- <footer class="bg-light text-center text-lg-start">
-  
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2021 Copyright: W-STEM UTN
-    
-  </div>
-  
-</footer> -->
+<app-footer></app-footer>

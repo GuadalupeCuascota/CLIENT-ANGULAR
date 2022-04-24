@@ -4,10 +4,13 @@
     <br />
     <div class="col-md-12">
       <div class="card">
-        <div class="card-body text-center">
-          <h5 class="text-center" style="color: #161515">
+        <div class="card-header  " >
+          <h5  style="color: #4b4949;font-weight: 700;">
             Listado de Usuarios
           </h5>
+        </div>
+        <div class="card-body text-center">
+          
           <div class="row">
             <div class="col-md-2">
               <button (click)="open(save);clear();" class="btn btn-primary">
@@ -41,6 +44,7 @@
                   <th scope="col">Apellido</th>
                   <th scope="col">Correo electrónico</th>
                   <th scope="col">Tipo rol</th>
+                  <th scope="col">Carrera</th>
                   <th scope="col">Acciones</th>
                 </tr>
               </thead>
@@ -57,6 +61,7 @@
                   <td>{{ usuario.apellido }}</td>
                   <td>{{ usuario.correo_electronico }}</td>
                   <td>{{ usuario.tipo_rol }}</td>
+                  <td>{{ usuario.nombre_carrera }}</td>
                   <td>
                     <button
                       class="btn btn-primary"
@@ -65,14 +70,14 @@
                         open(contenido)
                       "
                     >
-                      <i class="fas fa-edit"></i> Editar
+                      <i class="fas fa-edit"></i> 
                     </button>
                     |
                     <button
                       class="btn btn-danger"
                       (click)="deleteUsuario(usuario.id_usuario)"
                     >
-                      <i class="far fa-trash-alt"> </i> Eliminar
+                      <i class="far fa-trash-alt"> </i> 
                     </button>
                   </td>
                 </tr>
@@ -89,7 +94,7 @@
 </div>
 
 <ng-template #contenido let-modal>
-  <div class="modal-header">
+  <div class="modal-header ">
    
     <h4 class="modal-title" id="modal-basic-title">Editar información</h4>
     <button
@@ -213,11 +218,13 @@
             formControlName="tipo_rol"
           >
           <option value="" selected>Seleccione una opción</option>
-          <option *ngFor="let rol of roles">{{ rol.tipo_rol }}</option>
+          <option *ngFor="let rol of roles" value="{{rol.tipo_rol}}">{{rol.tipo_rol }}</option>
         </select>
         <small  *ngIf="exform.get('tipo_rol').hasError('required') && exform.get('tipo_rol').touched"  class="text-danger">Campo es requerido</small>
         </div>
-        <div class="col" >
+
+        
+        <div class="col" *ngIf="estado" >
           <label style="color: #161515">Carrera:</label>
           <select
           
@@ -226,11 +233,11 @@
           formControlName="nombre_carrera"
         >
         <option value="" selected>Seleccione una opción</option>
-        <option *ngFor="let carrera of carreras">{{ carrera.nombre_carrera }}</option>
+        <option *ngFor="let carrera of carreras">{{carrera.nombre_carrera}}</option>
       </select>
           
          
-          <small
+          <small  
           class="text-danger"
           *ngIf="
             exform.get('nombre_carrera').hasError('required') &&
@@ -261,6 +268,9 @@
     </button>
   </div>
 </ng-template>
+
+
+
 <ng-template #save let-modal>
   <div class="modal-header">
     <h5 class="text-center"  style="color: #161515">Registro de Usuarios</h5>
@@ -386,7 +396,7 @@
             formControlName="id_rol"
           >
           <option value="" selected>Seleccione una opción</option>
-          <option *ngFor="let rol of roles">{{ rol.tipo_rol }}</option>
+          <option *ngFor="let rol of roles" value="{{rol.id_rol}}">{{ rol.tipo_rol }}</option>
         </select>
         <small  *ngIf="saveForm.get('id_rol').hasError('required') && saveForm.get('id_rol').touched"  class="text-danger">Campo es requerido</small>
         </div>
@@ -395,7 +405,7 @@
           <select
             class="form-control"
             name="miselect"
-            formControlName="id_carrera"
+            formControlName="nombre_carrera"
           >
             <option value="" selected>Seleccione una opción</option>
             <option *ngFor="let carrera of carreras">
@@ -405,8 +415,8 @@
           <small
           class="text-danger"
           *ngIf="
-          saveForm.get('id_carrera').hasError('required') &&
-          saveForm.get('id_carrera').touched
+          saveForm.get('nombre_carrera').hasError('required') &&
+          saveForm.get('nombre_carrera').touched
           "
           >campo es requerido</small
         >
@@ -430,10 +440,4 @@
 </ng-template>
 
 
-<footer class="bg-light text-center text-lg-start">
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-    © 2021 Copyright: W-STEM UTN
-  </div>
-  <!-- Copyright -->
-</footer>
+<app-footer></app-footer>
