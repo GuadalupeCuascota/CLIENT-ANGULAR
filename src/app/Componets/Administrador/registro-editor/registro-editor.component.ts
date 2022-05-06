@@ -15,7 +15,7 @@ export class RegistroEditorComponent implements OnInit {
     id_usuario:0,
     nombre: '',
     apellido: '',
-    
+
     nombre_carrera:'',
     id_carrera:0,
     unidad_educativa: '',
@@ -33,16 +33,13 @@ export class RegistroEditorComponent implements OnInit {
   ngOnInit(): void {
   }
   saveUsuario() {
-    console.log(this.usuario);
     this.registroUsuarioService.saveUsuario(this.usuario).subscribe(
       (res) => {
-        console.log(res);
         this.alerts.showSuccess('Successfull Operation', 'Usuario guardado')
         this.router.navigate(['/login']);
 
       },
       (err) => {
-        console.error(err)
       this.alerts.showError('Error Operation', 'No se puede guardar')
       }
     );

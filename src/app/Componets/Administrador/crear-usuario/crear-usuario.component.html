@@ -1,21 +1,18 @@
 <app-registro-usuario></app-registro-usuario>
-<br>
+<br />
 <div class="contenido">
   <div class="container">
     <div class="card">
-      <div class="card-header" >
-        <h5  style="color: #4b4949;font-weight: 700;">
-          Listado de Estudiantes
-        </h5>
+      <div class="card-header">
+        <h5 style="color: #4b4949; font-weight: 700">Listado de Estudiantes</h5>
       </div>
       <div class="card-body text-center">
-            
         <div class="row">
           <div class="col-md-2">
             <!-- <button (click)="open(save);clear();" class="btn btn-primary">
               CREAR NUEVO <i class="fas fa-plus-square"></i>
             </button> -->
-          </div>  
+          </div>
           <div class="col-md-4"></div>
           <div class="col-md-5">
             <div class="form-group row">
@@ -34,7 +31,7 @@
             </div>
           </div>
         </div>
-  
+
         <div class="table-responsive">
           <table class="table table-striped">
             <thead>
@@ -44,11 +41,11 @@
                 <th scope="col">Correo electrónico</th>
                 <th scope="col">Nivel Académico</th>
                 <th scope="col">Carrera</th>
-                
+
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
-  
+
             <tbody>
               <tr
                 *ngFor="
@@ -60,9 +57,9 @@
                 <td>{{ usuario.nombre }}</td>
                 <td>{{ usuario.apellido }}</td>
                 <td>{{ usuario.correo_electronico }}</td>
-                
-                <td>{{ usuario.tipo_rol}}</td>
-                <td>{{ usuario.nombre_carrera}}</td>
+
+                <td>{{ usuario.tipo_rol }}</td>
+                <td>{{ usuario.nombre_carrera }}</td>
                 <td>
                   <button
                     class="btn btn-primary"
@@ -71,32 +68,29 @@
                       open(contenido)
                     "
                   >
-                    <i class="fas fa-edit"></i> 
+                    <i class="fas fa-edit"></i>
                   </button>
                   |
                   <button
                     class="btn btn-danger"
                     (click)="deleteUsuario(usuario.id_usuario)"
                   >
-                    <i class="far fa-trash-alt"> </i> 
+                    <i class="far fa-trash-alt"> </i>
                   </button>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-  
+
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>
     </div>
-    </div>
+  </div>
 </div>
- 
-
 
 <ng-template #contenido let-modal>
-  <div class="modal-header ">
-   
+  <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Editar información</h4>
     <button
       class="close"
@@ -125,16 +119,16 @@
             exform.get('nombre').hasError('required') &&
             exform.get('nombre').touched
           "
-          >campo es requerido</small
-        >
+          >campo es requerido
+        </small>
         <small
           class="text-danger"
           *ngIf="
             exform.get('nombre').hasError('pattern') &&
             exform.get('nombre').touched
           "
-          >Ingrese solo letras</small
-        >
+          >Ingrese solo letras
+          </small>
       </div>
       <div class="form-group">
         <label style="color: #161515">Apellido</label>
@@ -191,23 +185,29 @@
         </div>
         <div class="col">
           <label style="color: #161515">Contraseña</label>
-          <input 
+          <input
             type="password"
             class="form-control"
             name=""
             placeholder="Ingrese contraseña"
             formControlName="contrasenia"
-            
           />
           <small
-          class="text-danger"
-          *ngIf="
-            exform.get('contrasenia').hasError('required') &&
-            exform.get('contrasenia').touched
-          "
-          >campo es requerido</small
-        >
-        <small  class="text-danger" *ngIf="exform.get('contrasenia').hasError('minlength') && exform.get('contrasenia').touched" >Cantidad minima de caracteres es (8)</small>
+            class="text-danger"
+            *ngIf="
+              exform.get('contrasenia').hasError('required') &&
+              exform.get('contrasenia').touched
+            "
+            >campo es requerido</small
+          >
+          <small
+            class="text-danger"
+            *ngIf="
+              exform.get('contrasenia').hasError('minlength') &&
+              exform.get('contrasenia').touched
+            "
+            >Cantidad minima de caracteres es (8)</small
+          >
         </div>
       </div>
       <div class="form-group row">
@@ -219,35 +219,41 @@
             name="miselect"
             formControlName="tipo_rol"
           >
-          <option value="" selected>Seleccione una opción</option>
-          <option *ngFor="let rol of roles" value="{{rol.tipo_rol}}">{{rol.tipo_rol }}</option>
-        </select>
-        <small  *ngIf="exform.get('tipo_rol').hasError('required') && exform.get('tipo_rol').touched"  class="text-danger">Campo es requerido</small>
+            <option value="" selected>Seleccione una opción</option>
+            <option *ngFor="let rol of roles" value="{{ rol.tipo_rol }}">
+              {{ rol.tipo_rol }}
+            </option>
+          </select>
+          <small
+            *ngIf="
+              exform.get('tipo_rol').hasError('required') &&
+              exform.get('tipo_rol').touched
+            "
+            class="text-danger"
+            >Campo es requerido</small
+          >
         </div>
-
-        
-        <!-- <div class="col" *ngIf="estado" >
-          <label style="color: #161515">Carrera:</label>
-          <select
-          
+      </div>
+      <div class="form-group" *ngIf="estado">
+        <label style="color: #161515">Carrera:</label>
+        <select
           class="form-control"
           name="miselect"
           formControlName="nombre_carrera"
         >
-        <option value="" selected>Seleccione una opción</option>
-        <option *ngFor="let carrera of carreras">{{carrera.nombre_carrera}}</option>
-      </select>
-          
-         
-          <small  
-          class="text-danger"
-          *ngIf="
-            exform.get('nombre_carrera').hasError('required') &&
-            exform.get('nombre_carrera').touched
-          "
-          >campo es requerido</small
+          <option value="" selected>Seleccione una opción</option>
+          <option *ngFor="let carrera of carreras" value="{{ carrera.nombre_carrera }}">
+            {{ carrera.nombre_carrera }}
+          </option>
+        </select>
+        <small
+        *ngIf="
+          exform.get('nombre_carrera').hasError('required') &&
+          exform.get('nombre_carrera').touched
+        "
+        class="text-danger"
+        >Campo es requerido</small
         >
-        </div> -->
       </div>
     </form>
   </div>
@@ -270,6 +276,5 @@
     </button>
   </div>
 </ng-template>
-
 
 <app-footer></app-footer>

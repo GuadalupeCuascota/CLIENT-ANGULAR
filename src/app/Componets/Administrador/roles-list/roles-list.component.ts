@@ -23,7 +23,7 @@ export class RolesListComponent implements OnInit {
   };
   rolform:FormGroup
   edit: boolean=false;
-  constructor( 
+  constructor(
     private registroRolService: RegistroRolService,
     private router: Router,
     private alerts: AlertsService,
@@ -34,18 +34,19 @@ export class RolesListComponent implements OnInit {
     this.getRoles();
     this.rolform=new FormGroup({
       tipo_rol: new FormControl('', Validators.required),
-      
+
     })
   }
 
   getRoles() {
     this.registroRolService.getRoles().subscribe(
       (res) => {
-        console.log(res);
         this.roles = res;
-        
+
       },
-      (err) => console.error(err)
+      (err) => {
+        this.alerts.showError('Error Operation', err);
+      }
     );
   }
 
@@ -54,7 +55,6 @@ export class RolesListComponent implements OnInit {
     this.rol.tipo_rol=this.rolform.controls['tipo_rol'].value;
     this.registroRolService.saveRol(this.rol).subscribe(
       (res) => {
-        console.log(res);
         this.getRoles();
         this.alerts.showSuccess('Rol guardado', 'Operación exitosa')
       },
@@ -65,43 +65,41 @@ export class RolesListComponent implements OnInit {
     if(confirm('Esta seguro que desea eliminar esto?')){
     this.registroRolService.deleteURol(id).subscribe(
       (res) => {
-        console.log(res);
         this.getRoles();
         this.alerts.showSuccess('Rol eliminado','Operación exitosa', );
       },
       (err) => {
-        console.error(err)
       this.alerts.showError('Error Operation', 'No se puede eliminar')
       }
     );
     }
   }
   getRol(id: String) {
-    console.log(id);
     if (id) {
       this.registroRolService.getRol(id).subscribe(
         res => {
-          console.log(res);
-          this.rol= res;   
-          this.edit=true 
-          
+          this.rol= res;
+          this.edit=true
+
         },
-        err => console.error(err)
+        err => {
+          this.alerts.showError('Error Operation', err);
+        }
       );
     }
-    
+
   }
   updateRol(){
-    console.log(this.rol)
     this.registroRolService.updateRol(this.rol.id_rol,this.rol).subscribe(
       res=>{
-        console.log(res);
         this.getRoles();
         this.edit=false;
         //window.location.reload();
 
       },
-      err=>console.log(err)  
+      err=>{
+        this.alerts.showError('Error Operation', 'No se puede actualizar');
+      }
     );
 
 

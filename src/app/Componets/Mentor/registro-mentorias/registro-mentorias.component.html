@@ -168,7 +168,7 @@
                       <thead>
                         <tr class="table-active">
                           <th scope="col">Materia</th>
-                          <th scope="col">Fechas</th>
+                          <th scope="col">Fecha</th>
                           <th scope="col">Hora inicio</th>
                           <th scope="col">Hora fin</th>
                           <th scope="col">Estado</th>
@@ -460,7 +460,7 @@
   <div class="modal-body">
     <form [formGroup]="exformEdit">
       <div class="form-group">
-        <label style="color: #161515">Fecha:</label>
+        <label style="color: #161515" class="required">Fecha:</label>
         <input
           type="date"
           class="form-control"
@@ -474,7 +474,7 @@
         >
       </div>
       <div class="form-group">
-        <label style="color: #161515">Materia</label>
+        <label style="color: #161515" class="required">Materia</label>
 
         <select
           class="form-control"
@@ -496,7 +496,7 @@
         >
       </div>
       <div class="form-group">
-        <label style="color: #161515">Hora inicio:</label>
+        <label style="color: #161515" class="required">Hora inicio:</label>
         <select class="form-control" formControlName="hora_inicio">
           <option value="" selected>Seleccione una opción</option>
           <option *ngFor="let n of horas">{{ n }}</option>
@@ -512,7 +512,7 @@
       </div>
 
       <div class="form-group">
-        <label style="color: #161515">Hora fin:</label>
+        <label style="color: #161515" class="required">Hora fin:</label>
         <select class="form-control" formControlName="hora_fin">
           <option value="" selected>Seleccione una opción</option>
           <option *ngFor="let n of horas">{{ n }}</option>

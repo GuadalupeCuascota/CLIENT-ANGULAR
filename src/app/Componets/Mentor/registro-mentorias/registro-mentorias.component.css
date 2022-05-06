@@ -3,11 +3,15 @@
   color: red;
 }
 .content {
-  
+
   margin-left: 40px;
   padding-left: 20px;
   margin-right: 40px;
   padding-top: 115px;
+  }
+  .required:after {
+    content: " *";
+    color: red;
   }
   .form-control.ng-touched.ng-invalid{
     border:1px solid red
@@ -15,7 +19,7 @@
   .form-control.ng-touched.ng-valid{
     border:1px solid purple
   }
-    
+
 .list-group-item {
   background: rgba(255, 255, 255, 0.952);
 }
@@ -31,8 +35,8 @@
   background-image: linear-gradient(rgba(255, 246, 246, 0.8),rgba(213, 195, 247, 0.8)),url(../../../../assets/mentor.jpg);
   background-repeat: no-repeat center center fixed;
   min-height: 100vh;
-  background-size:100% 100%;  
-  
+  background-size:100% 100%;
+
 
 
 }

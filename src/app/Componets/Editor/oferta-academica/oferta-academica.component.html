@@ -50,7 +50,7 @@
                   <th scope="col">Descripción</th>
                   <th scope="col">Carrera</th>
                   <th scope="col">Imagen</th>
-                  <th scope="col">acciones</th>
+                  <th scope="col" style="width: 120px;">acciones</th>
                 </tr>
               </thead>
 
@@ -65,7 +65,7 @@
                   <td>{{ oferta_academica.titulo }}</td>
                   <td>{{ oferta_academica.descripcion }}</td>
 
-              
+
                   <td>{{ oferta_academica.nombre_carrera }}</td>
                   <td>
                     <img
@@ -167,9 +167,9 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="ofertaAform">
-      
+
       <div  class="form-group">
-        <label style="color: #161515">Carrera</label>
+        <label style="color: #161515" class="required"  >Carrera</label>
 
         <select
           class="form-control"
@@ -192,7 +192,7 @@
         >
       </div>
       <div class="form-group">
-        <label>Titulo: </label>
+        <label class="required">Titulo: </label>
         <input
           type="text"
           class="form-control"
@@ -209,9 +209,9 @@
         >campo es requerido</small
       >
       </div>
-      
+
       <div class="form-group">
-        <label>Descripción:</label>
+        <label class="required">Descripción:</label>
         <textarea
           rows="2"
           class="form-control"
@@ -219,14 +219,14 @@
           placeholder="Ingrese descripción"
           required
         ></textarea>
-        <!-- <small
+        <small
         class="text-danger"
         *ngIf="
           ofertaAform.get('descripcion').hasError('required') &&
           ofertaAform.get('descripcion').touched
         "
         >campo es requerido</small
-      > -->
+      >
       </div>
       <div class="buttons" *ngIf="edit">
         <input
@@ -278,7 +278,7 @@
     >
       Cerrar
     </button>
-   
+
     <button
     *ngIf="!edit"
       type="button"

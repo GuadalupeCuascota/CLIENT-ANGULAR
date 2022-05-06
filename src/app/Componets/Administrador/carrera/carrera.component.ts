@@ -27,7 +27,7 @@ export class CarreraComponent implements OnInit {
     id_carrera: 0,
     nombre_carrera: '',
   };
-  textoBuscar=''
+  textoBuscar = '';
   carrera1: any = {};
 
   p: number = 0;
@@ -66,18 +66,14 @@ export class CarreraComponent implements OnInit {
       this.clear();
       this.edit = false;
       return 'by pressing ESC';
-
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       this.clear();
       this.edit = false;
       return 'by clicking on a backdrop';
-
-
     } else {
       this.clear();
       this.edit = false;
       return `with: ${reason}`;
-
     }
   }
   close(content) {
@@ -85,14 +81,13 @@ export class CarreraComponent implements OnInit {
     this.getCarreras();
   }
   clear() {
-    this.carrera.nombre_carrera=null
+    this.carrera.nombre_carrera = null;
     this.carreraform.controls['nombre_carrera'].setValue(
-    this.carrera.nombre_carrera)
+      this.carrera.nombre_carrera
+    );
   }
   getCarreras() {
     var Carrera = [];
-    console.log('hol');
-
     this.registroCarreraService.getCarreras().subscribe(
       (res: any) => {
         for (let n of res) {
@@ -100,26 +95,22 @@ export class CarreraComponent implements OnInit {
             Carrera.push(n);
           }
         }
-        console.log(res);
         this.carreras = Carrera;
       },
-      /*  res=> console.log(res), */
-      (err) => console.error(err)
+      (err) => this.alerts.showError('Error Operation', 'No se puede guardar')
     );
   }
   saveCarrera() {
-    this.carrera.nombre_carrera=this.carreraform.controls['nombre_carrera'].value;
-
+    this.carrera.nombre_carrera =
+      this.carreraform.controls['nombre_carrera'].value;
 
     this.registroCarreraService.saveCarrera(this.carrera).subscribe(
       (res) => {
         this.getCarreras();
-        console.log(res);
         this.alerts.showSuccess('Successfull Operation', 'Carrera guardado');
         this.carreraform.reset();
       },
       (err) => {
-        console.error(err);
         this.alerts.showError('Error Operation', 'No se puede guardar');
       }
     );
@@ -130,13 +121,13 @@ export class CarreraComponent implements OnInit {
       this.registroCarreraService.getCarrera(id_carrera).subscribe(
         (res: any) => {
           this.carrera = res;
-         this.carreraform.controls['nombre_carrera'].setValue(
-          this.carrera.nombre_carrera)
-
-
+          this.carreraform.controls['nombre_carrera'].setValue(
+            this.carrera.nombre_carrera
+          );
         },
 
-        (err) => (err) =>  this.alerts.showError('Error Operation', 'No se puede actualizar')
+        (err) => (err) =>
+          this.alerts.showError('Error Operation', 'No se puede actualizar')
       );
     }
   }
@@ -145,19 +136,18 @@ export class CarreraComponent implements OnInit {
     if (confirm('Esta seguro que desea eliminar esto?')) {
       this.registroCarreraService.deleteCarrera(id_carrera).subscribe(
         (res) => {
-          console.log('PASAA' + res);
           this.getCarreras();
           this.alerts.showSuccess('Successfull Operation', 'Carrera eliminado');
           //this.toastr.success('Successfull Operation', 'Rol eliminado');
         },
-
         (err) =>
           this.alerts.showError('Error Operation', 'No se puede eliminar')
       );
     }
   }
   updateCarrera() {
-    this.carrera.nombre_carrera=this.carreraform.controls['nombre_carrera'].value;
+    this.carrera.nombre_carrera =
+      this.carreraform.controls['nombre_carrera'].value;
 
     this.registroCarreraService
       .updateCarrera(this.carrera.id_carrera, this.carrera)
@@ -168,13 +158,9 @@ export class CarreraComponent implements OnInit {
             'Carrera actualizado'
           );
           this.getCarreras();
-          console.log(res);
         },
-        (err) =>
-        {
-          console.log(err)
+        (err) => {
           this.alerts.showError('Error Operation', 'No se puede guardar');
-
         }
       );
   }

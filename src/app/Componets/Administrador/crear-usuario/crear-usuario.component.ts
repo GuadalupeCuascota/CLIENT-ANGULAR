@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators,ReactiveFormsModule} from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertsService } from 'src/app/Services/alerts/alerts.service';
 import { Usuario } from '../../../Models/usuario';
@@ -11,23 +17,23 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-crear-usuario',
   templateUrl: './crear-usuario.component.html',
-  styleUrls: ['./crear-usuario.component.css']
+  styleUrls: ['./crear-usuario.component.css'],
 })
 export class CrearUsuarioComponent implements OnInit {
   usuarios: Usuario[] = [];
   usuario: Usuario = {
-    id_usuario:0,
+    id_usuario: 0,
     nombre: '',
     apellido: '',
-
-    nombre_carrera:'',
-    id_carrera:0,
+    nombre_carrera: '',
+    id_carrera: 0,
     unidad_educativa: '',
     correo_electronico: '',
     contrasenia: '',
     id_rol: 0,
-    tipo_rol:'',
+    tipo_rol: '',
   };
+  carreras: Carrera[] = [];
   roles: any = [];
   exform: FormGroup;
   p: number = 0;
@@ -35,13 +41,19 @@ export class CrearUsuarioComponent implements OnInit {
   closeResult = '';
   edit: boolean = false;
   estado: boolean;
-  constructor( private registroUsuarioService: RegistroUsuarioService, private alerts: AlertsService,private router: Router,
-    private registroRolService: RegistroRolService,private registroCarreraService:  ResgitroCarrerasService,
-    private modalService: NgbModal) { }
-    private emailPattern: any =
+  constructor(
+    private registroUsuarioService: RegistroUsuarioService,
+    private alerts: AlertsService,
+    private router: Router,
+    private registroRolService: RegistroRolService,
+    private registroCarreraService: ResgitroCarrerasService,
+    private modalService: NgbModal
+  ) {}
+  private emailPattern: any =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   ngOnInit(): void {
-  this.ObtenerRoles();
+    this.getCarreras();
+    this.ObtenerRoles();
     this.getUsuarios();
     this.exform = new FormGroup({
       nombre: new FormControl('', [
@@ -61,7 +73,7 @@ export class CrearUsuarioComponent implements OnInit {
         Validators.minLength(8),
       ]),
       tipo_rol: new FormControl('', Validators.required),
-
+      nombre_carrera: new FormControl('', Validators.required),
     });
   }
   open(content) {
@@ -97,35 +109,26 @@ export class CrearUsuarioComponent implements OnInit {
     this.estado = false;
   }
   clear() {
-    console.log('clear clicked');
     this.usuario.nombre = null;
     this.usuario.apellido = null;
     this.usuario.correo_electronico = null;
-    this.usuario.contrasenia=null;
-    this.usuario.tipo_rol=null
-
+    this.usuario.contrasenia = null;
+    this.usuario.tipo_rol = null;
 
     this.exform.controls['nombre'].setValue(this.usuario.nombre);
     this.exform.controls['apellido'].setValue(this.usuario.apellido);
     this.exform.controls['correo_electronico'].setValue(
       this.usuario.correo_electronico
     );
-    this.exform.controls['contrasenia'].setValue(
-      this.usuario.contrasenia
-    );
-    this.exform.controls['tipo_rol'].setValue(
-      this.usuario.tipo_rol
-    );
+    this.exform.controls['contrasenia'].setValue(this.usuario.contrasenia);
+    this.exform.controls['tipo_rol'].setValue(this.usuario.tipo_rol);
   }
   getUsuario(id_usuario: String, id_rol: number) {
-    console.log("PASAA")
     // this.edit = true;
     if (id_usuario) {
       this.registroUsuarioService.getUsuario(id_usuario).subscribe(
-        (res:any) => {
-          console.log("se obtiene",res);
-          this.usuario= res;
-          console.log("LA CARRERA",this.usuario.nombre_carrera)
+        (res: any) => {
+          this.usuario = res;
           this.exform.controls['nombre'].setValue(this.usuario.nombre);
           this.exform.controls['apellido'].setValue(this.usuario.apellido);
           this.exform.controls['correo_electronico'].setValue(
@@ -135,9 +138,23 @@ export class CrearUsuarioComponent implements OnInit {
             this.usuario.contrasenia
           );
           this.exform.controls['tipo_rol'].setValue(this.usuario.tipo_rol);
+           //bachillerato
+          if (id_rol == 4) {
+            this.estado = false;
+            this.exform.controls['nombre_carrera'].setValue(
+              this.usuario.nombre_carrera = "Sin asignar"
+            );
 
+          } else {
+            if (id_rol == 5) {
+              this.estado = true;
 
+              this.exform.controls['nombre_carrera'].setValue(
+                this.usuario.nombre_carrera
+              );
 
+            }
+          }
         },
         (err) =>
           this.alerts.showError('Error Operation', 'No se puede actualizar')
@@ -150,10 +167,9 @@ export class CrearUsuarioComponent implements OnInit {
     this.registroUsuarioService.getUsuarios().subscribe(
       (res: any) => {
         for (let usu1 of res) {
-          if (usu1.id_rol == 4 || usu1.id_rol==5) {
-            if(usu1.id_carrera==1 || usu1.id_carrera==12){
-              usu1.nombre_carrera="";
-
+          if (usu1.id_rol == 4 || usu1.id_rol == 5) {
+            if (usu1.id_carrera == 1 || usu1.id_carrera == 12) {
+              usu1.nombre_carrera = '';
             }
             usuAE.push(usu1);
             c = c + 1;
@@ -173,12 +189,11 @@ export class CrearUsuarioComponent implements OnInit {
     this.registroRolService.getRoles().subscribe(
       (res: any) => {
         for (let rol1 of res) {
-          if (rol1.id_rol == 4 || rol1.id_rol == 5 ) {
+          if (rol1.id_rol == 4 || rol1.id_rol == 5) {
             rol.push(rol1);
           }
         }
         this.roles = rol;
-        console.log(this.roles)
       },
       (err) => console.error(err)
     );
@@ -187,13 +202,15 @@ export class CrearUsuarioComponent implements OnInit {
     if (confirm('Esta seguro que desea eliminar esto?')) {
       this.registroUsuarioService.deleteUsuario(id_usuario).subscribe(
         (res) => {
-          console.log(res);
           this.getUsuarios();
           this.alerts.showSuccess('Successfull Operation', 'Usuario eliminado');
           //this.toastr.success('Successfull Operation', 'Rol eliminado');
         },
 
-        (err) => console.log(err)
+        (err) => {
+          this.alerts.showError('Error Operation', err);
+        }
+
       );
     }
   }
@@ -201,10 +218,10 @@ export class CrearUsuarioComponent implements OnInit {
     this.usuario.nombre = this.exform.controls['nombre'].value;
     this.usuario.apellido = this.exform.controls['apellido'].value;
     this.usuario.correo_electronico =
-      this.exform.controls['correo_electronico'].value;
+    this.exform.controls['correo_electronico'].value;
     this.usuario.contrasenia = this.exform.controls['contrasenia'].value;
     this.usuario.tipo_rol = this.exform.controls['tipo_rol'].value;
-
+    this.usuario.nombre_carrera = this.exform.controls['nombre_carrera'].value;
 
     this.registroUsuarioService
       .updateUsuario(this.usuario.id_usuario, this.usuario)
@@ -215,25 +232,44 @@ export class CrearUsuarioComponent implements OnInit {
             'Usuario actualizado'
           );
           this.getUsuarios();
-          console.log(res);
         },
 
-
-        (err) =>{
+        (err) => {
           console.error(err);
           this.alerts.showError('Error Operation', 'No se puede actualizar');
         }
       );
   }
-  public optionsFn(event) {
-    //editar
 
-    console.log('el evento ES', event.target.value);
-    // if (event.target.value == 'Mentor') {
-    //    this.estado = true;
-    // } else {
-    //   this.exform.patchValue({ nombre_carrera: 'Sin asignar' });
-    //   this.estado = false;
-    // }
+  getCarreras() {
+    var Carrera = [];
+    this.registroCarreraService.getCarreras().subscribe(
+      (res: any) => {
+        for (let n of res) {
+          if (n.id_carrera != 1) {
+            Carrera.push(n);
+          }
+        }
+
+        this.carreras = Carrera;
+      },
+
+      (err) => console.error(err)
+    );
+  }
+  public optionsFn(event) {
+
+    if (event.target.value == 'Educación Superior') {
+      this.estado = true;
+      this.exform.controls['nombre_carrera'].setValue(null);
+    } else {
+      if (event.target.value == 'Bachillerato') {
+        this.estado = false;
+        this.exform.controls['nombre_carrera'].setValue(
+          this.usuario.nombre_carrera = 'Sin Asignar'
+        );
+
+      }
+    }
   }
 }

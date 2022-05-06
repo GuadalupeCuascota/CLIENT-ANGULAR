@@ -191,11 +191,11 @@ export class DashboardComponent implements OnInit {
 
 
         }
-
         this.tipoMentoria = con;
-        console.log('nuevo tipo', this.tipoMentoria);
       },
-      (err) => console.error(err)
+      (err) => {
+        this.alerts.showError('Error Operation', err);
+      }
     );
   }
 
@@ -225,7 +225,6 @@ export class DashboardComponent implements OnInit {
     var con = [];
     this.registroUsuarioService.getUsuarios().subscribe(
       (res: any) => {
-        console.log('los usuarios', res);
         for (let usu1 of res) {
           if (usu1.id_rol == 4 || usu1.id_rol == 5) {
             est = est + 1;
@@ -249,10 +248,11 @@ export class DashboardComponent implements OnInit {
         con.push(options, options1);
         this.registroEst = con;
         this.countEstudiantes = est;
-        console.log('el resgistro', this.registroEst);
+
       },
-      /*  res=> console.log(res), */
-      (err) => console.error(err)
+      (err) => {
+        this.alerts.showError('Error Operation', err);
+      }
     );
   }
   getNroLikesPorCarrera() {
@@ -272,9 +272,11 @@ export class DashboardComponent implements OnInit {
           }
         }
         this.eventosCarrera = con;
-        console.log("el evento por carrera",this.eventosCarrera)
+
       },
-      (err) => console.error(err)
+      (err) => {
+        this.alerts.showError('Error Operation', err);
+      }
     );
   }
 
@@ -290,7 +292,6 @@ export class DashboardComponent implements OnInit {
         this.countLikes = likes;
       },
       (err) => {
-        console.log('no se puede obtener');
         this.alerts.showError('Error Operation', 'No se puede guardar');
       }
     );
@@ -305,8 +306,7 @@ export class DashboardComponent implements OnInit {
         this.countMentoriaAgen = numMentorias;
       },
       (err) => {
-        console.log('no se puede obtener');
-        this.alerts.showError('Error Operation', 'No se puede guardar');
+        this.alerts.showError('Error Operation', err);
       }
     );
   }
@@ -328,9 +328,10 @@ export class DashboardComponent implements OnInit {
           }
         }
         this.LikesPerfil = con;
-        console.log('likes perfil', this.LikesPerfil);
       },
-      (err) => console.error(err)
+      (err) => {
+        this.alerts.showError('Error Operation', err);
+      }
     );
   }
   onSelect(data): void {
@@ -344,4 +345,5 @@ export class DashboardComponent implements OnInit {
   onDeactivate(data): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
+
 }

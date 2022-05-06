@@ -48,21 +48,18 @@ export class NoticiasComponent implements OnInit {
   noticiaform: FormGroup;
   ngOnInit(): void {
     this.id = this.router.snapshot.paramMap.get('id');
-    console.log('el id de la ruta', this.id);
-
     this.datos = JSON.parse(localStorage.getItem('payload'));
     this.getpublicaciones();
     this.noticiaform = new FormGroup({
       titulo: new FormControl('', [
-        Validators.required,Validators.maxLength(250),
-        
-       
+        Validators.required,
+        Validators.maxLength(250),
       ]),
       descripcion: new FormControl('', [
         Validators.required,
         Validators.minLength(10),
       ]),
-      enlace: new FormControl('', ),
+      enlace: new FormControl(''),
     });
   }
   ///////////////////////METODOS DEL MODAL///////////////////////////
@@ -96,7 +93,6 @@ export class NoticiasComponent implements OnInit {
     this.edit = false;
   }
   clear() {
-    console.log('clear clicked');
     this.noticia.titulo = null;
     this.noticia.descripcion = null;
     this.noticia.estado_profesion = null;
@@ -107,56 +103,41 @@ export class NoticiasComponent implements OnInit {
     this.noticiaform.controls['titulo'].setValue(this.noticia.titulo);
     this.noticiaform.controls['descripcion'].setValue(this.noticia.descripcion);
     this.noticiaform.controls['enlace'].setValue(this.noticia.enlace);
-
-    
   }
   onFileSelect(event) {
-    console.log(event);
     if (event.target.files.length > 0) {
       this.archivosSeleccionado = <File>event.target.files[0];
-      console.log('Archivo cargado', this.archivosSeleccionado);
-
       const reader = new FileReader(); //Crear un objeto de tipo FileReader  para leer la imagen
       reader.readAsDataURL(this.archivosSeleccionado); //leemos la imagen pasado por parametro
 
       reader.onload = (e) => (this.leerArchivo = reader.result); //Comprobamos la carga del archivo y enviamos el resultado
-      console.log('el archivo leer', this.leerArchivo);
     } else {
-      console.log('seleccione imagen');
       this.alerts.showError('Error Operation', 'Seleccione imagen');
     }
   }
 
   saveArchivo() {
-    console.log(this.noticia);
-
     try {
       const fd = new FormData(); //objeto que almacena datos de un formulario
       // for( let i=0; i<this.archivosSeleccionado.length; i++){
       fd.append('ruta_archivo', this.archivosSeleccionado);
       fd.append('titulo', this.noticiaform.controls['titulo'].value);
-      fd.append('descripcion',  this.noticiaform.controls['descripcion'].value);
+      fd.append('descripcion', this.noticiaform.controls['descripcion'].value);
       fd.append('enlace', this.noticiaform.controls['enlace'].value);
       fd.append('id_usuario', this.datos.id_usuario);
       fd.append('id_tipo_publicacion', this.id);
       fd.append('id_estado_publicacion', this.noticia.id_estado_publicacion);
       fd.append('nombre_carrera', this.noticia.nombre_carrera);
       this.registroArchivo.saveArchivo(fd).subscribe(
-        (res)=>{
-          console.log(res)
+        (res) => {
           this.getpublicaciones();
-          this.alerts.showSuccess('Successfull Operation', 'Noticia guardado')
+          this.alerts.showSuccess('Successfull Operation', 'Noticia guardado');
           this.ngOnInit();
-
         },
 
-         (err)=>
-         this.alerts.showError('Error Operation', 'No se puede guardar')
-
+        (err) => this.alerts.showError('Error Operation', 'No se puede guardar')
       );
-    } catch {
-      console.log('error');
-    }
+    } catch {}
     this.clear();
   }
 
@@ -167,75 +148,50 @@ export class NoticiasComponent implements OnInit {
         for (let n of res) {
           if (n.id_tipo_publicacion == 2) {
             not.push(n);
-            console.log(not);
           }
         }
 
         this.noticias = not;
       },
-      /*  res=> console.log(res), */
       (err) => console.error(err)
     );
   }
   getpublicacion(id: String) {
-    console.log(id);
     if (id) {
       this.registroArchivo.getArchivo(id).subscribe(
         (res) => {
-          console.log(res);
           this.noticia = res;
           this.noticiaform.controls['titulo'].setValue(this.noticia.titulo);
-          this.noticiaform.controls['descripcion'].setValue(this.noticia.descripcion);
+          this.noticiaform.controls['descripcion'].setValue(
+            this.noticia.descripcion
+          );
           this.noticiaform.controls['enlace'].setValue(this.noticia.enlace);
-
           this.API_URI = this.noticia.ruta_archivo;
           this.edit = true;
         },
-        (err) => console.error(err)
+        (err) => {
+          this.alerts.showError('Error Operation', err);
+        }
       );
     }
   }
-  
+
   updatepublicacion() {
     if (this.archivosSeleccionado) {
       this.edit = true;
-      
-      try {
-        const fda = new FormData(); //objeto que almacena datos de un formulario
-      // for( let i=0; i<this.archivosSeleccionado.length; i++){
-      fda.append('ruta_archivo', this.archivosSeleccionado);
-      fda.append('titulo', this.noticiaform.controls['titulo'].value);
-      fda.append('descripcion', this.noticiaform.controls['descripcion'].value);
-      fda.append('enlace', this.noticiaform.controls['enlace'].value);
-      fda.append('nombre_carrera', this.noticia.nombre_carrera);
 
-      
-
-      this.registroArchivo
-        .updateArchivo(this.noticia.id_publicacion, fda)
-        .subscribe(
-          (res) => {
-            this.alerts.showSuccess(
-              'Successfull Operation',
-              'publicación actualizado'
-            );
-            this.getpublicaciones();
-            console.log(res);
-          },
-          (err) =>
-            this.alerts.showError('Error Operation', 'No se puede actualizar')
-        );
-      } catch (error) {}
-    } else {
       try {
         const fda = new FormData(); //objeto que almacena datos de un formulario
         // for( let i=0; i<this.archivosSeleccionado.length; i++){
+        fda.append('ruta_archivo', this.archivosSeleccionado);
+        fda.append('titulo', this.noticiaform.controls['titulo'].value);
+        fda.append(
+          'descripcion',
+          this.noticiaform.controls['descripcion'].value
+        );
+        fda.append('enlace', this.noticiaform.controls['enlace'].value);
+        fda.append('nombre_carrera', this.noticia.nombre_carrera);
 
-          fda.append('ruta_archivo', this.noticia.ruta_archivo);
-          fda.append('titulo', this.noticiaform.controls['titulo'].value);
-          fda.append('descripcion', this.noticiaform.controls['descripcion'].value);
-          fda.append('enlace', this.noticiaform.controls['enlace'].value);
-          fda.append('nombre_carrera', this.noticia.nombre_carrera);
         this.registroArchivo
           .updateArchivo(this.noticia.id_publicacion, fda)
           .subscribe(
@@ -245,28 +201,53 @@ export class NoticiasComponent implements OnInit {
                 'publicación actualizado'
               );
               this.getpublicaciones();
-              console.log(res);
             },
-           
+            (err) =>
+              this.alerts.showError('Error Operation', 'No se puede actualizar')
           );
-          (err) =>
-            this.alerts.showError('Error Operation', 'No se puede actualizar')
+      } catch (error) {}
+    } else {
+      try {
+        const fda = new FormData(); //objeto que almacena datos de un formulario
+        // for( let i=0; i<this.archivosSeleccionado.length; i++){
+
+        fda.append('ruta_archivo', this.noticia.ruta_archivo);
+        fda.append('titulo', this.noticiaform.controls['titulo'].value);
+        fda.append(
+          'descripcion',
+          this.noticiaform.controls['descripcion'].value
+        );
+        fda.append('enlace', this.noticiaform.controls['enlace'].value);
+        fda.append('nombre_carrera', this.noticia.nombre_carrera);
+        this.registroArchivo
+          .updateArchivo(this.noticia.id_publicacion, fda)
+          .subscribe((res) => {
+            this.alerts.showSuccess(
+              'Successfull Operation',
+              'publicación actualizado'
+            );
+            this.getpublicaciones();
+          });
+        (err) =>
+          this.alerts.showError('Error Operation', 'No se puede actualizar');
       } catch (error) {}
     }
     this.clear();
   }
   deletePublicacion(id: String) {
-    console.log(id);
-
     if (confirm('Esta seguro que desea eliminar esto?')) {
       this.registroArchivo.deleteArchivo(id).subscribe(
         (res) => {
-          console.log(res);
           this.getpublicaciones();
-          this.alerts.showSuccess('Successfull Operation', 'Publicación eliminado');
+          this.alerts.showSuccess(
+            'Successfull Operation',
+            'Publicación eliminado'
+          );
         },
-        (err) => console.log(err)
+        (err) => {
+          this.alerts.showError('Error Operation', 'No se puede eliminar');
+        }
       );
-    } 
+    }
   }
 }

@@ -12,16 +12,16 @@ export class AlertsService {
 
   showSuccess(text, tittle){
     this.toast.success(text,tittle,{
-      timeOut:3000
+      timeOut:5000
     });
-    
+
 
 
   }
   showError(text, tittle){
     this.toast.error(text,tittle,{
-      timeOut:3000
+      timeOut:6000
     });
-    
+
   }
 }

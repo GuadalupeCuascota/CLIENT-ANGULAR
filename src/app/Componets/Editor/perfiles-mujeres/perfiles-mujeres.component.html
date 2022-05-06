@@ -48,10 +48,9 @@
                   <th scope="col">Profesión</th>
 
                   <th scope="col">Descripción</th>
-                  <th scope="col">Perfil Linkedin</th>
                   <th scope="col">Imagen</th>
 
-                  <th scope="col">acciones</th>
+                  <th scope="col" style="width: 120px;">Acciones</th>
                 </tr>
               </thead>
 
@@ -65,10 +64,7 @@
                 >
                   <td>{{ perfil.nombre_perfil }}</td>
                   <td>{{ perfil.profesion }}</td>
-
                   <td>{{ perfil.descripcion }}</td>
-                  <td>{{ perfil.enlace }}</td>
-
                   <td>
                     <img
                       *ngIf="
@@ -146,7 +142,7 @@
 <ng-template #contenido let-modal>
   <div class="modal-header">
     <h4 *ngIf="!edit" ng class="modal-title" id="modal-basic-title">
-      Crear perfil de mujeres en STEM 
+      Crear perfil de mujeres en STEM
     </h4>
     <h4 *ngIf="edit">Actualizar información del perfil</h4>
 
@@ -163,7 +159,7 @@
   <div class="modal-body">
     <form [formGroup]="perfilform">
       <div class="form-group">
-        <label>Nombre: </label>
+        <label class="required">Nombre y apellido: </label>
         <input
           type="text"
           class="form-control"
@@ -180,17 +176,48 @@
           >campo es requerido</small
         >
         <small
-        class="text-danger"
-        *ngIf="
-          perfilform.get('nombre_perfil').hasError('pattern') &&
-          perfilform.get('nombre_perfil').touched
-        "
-        >Ingrese solo letras</small
-      >
-        
+          class="text-danger"
+          *ngIf="
+            perfilform.get('nombre_perfil').hasError('pattern') &&
+            perfilform.get('nombre_perfil').touched
+          "
+          >Ingrese solo letras</small
+        >
       </div>
+
+      <!-- <select class="browser-default custom-select">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select> -->
+
       <div class="form-group">
-        <label>Campo de trabajo/estudio: </label>
+        <label style="color: #161515" class="required"
+          >Nivel de instrucción:</label
+        >
+        <select
+          class="browser-default custom-select"
+          name="miselect"
+          formControlName="estado_profesion"
+        >
+          <option value="" selected>Seleccione una opción</option>
+          <option value="Graduado">Graduado</option>
+          <option value="Estudiante">Estudiante</option>
+        </select>
+
+        <small
+          class="text-danger"
+          *ngIf="
+            perfilform.get('estado_profesion').hasError('required') &&
+            perfilform.get('estado_profesion').touched
+          "
+          >campo es requerido
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label class="required">Campo de trabajo/estudio: </label>
         <input
           type="text"
           class="form-control"
@@ -199,44 +226,21 @@
           formControlName="profesion"
         />
         <small
-        class="text-danger"
-        *ngIf="
-          perfilform.get('profesion').hasError('required') &&
-          perfilform.get('profesion').touched
-        "
-        >campo es requerido</small
-      >
-      <small
-        class="text-danger"
-        *ngIf="
-          perfilform.get('profesion').hasError('pattern') &&
-          perfilform.get('profesion').touched
-        "
-        >Ingrese solo letras</small
-      >
-      </div>
-
-     
-
-      <div class="form-group">
-        
-        <select
-          name="miselect"
-          formControlName="estado_profesion"
-          class="form-control"
+          class="text-danger"
+          *ngIf="
+            perfilform.get('profesion').hasError('required') &&
+            perfilform.get('profesion').touched
+          "
+          >campo es requerido</small
         >
-          <option value="" selected>Seleccione una opción</option>
-          <option value="Graduado">Graduado</option>
-          <option value="Estudiante">Estudiante</option>
-        </select>
         <small
-        class="text-danger"
-        *ngIf="
-          perfilform.get('estado_profesion').hasError('required') &&
-          perfilform.get('estado_profesion').touched
-        "
-        >campo es requerido</small
-      >
+          class="text-danger"
+          *ngIf="
+            perfilform.get('profesion').hasError('pattern') &&
+            perfilform.get('profesion').touched
+          "
+          >Ingrese solo letras</small
+        >
       </div>
 
       <!-- <div class="form-check form-check-inline">
@@ -251,7 +255,7 @@
       </div> -->
 
       <div class="form-group">
-        <label>Descripción hoy:</label>
+        <label class="required">Descripción:</label>
         <textarea
           rows="2"
           class="form-control"
@@ -259,15 +263,22 @@
           placeholder="Ingrese descripción"
           required
         ></textarea>
-        <small  class="text-danger" *ngIf="perfilform.get('descripcion').hasError('minlength') && perfilform.get('descripcion').touched" >Cantidad minima de caracteres es (30)</small>
         <small
-        class="text-danger"
-        *ngIf="
-          perfilform.get('descripcion').hasError('required') &&
-          perfilform.get('descripcion').touched
-        "
-        >campo es requerido</small
-      >
+          class="text-danger"
+          *ngIf="
+            perfilform.get('descripcion').hasError('minlength') &&
+            perfilform.get('descripcion').touched
+          "
+          >Cantidad minima de caracteres es (30)</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+            perfilform.get('descripcion').hasError('required') &&
+            perfilform.get('descripcion').touched
+          "
+          >campo es requerido</small
+        >
       </div>
       <div class="form-group">
         <label>Enlace linkedln: </label>
@@ -278,22 +289,24 @@
           placeholder="Ingrese enlace"
           formControlName="enlace"
         />
-        
       </div>
       <div class="buttons" *ngIf="edit">
-      <input type="file"  class="d-none" placeholder="" (change)="onFileSelect($event)" #photo />
+        <input
+          type="file"
+          class="d-none"
+          placeholder=""
+          (change)="onFileSelect($event)"
+          #photo
+        />
 
-      <button (click)="photo.click()" class="btn btn-primary" >
-        Agregar imagen
-      </button>
+        <button (click)="photo.click()" class="btn btn-primary">
+          Agregar imagen
+        </button>
 
-      <button  class="btn btn-primary" (click)="open(imagen)" >
-        Ver imagen
-      </button> 
-
-
-
-    </div>
+        <button class="btn btn-primary" (click)="open(imagen)">
+          Ver imagen
+        </button>
+      </div>
 
       <div *ngIf="!edit">
         <input
@@ -348,11 +361,11 @@
 </ng-template>
 
 <!-- <footer class="bg-light text-center text-lg-start">
- 
+
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
     © 2021 Copyright: W-STEM UTN
-    
+
   </div>
-  
+
 </footer> -->
 <app-footer></app-footer>

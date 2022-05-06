@@ -16,11 +16,15 @@ label{
   top: 40px;
   }
   .content {
-  
+
     margin-left: 60px;
     padding-left: 20px;
     margin-right: 60px;
     padding-top: 5px;
+  }
+  .required:after {
+    content: " *";
+    color: red;
   }
   .form-control.ng-touched.ng-invalid{
     border:1px solid red
@@ -35,9 +39,9 @@ label{
     min-height: 100vh;
     background-size:100% 100%;
     background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(71, 69, 69, 0.5));
-  
+
     /* background-attachment: fixed; */
     /* width: 100%; */
-  
-  
+
+
   }

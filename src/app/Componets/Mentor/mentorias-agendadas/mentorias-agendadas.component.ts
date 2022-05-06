@@ -30,13 +30,12 @@ export class MentoriasAgendadasComponent implements OnInit {
     this.datos = JSON.parse(localStorage.getItem('payload'));
    this.getSolicitudMentorias();
   }
- 
+
   getSolicitudMentorias() {
 
     var agenMentoria = [];
     this.registroMentoriaService.getAgendamientoMentorias(this.params).subscribe(
       (res: any) => {
-        console.log('el arreglo de mentorias es ', res);
         for (let usu1 of res) {
           if (usu1.id_usuario == this.datos.id_usuario) {
             this.localTime = moment(usu1.fecha).format('YYYY-MM-DD');
@@ -45,30 +44,22 @@ export class MentoriasAgendadasComponent implements OnInit {
           }
         }
         this.mentoriasAgen = agenMentoria;
-        console.log(this.mentoriasAgen);
       },
-
-      /*  res=> console.log(res), */
       (err) => console.error(err)
     );
   }
   updateEstadoMentoria(id_agendamiento_mentoria: number) {
-    console.log('el id', id_agendamiento_mentoria);
-
     this.registroMentoriaService
       .updateAgenMentoria(id_agendamiento_mentoria, this.datosM)
       .subscribe(
         (res: any) => {
-          console.log(res);
           // this.getSolicitudMentorias();
         },
 
-        /*  res=> console.log(res), */
-        (err) => console.error(err)
+        (err) => {
+
+        }
       );
   }
-  selectRes(event: any) {
-    console.log("el evento",event);
-    
-  }
+
 }

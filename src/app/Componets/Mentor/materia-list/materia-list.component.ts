@@ -96,7 +96,6 @@ export class MateriaListComponent implements OnInit {
       this.cleartema();
       this.edit = false;
       return 'by pressing ESC';
-
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       this.clear();
       this.cleartema();
@@ -110,7 +109,6 @@ export class MateriaListComponent implements OnInit {
     }
   }
   close(content) {
-
     this.cleartema();
     this.modalService.dismissAll(content);
     this.getMaterias();
@@ -126,12 +124,10 @@ export class MateriaListComponent implements OnInit {
   }
   clear() {
     this.ngOnInit();
-
-    console.log('clear clicked');
     this.materia.nombre_materia = null;
     this.exform.controls['nombre_materia'].setValue(
-      this.materia.nombre_materia)
-
+      this.materia.nombre_materia
+    );
   }
   saveTema() {
     this.tema.nombre_tema = this.temform.controls['nombre_tema'].value;
@@ -148,28 +144,22 @@ export class MateriaListComponent implements OnInit {
     );
   }
   cleartema() {
-    this.temas.length=0;
-    console.log('clear clicked tema');
+    this.temas.length = 0;
     this.tema.nombre_tema = null;
     // this.tema.id_materia = null;
     this.temform.controls['nombre_tema'].setValue(this.tema.nombre_tema);
   }
   getTemaMateria(id_materia: number) {
-    console.log('el id es', id_materia);
     if (id_materia) {
       this.registroTemaService.getTema(id_materia).subscribe(
         (res: any) => {
           this.temas = res;
           this.temform.controls['nombre_tema'].setValue(this.tema.nombre_tema);
-          console.log('los temas', res);
-
         },
         (err) => {
           this.msjErr = err.error.text;
-          // this.alerts.showError(err.error.text, 'Error Operation');
-          console.log('el error', err.error.text);
+          // this.alerts.showError(err.error.text, 'Error Operation')
         }
-
       );
     }
   }
@@ -183,7 +173,6 @@ export class MateriaListComponent implements OnInit {
         this.alerts.showSuccess('Successfull Operation', 'Materia guardado');
       },
       (err) => {
-        console.error(err);
         this.alerts.showError(err.error.text, 'Error Operation');
       }
     );
@@ -193,7 +182,6 @@ export class MateriaListComponent implements OnInit {
     var c = 0;
     this.registroMateriaService.getMaterias().subscribe(
       (res: any) => {
-        console.log(res);
         for (let mat of res) {
           if (mat.id_usuario == this.datos.id_usuario) {
             subjet.push(mat);
@@ -201,8 +189,9 @@ export class MateriaListComponent implements OnInit {
         }
         this.materias = subjet;
       },
-      /*  res=> console.log(res), */
-      (err) => console.error(err)
+      (err) => {
+        this.alerts.showError('Error Operation', err);
+      }
     );
   }
   editMateria() {
@@ -235,7 +224,6 @@ export class MateriaListComponent implements OnInit {
           this.exform.controls['nombre_materia'].setValue(
             this.materia.nombre_materia
           );
-          console.log(res);
         },
         (err) => {
           this.alerts.showError(err.error.text, 'Error Operation');
@@ -247,8 +235,6 @@ export class MateriaListComponent implements OnInit {
     if (confirm('Esta seguro que desea eliminar esto?')) {
       this.registroTemaService.deleteTema(id).subscribe(
         (res) => {
-          console.log(res);
-
           this.alerts.showSuccess('Successfull Operation', 'Dato eliminado');
         },
         (err) => {
@@ -261,7 +247,6 @@ export class MateriaListComponent implements OnInit {
     if (confirm('Esta seguro que desea eliminar esto?')) {
       this.registroMateriaService.deleteMateria(id).subscribe(
         (res) => {
-          console.log(res);
           this.getMaterias();
           this.alerts.showSuccess('Successfull Operation', 'Rol eliminado');
         },
@@ -291,9 +276,6 @@ export class MateriaListComponent implements OnInit {
   //   }
   // }
   updateEstadoMateria(id: number, idestado: number) {
-    console.log('el id', id);
-    console.log('el idestado', idestado);
-
     if (confirm('Esta seguro que desea activar/desactivar la materia?')) {
       if (idestado == 1) {
         this.datosM.id_estado_materia = 2;
@@ -310,34 +292,12 @@ export class MateriaListComponent implements OnInit {
         .updateEstadoMateria(id, this.datosM)
         .subscribe(
           (res) => {
-            // this.alerts.showSuccess(
-            //   'Successfull Operation',
-            //   'Estado de materia actualizado'
-            // );
             this.getMaterias();
           },
-          (err) => console.log(err)
+          (err) => {
+            this.alerts.showError('Error Operation', err);
+          }
         );
     }
   }
-
-  //  getMateriasCarrera() {
-  //   var Materia = [];
-
-  //   console.log("hol")
-
-  //   var c=0;
-  //   this.registroCarrerasMateria.getMateriasCarrera().subscribe(
-
-  //     (res:any) => {
-
-  //       console.log(res)
-  //      this.materiasCarrera=res;
-
-  //     },
-  //     /*  res=> console.log(res), */
-  //     (err) => console.error(err)
-  //   );
-
-  // }
 }
