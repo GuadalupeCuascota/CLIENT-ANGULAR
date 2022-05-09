@@ -1,30 +1,10 @@
-/* .buttons{
-  display: flex;
-  justify-content: space-between;
 
-}
-.content {
-
-  margin-left: 40px;
-  padding-left: 20px;
-  margin-right: 40px;
-  padding-top: 115px;
-  }
-  .form-control.ng-touched.ng-invalid{
-    border:1px solid red
-  }
-  .form-control.ng-touched.ng-valid{
-    border:1px solid purple
-  }
-     */
   .contenido {
     padding: 6% 0 0;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(163, 157, 157, 0.5)),url(../../../../assets/editor.jpg);
-    background-repeat: no-repeat center center fixed;
-    min-height: 100vh;
-    background-size:100% 100%;
-
-
+        background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(163, 157, 157, 0.5)),url(../../../../assets/editor.jpg);
+        background-repeat: no-repeat center center fixed;
+        min-height: 100vh;
+        background-size:100% 100%;
 
   }
   .required:after {

@@ -7,21 +7,14 @@ header {
 
 
 a{
-    font-size: 120%;
+    font-size: 110%;
     font-weight: 700;
   }
-  /* .contenido {
-    padding: 6% 0 0;
-    background-image: url(../../../../assets/prueba1.jfif );
-    background-repeat: no-repeat center center fixed;
-    min-height: 100vh;
-    background-size:100% 100%;
-  
-   
-  
-  
-  } */
+
   .navbar-nav li a{
-    
+
     padding:15px;
+  }
+  .navbar{
+    padding: 0.2rem 1rem;
   }
