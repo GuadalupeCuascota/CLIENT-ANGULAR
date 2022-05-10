@@ -1,20 +1,17 @@
-
 header {
   width: 100%;
   position: fixed;
   z-index: 10;
 }
 
+a {
+  font-size: 110%;
+  font-weight: 700;
+}
 
-a{
-    font-size: 110%;
-    font-weight: 700;
+  .navbar-nav li a {
+    padding: 15px;
   }
-
-  .navbar-nav li a{
-
-    padding:15px;
-  }
-  .navbar{
-    padding: 0.2rem 1rem;
-  }
+.navbar {
+  padding: 0.2rem 1rem;
+}
