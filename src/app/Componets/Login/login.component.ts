@@ -6,10 +6,8 @@ import { AlertsService } from '../../Services/alerts/alerts.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {
   FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
+ FormGroup,
+
 } from '@angular/forms';
 import { UsuarioListComponent } from '../Administrador/usuario-list/usuario-list.component';
 

@@ -4,7 +4,6 @@ export interface Usuario {
   nombre_carrera: string;
   nombre: string;
   apellido: string;
-  
   tipo_rol:string;
   unidad_educativa: string;
   correo_electronico: string;
