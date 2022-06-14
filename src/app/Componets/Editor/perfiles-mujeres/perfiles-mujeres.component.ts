@@ -259,6 +259,7 @@ export class PerfilesMujeresComponent implements OnInit {
     }
   }
   updatepublicacion() {
+
     if (this.archivosSeleccionado) {
       this.edit = true;
       try {
@@ -284,17 +285,22 @@ export class PerfilesMujeresComponent implements OnInit {
         this.registroArchivo
           .updateArchivo(this.perfil.id_publicacion, fda)
           .subscribe(
+
             (res) => {
+
               this.alerts.showSuccess(
                 'Successfull Operation',
-                'publicación actualizado'
+                'Publicación actualizada'
               );
               this.getpublicaciones();
+              console.log("ACTUALI",res)
             },
             (err) => {
               this.alerts.showError('Error Operation', err);
             }
-          );
+          )
+          ;
+
       } catch (error) {}
     } else {
       try {
@@ -328,8 +334,11 @@ export class PerfilesMujeresComponent implements OnInit {
             },
             (err) => {
               this.alerts.showError('Error Operation', err);
+
             }
+
           );
+
       } catch (error) {}
     }
     this.clear();

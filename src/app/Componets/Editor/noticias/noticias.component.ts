@@ -6,7 +6,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ThrowStmt } from '@angular/compiler';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import {map} from 'rxjs/operators';
 @Component({
   selector: 'app-noticias',
   templateUrl: './noticias.component.html',
@@ -16,7 +16,7 @@ export class NoticiasComponent implements OnInit {
   id = '';
   datos: any = {};
   noticias: any | Publicacion = [];
-
+  FileType = '';
   textoBuscar = '';
   noticia: any | Publicacion = {
     id_publicacion: 0,
@@ -31,11 +31,12 @@ export class NoticiasComponent implements OnInit {
     id_estado_publicacion: '1',
     id_usuario: '',
     nombre_carrera: 'Sin asignar',
+
   };
+  barWidth:'0%';
   API_URI: string;
   edit: boolean = false;
   closeResult = '';
-  //file: Array<File>
   archivosSeleccionado: File;
   leerArchivo: string | ArrayBuffer;
   constructor(
@@ -86,6 +87,7 @@ export class NoticiasComponent implements OnInit {
   }
   close(content) {
     this.edit = false;
+
     this.modalService.dismissAll(content);
   }
   ///////////////////////////////////////////////////////
@@ -100,6 +102,7 @@ export class NoticiasComponent implements OnInit {
     this.leerArchivo = null;
     this.archivosSeleccionado = null;
     this.API_URI = null;
+    this.FileType=null;
     this.noticiaform.controls['titulo'].setValue(this.noticia.titulo);
     this.noticiaform.controls['descripcion'].setValue(this.noticia.descripcion);
     this.noticiaform.controls['enlace'].setValue(this.noticia.enlace);
@@ -109,7 +112,7 @@ export class NoticiasComponent implements OnInit {
       this.archivosSeleccionado = <File>event.target.files[0];
       const reader = new FileReader(); //Crear un objeto de tipo FileReader  para leer la imagen
       reader.readAsDataURL(this.archivosSeleccionado); //leemos la imagen pasado por parametro
-
+      this.FileType = this.archivosSeleccionado.type;
       reader.onload = (e) => (this.leerArchivo = reader.result); //Comprobamos la carga del archivo y enviamos el resultado
     } else {
       this.alerts.showError('Error Operation', 'Seleccione imagen');
@@ -129,8 +132,11 @@ export class NoticiasComponent implements OnInit {
       fd.append('id_estado_publicacion', this.noticia.id_estado_publicacion);
       fd.append('nombre_carrera', this.noticia.nombre_carrera);
       this.registroArchivo.saveArchivo(fd).subscribe(
+
+
         (res) => {
           this.getpublicaciones();
+
           this.alerts.showSuccess('Successfull Operation', 'Noticia guardado');
           this.ngOnInit();
         },
@@ -150,7 +156,6 @@ export class NoticiasComponent implements OnInit {
             not.push(n);
           }
         }
-
         this.noticias = not;
       },
       (err) => console.error(err)
@@ -167,6 +172,7 @@ export class NoticiasComponent implements OnInit {
           );
           this.noticiaform.controls['enlace'].setValue(this.noticia.enlace);
           this.API_URI = this.noticia.ruta_archivo;
+          this.FileType=this.noticia.tipo_archivo;
           this.edit = true;
         },
         (err) => {

@@ -1,14 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* 
+/*
 body{
-    background: #ADA996;  
-background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); 
-background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); 
+    background: #ADA996;
+background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
+background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
 
 } */
+@import '~ngx-toastr/toastr.css';
 
 body{
     background:#cac9c9;
-    
+
 }

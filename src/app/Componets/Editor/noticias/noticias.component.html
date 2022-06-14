@@ -1,158 +1,131 @@
 <app-menu-principal-editor></app-menu-principal-editor>
-<br/>
+<br />
 <div class="contenido">
   <div class="container">
-
-      <div class="card">
-        <div class="card-header  " >
-          <h5  style="color: #4b4949;font-weight: 700;">
-            Listado de Noticias en STEM
-          </h5>
-        </div>
-        <div class="card-body text-center">
-
-          <div class="row">
-            <div class="col-md-3">
-              <button
-                type="reset"
-                class="btn btn-primary"
-                (click)=" estado(); open(contenido); clear()"
-              >
-                CREAR NOTICIAS <i class="fas fa-plus-square"></i>
-              </button>
-            </div>
-            <div class="col-md-3"></div>
-            <div class="col-md-5">
-              <div class="form-group row">
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="textoBuscar"
-                    [(ngModel)]="textoBuscar"
-                    placeholder="Ingrese título"
-                  />
-                  <div class="input-group-text bg-white">
-                    <i class="fas fa-search"></i>
-                  </div>
+    <div class="card">
+      <div class="card-header">
+        <h5 style="color: #4b4949; font-weight: 700">
+          Listado de Noticias en STEM
+        </h5>
+      </div>
+      <div class="card-body text-center">
+        <div class="row">
+          <div class="col-md-3">
+            <button
+              type="reset"
+              class="btn btn-primary"
+              (click)="estado(); open(contenido); clear()"
+            >
+              CREAR NOTICIAS <i class="fas fa-plus-square"></i>
+            </button>
+          </div>
+          <div class="col-md-3"></div>
+          <div class="col-md-5">
+            <div class="form-group row">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="textoBuscar"
+                  [(ngModel)]="textoBuscar"
+                  placeholder="Ingrese título"
+                />
+                <div class="input-group-text bg-white">
+                  <i class="fas fa-search"></i>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <br />
-          <br />
+        <br />
+        <br />
 
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr class="table-active">
-                    <th scope="col">Titulo</th>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr class="table-active">
+                <th scope="col">Titulo</th>
 
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Imagen</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Archivo</th>
 
-                    <th scope="col" style="width: 120px;">Acciones</th>
-                  </tr>
-                </thead>
+                <th scope="col" style="width: 120px">Acciones</th>
+              </tr>
+            </thead>
 
-                <tbody>
-                  <tr
-                    *ngFor="
-                      let noticia of noticias
-                        |filtroNoticias:textoBuscar | paginate: { itemsPerPage: 5, currentPage: p }
+            <tbody>
+              <tr
+                *ngFor="
+                  let noticia of noticias
+                    | filtroNoticias: textoBuscar
+                    | paginate: { itemsPerPage: 5, currentPage: p }
+                "
+              >
+                <td>{{ noticia.titulo }}</td>
+
+                <td>{{ noticia.descripcion }}</td>
+
+                <td>
+                  <img
+                    *ngIf="
+                      noticia.tipo_archivo == 'image/png' ||
+                      noticia.tipo_archivo == 'image/jpeg' ||
+                      noticia.tipo_archivo == 'image/jpg'
+                    "
+                    width="100px"
+                    heigh="100px"
+                    [src]="noticia.ruta_archivo"
+                    alt="no-image"
+                  />
+                  <video
+                    *ngIf="
+                      noticia.tipo_archivo == 'video/mp4' ||
+                      noticia.tipo_archivo == 'video/mov'
+                    "
+                    width="100px"
+                    heigh="100px"
+                    [src]="noticia.ruta_archivo"
+                    controls
+                  ></video>
+
+
+                </td>
+
+                <td>
+                  <button
+                    class="btn btn-primary"
+                    (click)="
+                      getpublicacion(noticia.id_publicacion); open(contenido)
                     "
                   >
-                    <td>{{ noticia.titulo }}</td>
-
-                    <td>{{ noticia.descripcion }}</td>
-
-                    <td>
-                      <img
-                        *ngIf="
-                          noticia.tipo_archivo == 'image/png' ||
-                          noticia.tipo_archivo == 'image/jpeg' ||
-                          noticia.tipo_archivo == 'image/jpg'
-                        "
-                        width="100px"
-                        heigh="100px"
-                        width="100px"
-                        heigh="100px"
-                        [src]="noticia.ruta_archivo"
-                        alt="no-image"
-                        width="100px"
-                        heigh="100px"
-                      />
-                      <video
-                        *ngIf="
-                          noticia.tipo_archivo == 'video/mp4' ||
-                          noticia.tipo_archivo == 'video/mov'
-                        "
-                        width="100px"
-                        heigh="100px"
-                        [src]="noticia.ruta_archivo"
-                        class="img-fluid"
-                        alt="no-image"
-                      ></video>
-                    </td>
-                    <!-- <td><img [src]="'http://localhost:3000/'+ perfil.ruta_archivo" class="img-card-top w-100"  alt="no-image"></td> -->
-                    <td>
-                      <button
-                        class="btn btn-primary"
-                        (click)="
-                          getpublicacion(noticia.id_publicacion);
-                          open(contenido)
-                        "
-                      >
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      |
-                      <button
-                        class="btn btn-danger"
-                        (click)="deletePublicacion(noticia.id_publicacion)"
-                      >
-                        <i class="far fa-trash-alt"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <pagination-controls
-                (pageChange)="p = $event"
-              ></pagination-controls>
-            </div>
-
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  |
+                  <button
+                    class="btn btn-danger"
+                    (click)="deletePublicacion(noticia.id_publicacion)"
+                  >
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
       </div>
-
+    </div>
   </div>
 </div>
-<ng-template #imagen let-modal>
-  <div class="modal-header">
-    <h4 ng class="modal-title" id="modal-basic-title">Visualizar imagen</h4>
-    <button
-      class="close"
-      aria-label="close"
-      type="button"
-      (click)="modal.dismiss()"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
 
-  <img
-    width="100%"
-    height="50px"
-    class="d-none"
-    [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
-    class="img-fluid"
-    alt="no-image"
-  />
-</ng-template>
+
+
+
 <ng-template #contenido let-modal>
   <div class="modal-header">
     <h4 *ngIf="!edit" class="modal-title" id="modal-basic-title">
-      Noticias, iniciativas y eventos STEM
+      Registro de noticias, iniciativas y eventos STEM
     </h4>
     <h4 *ngIf="edit">Actualizar información</h4>
     <button
@@ -166,111 +139,144 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="noticiaform">
-    <div class="form-group">
-      <label class="required">Titulo: </label>
-      <input
-        type="text"
-        class="form-control"
-        name=""
-        placeholder="Ingrese Titulo (Máximo 25 palabras)"
-        formControlName="titulo"
+      <div class="form-group">
+        <label class="required">Titulo: </label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese Titulo (Máximo 25 palabras)"
+          formControlName="titulo"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            noticiaform.get('titulo').hasError('required') &&
+            noticiaform.get('titulo').touched
+          "
+          >campo es requerido</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+            noticiaform.get('titulo').hasError('maxlength') &&
+            noticiaform.get('titulo').touched
+          "
+          >Cantidad máxima de palabras es (25)</small
+        >
+      </div>
 
+      <div class="form-group">
+        <label class="required">Descripción:</label>
+        <textarea
+          rows="2"
+          class="form-control"
+          formControlName="descripcion"
+          placeholder="Ingrese descripción"
+        ></textarea>
+        <small
+          class="text-danger"
+          *ngIf="
+            noticiaform.get('descripcion').hasError('required') &&
+            noticiaform.get('descripcion').touched
+          "
+          >campo es requerido</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+            noticiaform.get('descripcion').hasError('minlength') &&
+            noticiaform.get('descripcion').touched
+          "
+          >Cantidad minima de caracteres es (10)</small
+        >
+      </div>
+      <div class="form-group">
+        <label>Enlace: </label>
+        <input
+          type="text"
+          class="form-control"
+          name=""
+          placeholder="Ingrese Enlace"
+          formControlName="enlace"
+        />
+      </div>
 
-      />
-      <small
-      class="text-danger"
-      *ngIf="
-        noticiaform.get('titulo').hasError('required')  &&
-        noticiaform.get('titulo').touched
-      "
-      >campo es requerido</small
-    >
-    <small  class="text-danger" *ngIf="noticiaform.get('titulo').hasError('maxlength') && noticiaform.get('titulo').touched" >Cantidad máxima de palabras es (25)</small>
-
-    </div>
-
-    <div class="form-group">
-      <label class="required">Descripción:</label>
-      <textarea
-        rows="2"
-        class="form-control"
-        formControlName="descripcion"
-        placeholder="Ingrese descripción"
-
-      ></textarea>
-      <small
-      class="text-danger"
-      *ngIf="
-        noticiaform.get('descripcion').hasError('required') &&
-        noticiaform.get('descripcion').touched
-      "
-      >campo es requerido</small
-    >
-    <small  class="text-danger" *ngIf="noticiaform.get('descripcion').hasError('minlength') && noticiaform.get('descripcion').touched" >Cantidad minima de caracteres es (10)</small>
-    </div>
-    <div class="form-group">
-      <label>Enlace: </label>
-      <input
-        type="text"
-        class="form-control"
-        name=""
-        placeholder="Ingrese Enlace"
-        formControlName="enlace"
-
-
-      />
-    </div>
-    <div class="buttons" *ngIf="edit">
-      <input
-        type="file"
-        accept="image/*"
-        class="d-none"
-        placeholder=""
-        (change)="onFileSelect($event)"
-        #photo
-      />
-
-      <button (click)="photo.click()" class="btn btn-primary">
-        Agregar imagen
-      </button>
-
-      <button class="btn btn-primary" (click)="open(imagen)">Ver imagen</button>
-    </div>
-    <div *ngIf="!edit">
-      <input
-        type="file"
-        class="d-none"
-        placeholder=""
-        (change)="onFileSelect($event)"
-        #photo
-      />
-
-      <button (click)="photo.click()" class="btn btn-primary">
-        Agregar imagen
-      </button>
-      <img
-        class="d-none"
-        [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
-        class="img-fluid"
-        alt="no-image"
-      />
-    </div>
-    <!-- <div class="form-group">
+      <div class="buttons" *ngIf="edit">
         <input
           type="file"
-          name=""
+          accept="image/*"
           placeholder=""
           (change)="onFileSelect($event)"
           #photo
         />
 
-          <img [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'" class="img-fluid" alt="no-image" >
+
+        <button class="btn btn-primary" (click)="open(imagen)">
+          Ver archivo actual
+        </button>
+      </div>
 
 
+      <div *ngIf="!edit">
+        <input
+          type="file"
+          placeholder=""
+          (change)="onFileSelect($event)"
+          #photo
+        />
 
-      </div> -->
+        <img
+          *ngIf="FileType == 'image/jpeg' || FileType == 'image/png'"
+          [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
+          class="img-fluid"
+          alt="no-image"
+        />
+        <video
+          *ngIf="FileType == 'video/mp4' || FileType == 'video/mov'"
+          [src]="leerArchivo ||'../../../../assets/noimage.png'"
+          width="250px"
+          controls
+        ></video>
+
+        <p><ngb-progressbar *ngIf=" barWidth!='0'" [innerHTML]="barWidth" [value]="50" type="sucess" [showValue]="true"></ngb-progressbar></p>
+
+        <!-- <div class="progress" *ngIf=" barWidth!='0'">
+          <span [innerHTML]="barWidth"></span>
+          <div class="bar" [style.width]="barWidth"></div>
+        </div> -->
+
+      </div>
+
     </form>
   </div>
+
+  <ng-template #imagen let-modal>
+    <div class="modal-header">
+      <h4 ng class="modal-title" id="modal-basic-title">Visualizar archivo</h4>
+      <button
+        class="close"
+        aria-label="close"
+        type="button"
+        (click)="modal.dismiss()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <img *ngIf="FileType == 'image/jpeg' || FileType == 'image/png'"
+      width="100%"
+      height="50px"
+      class="d-none"
+      [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
+      class="img-fluid"
+      alt="no-image"
+    />
+    <video  *ngIf="FileType == 'video/mp4' || FileType == 'video/mov'" [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'" controls  width="100%" ></video>
+    <ion-label *ngIf="FileType == null" style="font-weight: 700;margin-left:auto ; margin-right: auto;">
+    Sin archivo
+    </ion-label>
+  </ng-template>
 
   <div class="modal-footer">
     <button
@@ -286,19 +292,18 @@
       [disabled]="!noticiaform.valid"
       type="button"
       class="btn btn-primary"
-      (click)="edit ? updatepublicacion() : saveArchivo(); close(contenido)"
+      (click)="edit ? updatepublicacion() : saveArchivo()|| close(contenido)"
     >
       PUBLICAR
     </button>
     <button
-
       *ngIf="edit"
       [disabled]="!noticiaform.valid"
       type="button"
       class="btn btn-primary"
       (click)="edit ? updatepublicacion() : saveArchivo(); close(contenido)"
     >
-      GUARDAR <i class="fas fa-save"></i>
+      MODIFICAR <i class="fas fa-save"></i>
     </button>
   </div>
 </ng-template>
@@ -314,4 +319,4 @@
     </div>
 
   </footer> -->
-  <app-footer></app-footer>
+<app-footer></app-footer>

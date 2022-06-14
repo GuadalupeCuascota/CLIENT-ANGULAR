@@ -68,25 +68,25 @@
                     <img
                       *ngIf="
                         oferta_academica.tipo_archivo == 'image/png' ||
-                        oferta_academica.tipo_archivo == 'image/jpeg'
+                        oferta_academica.tipo_archivo == 'image/jpeg' ||
+                        oferta_academica.tipo_archivo == 'image/png'
                       "
                       width="100px"
                       heigh="100px"
                       [src]="oferta_academica.ruta_archivo"
                       alt="no-image"
                     />
-                  </td>
-                  <!-- <video
-                  *ngIf="
+                    <video
+                    *ngIf="
                     oferta_academica.tipo_archivo == 'video/mp4' ||
-                    tipo_archivo == 'video/mov'
-                  "
-                  width="100px"
-                  heigh="100px"
-                  [src]="perfil.ruta_archivo"
-                  class="img-fluid"
-                  alt="no-image"
-                ></video> -->
+                    oferta_academica.tipo_archivo == 'video/mov'
+                    "
+                    width="100px"
+                    heigh="100px"
+                    [src]="oferta_academica.ruta_archivo"
+                    controls
+                  ></video>
+                  </td>
 
                   <td>
                     <button
@@ -126,7 +126,7 @@
 </div>
 <ng-template #imagen let-modal>
   <div class="modal-header">
-    <h4 ng class="modal-title" id="modal-basic-title">Visualizar imagen</h4>
+    <h4 ng class="modal-title" id="modal-basic-title">Visualizar archivo</h4>
     <button
       class="close"
       aria-label="close"
@@ -137,7 +137,7 @@
     </button>
   </div>
 
-  <img
+  <img  *ngIf="FileType == 'image/jpeg' || FileType == 'image/png'"
     width="100%"
     height="50px"
     class="d-none"
@@ -145,11 +145,12 @@
     class="img-fluid"
     alt="no-image"
   />
+  <video  *ngIf="FileType == 'video/mp4' || FileType == 'video/mov'" [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'" controls  width="100%" ></video>
 </ng-template>
 <ng-template #contenido let-modal>
   <div class="modal-header">
     <h4 *ngIf="!edit" class="modal-title" id="modal-basic-title">
-      Crear publicación oferta académica FICA
+      Registro publicación oferta académica FICA
     </h4>
     <h4 *ngIf="edit">Actualizar información </h4>
 
@@ -228,39 +229,38 @@
       <div class="buttons" *ngIf="edit">
         <input
           type="file"
-          class="d-none"
+
           placeholder=""
           (change)="onFileSelect($event)"
           #photo
         />
 
-        <button (click)="photo.click()" class="btn btn-primary">
-          Agregar imagen
-        </button>
 
         <button class="btn btn-primary" (click)="open(imagen)">
-          Ver imagen
+          Ver archivo actual
         </button>
       </div>
 
       <div *ngIf="!edit">
         <input
           type="file"
-          class="d-none"
           placeholder=""
           (change)="onFileSelect($event)"
           #photo
         />
 
-        <button (click)="photo.click()" class="btn btn-primary">
-          Agregar imagen
-        </button>
-        <img
+        <img  *ngIf="FileType == 'image/jpeg' || FileType == 'image/png'"
           class="d-none"
           [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
           class="img-fluid"
           alt="no-image"
         />
+        <video
+        *ngIf="FileType == 'video/mp4' || FileType == 'video/mov'"
+        [src]="leerArchivo ||'../../../../assets/noimage.png'"
+        width="250px"
+        controls
+      ></video>
       </div>
 
     </form>

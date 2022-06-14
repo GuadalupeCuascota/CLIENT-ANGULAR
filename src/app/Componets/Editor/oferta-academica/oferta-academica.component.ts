@@ -17,7 +17,7 @@ export class OfertaAcademicaComponent implements OnInit {
   datos: any = {};
   carreras: any = []; //crear arreglo de carreras
   ofertas_academica: any | Publicacion = [];
-
+  FileType = '';
   oferta_academica: any | Publicacion = {
     //Crear objeto
     id_publicacion: 0,
@@ -114,7 +114,7 @@ export class OfertaAcademicaComponent implements OnInit {
     this.leerArchivo = null;
     this.archivosSeleccionado = null;
     this.API_URI = null;
-
+    this.FileType = null;
     this.ofertaAform.controls['titulo'].setValue(this.oferta_academica.titulo);
     this.ofertaAform.controls['descripcion'].setValue(
       this.oferta_academica.descripcion
@@ -129,6 +129,7 @@ export class OfertaAcademicaComponent implements OnInit {
       this.archivosSeleccionado = <File>event.target.files[0];
       const reader = new FileReader(); //Crear un objeto de tipo FileReader  para leer la imagen
       reader.readAsDataURL(this.archivosSeleccionado); //leemos la imagen pasado por parametro
+      this.FileType = this.archivosSeleccionado.type;
       reader.onload = (e) => (this.leerArchivo = reader.result); //Comprobamos la carga del archivo y enviamos el resultado
     } else {
       this.alerts.showError('Error Operation', 'Seleccione imagen');
@@ -204,6 +205,7 @@ export class OfertaAcademicaComponent implements OnInit {
           );
           this.API_URI = this.oferta_academica.ruta_archivo;
           this.edit = true;
+          this.FileType = this.oferta_academica.tipo_archivo;
         },
         (err) => {
           this.alerts.showError('Error Operation', err);
@@ -272,7 +274,7 @@ export class OfertaAcademicaComponent implements OnInit {
               );
               this.getpublicaciones();
             },
-            (err) =>{
+            (err) => {
               this.alerts.showError('Error Operation', err);
             }
           );
@@ -297,7 +299,6 @@ export class OfertaAcademicaComponent implements OnInit {
     );
   }
   deletePublicacion(id: String) {
-
     if (confirm('Esta seguro que desea eliminar esto?')) {
       this.registroArchivo.deleteArchivo(id).subscribe(
         (res) => {
