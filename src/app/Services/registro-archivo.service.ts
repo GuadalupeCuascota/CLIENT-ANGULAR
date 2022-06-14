@@ -23,9 +23,9 @@ export class RegistroArchivoService {
   }
   saveArchivo (formData){
 
-    return this.http.post(`${environment.API_URI}/publicaciones`,formData,{reportProgress:true,observe:'events'
+    return this.http.post(`${environment.API_URI}/publicaciones`,formData
 
-    }).pipe();
+    );
 
   }
 
