@@ -165,10 +165,11 @@ export class RegistroMentoriasComponent implements OnInit {
     var agenMentoria = [];
     this.registroMentoriaService.getAgendamientoMentorias(id).subscribe(
       (res: any) => {
+        console.log("respuesta",res)
+
         for (let usu1 of res) {
           if (usu1.id_usuario == this.datos.id_usuario)
           {
-
             this.localTime = moment(usu1.fecha).format('YYYY-MM-DD');
             usu1.fecha = this.localTime;
             agenMentoria.push(usu1);
@@ -213,6 +214,7 @@ export class RegistroMentoriasComponent implements OnInit {
     var UsuMentoriaAgen = [];
     this.registroMentoriaService.getMentorias().subscribe(
       (res: any) => {
+        console.log("respuesta1",res)
         for (let usu1 of res) {
           if (usu1.id_usuario == this.datos.id_usuario) {
             if (usu1.nombre_estado_mentoria == 'Registrada') {

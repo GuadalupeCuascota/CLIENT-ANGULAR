@@ -16,5 +16,6 @@ export class RegistroUsuarioComponent implements OnInit {
   }
   ngOnInit(): void {
     this.datos = JSON.parse(localStorage.getItem('payload'));
+    console.log("datos",this.datos)
   }
 }

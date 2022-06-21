@@ -87,7 +87,6 @@ export class NoticiasComponent implements OnInit {
   }
   close(content) {
     this.edit = false;
-
     this.modalService.dismissAll(content);
   }
   ///////////////////////////////////////////////////////

@@ -40,8 +40,7 @@
                 <th scope="col">Apellido</th>
                 <th scope="col">Correo electrónico</th>
                 <th scope="col">Nivel Académico</th>
-                <th scope="col">Carrera</th>
-
+                <th scope="col">Carrera/Institución educativa</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
@@ -59,7 +58,7 @@
                 <td>{{ usuario.correo_electronico }}</td>
 
                 <td>{{ usuario.tipo_rol }}</td>
-                <td>{{ usuario.nombre_carrera }}</td>
+                <td>{{ usuario.nombre_carrera }} {{usuario.unidad_educativa}}</td>
                 <td>
                   <button
                     class="btn btn-primary"

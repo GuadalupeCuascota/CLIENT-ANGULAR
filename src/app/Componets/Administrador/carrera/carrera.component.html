@@ -15,7 +15,7 @@
           <div class="row">
             <div class="col-md-3">
               <button
-                (click)="open(contenido);clear();"
+                (click)="estado();open(contenido);clear();"
                 class="btn btn-primary"
               >
                 CREAR NUEVO <i class="fas fa-plus-square"></i>
@@ -46,8 +46,11 @@
               <thead>
                 <tr class="table-active">
                   <th scope="col">Nombre</th>
+                  <th scope="col">Siglas</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Imagen</th>
 
-                  <th scope="col">Acciones</th>
+                  <th scope="col" style="width: 20%;">Acciones</th>
                 </tr>
               </thead>
 
@@ -59,20 +62,30 @@
                   "
                 >
                   <td>{{ carrera.nombre_carrera }}</td>
+                  <td>{{ carrera.siglas}}</td>
+                  <td>{{ carrera.descripcion }}</td>
+                  <td> <img
+
+                    width="60px"
+                    heigh="50px"
+                    [src]="carrera.ruta_archivo"
+                    alt="no-image"
+                  /></td>
+
 
                   <td>
                     <button
                       class="btn btn-primary"
                       (click)="getCarrera(carrera.id_carrera); open(contenido)"
                     >
-                      <i class="fas fa-edit"></i> Editar
+                      <i class="fas fa-edit"></i>
                     </button>
                     |
                     <button
                       class="btn btn-danger"
                       (click)="deleteCarrera(carrera.id_carrera)"
                     >
-                      <i class="far fa-trash-alt"></i> Eliminar
+                      <i class="far fa-trash-alt"></i>
                     </button>
                   </td>
                 </tr>
@@ -133,6 +146,80 @@
           >Ingrese solo letras</small
         >
       </div>
+      <div class="form-group">
+        <label class="required">Siglas: </label>
+        <input
+        type="text"
+        class="form-control"
+        name=""
+        placeholder="Ingrese siglas"
+        formControlName="siglas"
+
+      />
+      <small
+          class="text-danger"
+          *ngIf="
+            carreraform.get('siglas').hasError('required') &&
+            carreraform.get('siglas').touched
+          "
+          >campo es requerido</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="
+            carreraform.get('siglas').hasError('pattern') &&
+            carreraform.get('siglas').touched
+          "
+          >Ingrese solo letras</small
+        >
+      </div>
+
+      <div class="form-group">
+        <label class="required">Descripción: </label>
+        <input
+        type="text"
+        class="form-control"
+        name=""
+        placeholder="Ingrese descripción"
+        formControlName="descripcion"
+
+      />
+      <small
+          class="text-danger"
+          *ngIf="
+            carreraform.get('descripcion').hasError('required') &&
+            carreraform.get('descripcion').touched
+          "
+          >campo es requerido</small
+        >
+      </div>
+      <div *ngIf="!edit">
+        <input
+        type="file"
+        placeholder=""
+        (change)="onFileSelect($event)"
+        #photo
+      />
+      <img
+          [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
+          class="img-fluid"
+          alt="no-image"
+        />
+      </div>
+      <div class="buttons" *ngIf="edit">
+        <input
+          type="file"
+          accept="image/*"
+          placeholder=""
+          (change)="onFileSelect($event)"
+          #photo
+        />
+
+
+        <button class="btn btn-primary" (click)="open(imagen)">
+          Ver archivo actual
+        </button>
+      </div>
     </form>
   </div>
 
@@ -151,7 +238,7 @@
       class="btn btn-primary"
       (click)="updateCarrera(); close(contenido)"
     > <i class="fas fa-save"></i>
-      GUARDAR
+      ACTUALIZAR
     </button>
     <button *ngIf="!edit"
       [disabled]="!carreraform.valid"
@@ -162,6 +249,30 @@
       GUARDAR
     </button>
   </div>
+</ng-template>
+<ng-template #imagen let-modal>
+  <div class="modal-header">
+    <h4 ng class="modal-title" id="modal-basic-title">Visualizar imagen</h4>
+    <button
+      class="close"
+      aria-label="close"
+      type="button"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <img
+    width="100%"
+    height="50px"
+    class="d-none"
+    [src]="leerArchivo || API_URI || '../../../../assets/noimage.png'"
+    class="img-fluid"
+    alt="no-image"
+  />
+
+
 </ng-template>
 
 <app-footer></app-footer>

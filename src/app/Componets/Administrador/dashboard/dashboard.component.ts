@@ -237,12 +237,12 @@ export class DashboardComponent implements OnInit {
           }
         }
         let options = {
-          name: 'Estudiantes Bachillerato',
+          name: 'Bachillerato',
           value: this.NroEstBachillerato,
         };
 
         let options1 = {
-          name: 'Estudiantes FICA',
+          name: 'Universitarios',
           value: this.NroEstUniversidad,
         };
         con.push(options, options1);
@@ -259,9 +259,10 @@ export class DashboardComponent implements OnInit {
     var con = [];
     this.consultasDashboardServices.getNroEventoPorCarrera().subscribe(
       (res: any) => {
+        console.log("res",res)
         for (let c of res) {
           if (c.id_carrera != 1) {
-            const carrera = c.nombre_carrera;
+            const carrera = c.siglas;
             const nro = c.likes;
             let options = {
               name: carrera,
@@ -272,7 +273,7 @@ export class DashboardComponent implements OnInit {
           }
         }
         this.eventosCarrera = con;
-
+   console.log("los eve",this.eventosCarrera)
       },
       (err) => {
         this.alerts.showError('Error Operation', err);
@@ -335,15 +336,15 @@ export class DashboardComponent implements OnInit {
     );
   }
   onSelect(data): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
   onActivate(data): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+    // console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
   onDeactivate(data): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
 }

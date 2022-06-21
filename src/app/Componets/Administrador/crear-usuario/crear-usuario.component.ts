@@ -41,6 +41,7 @@ export class CrearUsuarioComponent implements OnInit {
   closeResult = '';
   edit: boolean = false;
   estado: boolean;
+
   constructor(
     private registroUsuarioService: RegistroUsuarioService,
     private alerts: AlertsService,
