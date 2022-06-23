@@ -1,42 +1,39 @@
+.list-group-item{
+  background: rgba(255, 255, 255, 0.952);
+
+}
+label{
+color: #646262;
+font-size: 1rem;
+margin: 0 0 10px 0;
+font-weight: 500;
+}
+.iconoInput {
+color: #1a1818;
+font-size: 15px;
+position: absolute;
+right: 30px;
+top: 40px;
+}
+
 .required:after {
   content: " *";
   color: red;
 }
-.content {
-
-  margin-left: 40px;
-  padding-left: 20px;
-  margin-right: 40px;
-  padding-top: 115px;
-  }
-  .required:after {
-    content: " *";
-    color: red;
-  }
-  .form-control.ng-touched.ng-invalid{
-    border:1px solid red
-  }
-  .form-control.ng-touched.ng-valid{
-    border:1px solid purple
-  }
-
-.list-group-item {
-  background: rgba(255, 255, 255, 0.952);
+.form-control.ng-touched.ng-invalid{
+  border:1px solid red
 }
-.iconoInput {
-  color: #1a1818;
-  font-size: 15px;
-  position: absolute;
-  right: 30px;
-  top: 40px;
+.form-control.ng-touched.ng-valid{
+  border:1px solid purple
 }
 .contenido {
-  padding: 3% 0 0;
-  background-image: linear-gradient(rgba(255, 246, 246, 0.8),rgba(213, 195, 247, 0.8)),url(../../../../assets/mentor.jpg);
+  padding: 8% 0 0;
+
   background-repeat: no-repeat center center fixed;
   min-height: 100vh;
   background-size:100% 100%;
-
-
+  background-image: linear-gradient(rgba(255, 246, 246, 0.8),rgba(213, 195, 247, 0.8)),url(../../../../assets/mentor.jpg);
 
 }
+
+

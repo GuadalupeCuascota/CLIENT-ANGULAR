@@ -153,6 +153,7 @@ export class MateriaListComponent implements OnInit {
     if (id_materia) {
       this.registroTemaService.getTema(id_materia).subscribe(
         (res: any) => {
+          console.log("temas",res)
           this.temas = res;
           this.temform.controls['nombre_tema'].setValue(this.tema.nombre_tema);
         },

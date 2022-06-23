@@ -16,6 +16,8 @@ import { ElementSchemaRegistry } from '@angular/compiler';
 import { Router } from '@angular/router';
 import { RegistroMateriasService } from 'src/app/Services/registro-materias.service';
 import { Materia } from 'src/app/Models/materias';
+import { TemaMateria } from 'src/app/Models/tema_materia';
+import { RegistroTemaService } from 'src/app/Services/registro-tema.service';
 
 @Component({
   selector: 'app-registro-mentorias',
@@ -24,7 +26,7 @@ import { Materia } from 'src/app/Models/materias';
 })
 export class RegistroMentoriasComponent implements OnInit {
   exform: FormGroup;
-  exformEdit:FormGroup;
+  exformEdit: FormGroup;
   datos: any = {};
   closeResult = '';
   localTime = moment().format('DD-MM-YYYY');
@@ -79,38 +81,48 @@ export class RegistroMentoriasComponent implements OnInit {
     hora_inicio: '',
     hora_fin: '',
     tipo_mentoria: '',
-    nombre_materia:'',
+    nombre_materia: '',
     id_usuario: 0,
     carrera: '',
     id_materia: '',
     id_estado_mentoria: 1,
+    nombre_tema:'',
   };
   materias: Materia[] = [];
+  temas: TemaMateria[] = [];
   textoBuscar = '';
   p: number = 0;
   mentoriasAgen: any = [];
+  public selectedMateria: Materia = {
+    id_materia: 0,
+    nombre_materia: '',
+    id_estado_materia: 0,
+    id_usuario: 0,
+  };
+  public;
   constructor(
     private registroMentoriaService: RegistroMentoriaService,
     private alerts: AlertsService,
     private modalService: NgbModal,
     private router: Router,
     private registroCancelarMentoria: CancelarMentoriaService,
-    private registroMateriaService: RegistroMateriasService
+    private registroMateriaService: RegistroMateriasService,
+    private registroTemasService: RegistroTemaService
   ) {}
 
   ngOnInit(): void {
     this.datos = JSON.parse(localStorage.getItem('payload'));
     this.getMentorias();
     this.getMaterias();
-
     this.mentoria.id_usuario = this.datos.id_usuario;
     this.exform = new FormGroup({
       nombre_materia: new FormControl('', Validators.required),
       fecha: new FormControl('', Validators.required),
       hora_inicio: new FormControl('', Validators.required),
       hora_fin: new FormControl('', Validators.required),
+      nombre_tema: new FormControl('', Validators.required),
     });
-    this.exformEdit= new FormGroup({
+    this.exformEdit = new FormGroup({
       nombre_materia: new FormControl('', Validators.required),
       fecha: new FormControl('', Validators.required),
       hora_inicio: new FormControl('', Validators.required),
@@ -151,25 +163,44 @@ export class RegistroMentoriasComponent implements OnInit {
   ////////////////////////////////////////////////////
 
   clear() {
+    this.ngOnInit();
     this.mentoria.fecha = null;
     this.mentoria.id_materia = null;
     this.mentoria.hora_inicio = null;
     this.mentoria.hora_fin = null;
     this.exform.controls['fecha'].setValue(this.mentoria.fecha);
-    this.exform.controls['nombre_materia'].setValue(this.mentoria.nombre_materia);
+    this.exform.controls['nombre_materia'].setValue(
+      this.mentoria.nombre_materia
+    );
     this.exform.controls['hora_inicio'].setValue(this.mentoria.hora_inicio);
     this.exform.controls['hora_fin'].setValue(this.mentoria.hora_fin);
   }
-  getSolicitudMentorias(id) {
+  getTemaMateria(id_materia: number) {
+    if (id_materia) {
+      this.registroTemasService.getTema(id_materia).subscribe(
+        (res: any) => {
+          console.log('temas', res);
+          this.temas = res;
+        },
+        (err) => {
+          // this.alerts.showError(err.error.text, 'Error Operation')
+        }
+      );
+    }
+  }
 
+  onChange(id) {
+    this.getTemaMateria(id);
+    console.log('los tem', this.getTemaMateria(id));
+  }
+  getSolicitudMentorias(id) {
     var agenMentoria = [];
     this.registroMentoriaService.getAgendamientoMentorias(id).subscribe(
       (res: any) => {
-        console.log("respuesta",res)
+        console.log('respuesta', res);
 
         for (let usu1 of res) {
-          if (usu1.id_usuario == this.datos.id_usuario)
-          {
+          if (usu1.id_usuario == this.datos.id_usuario) {
             this.localTime = moment(usu1.fecha).format('YYYY-MM-DD');
             usu1.fecha = this.localTime;
             agenMentoria.push(usu1);
@@ -182,7 +213,6 @@ export class RegistroMentoriasComponent implements OnInit {
         this.alerts.showError('Error Operation', err);
       }
     );
-    // this.router.navigate(['mentorias-agendadas/' + id]);
   }
   getSolicitudMentorias1(id: number) {
     var agenMentoria = [];
@@ -191,12 +221,6 @@ export class RegistroMentoriasComponent implements OnInit {
         for (let usu1 of res) {
           if (usu1.id_usuario == this.datos.id_usuario) {
             this.localTime = moment(usu1.fecha).format('YYYY-MM-DD');
-            // this.time = moment(usu1.hora_inicio).format('HH:mm');
-            // this.time1 = moment(usu1.hora_fin).format('HH:mm');
-
-            usu1.fecha = this.localTime;
-            // usu1.hora_inicio=this.time
-            // usu1.hora_fin=this.time1
             agenMentoria.push(usu1);
           }
         }
@@ -208,17 +232,16 @@ export class RegistroMentoriasComponent implements OnInit {
   }
 
   getMentorias() {
-
     var UsuMentoria = [];
     var UsuMentoriaCancel = [];
     var UsuMentoriaAgen = [];
     this.registroMentoriaService.getMentorias().subscribe(
       (res: any) => {
-        console.log("respuesta1",res)
+        console.log('respuesta1', res);
         for (let usu1 of res) {
           if (usu1.id_usuario == this.datos.id_usuario) {
             if (usu1.nombre_estado_mentoria == 'Registrada') {
-              console.log("fecha",usu1.fecha)
+              console.log('fecha', usu1.fecha);
               this.localTime = moment(usu1.fecha).format('DD-MM-YYYY');
               usu1.carrera = res.materia;
               usu1.fecha = this.localTime;
@@ -251,25 +274,25 @@ export class RegistroMentoriasComponent implements OnInit {
     );
   }
   getMentoria(id_mentoria: number) {
+    this.registroMentoriaService.getMentoria(id_mentoria).subscribe(
+      (res) => {
+        this.mentoria1 = res;
+        this.localTime = moment(this.mentoria1.fecha).format('DD-MM-YYYY');
+        this.exformEdit.controls['fecha'].setValue(this.localTime);
+        this.exformEdit.controls['nombre_materia'].setValue(
+          this.mentoria1.nombre_materia
+        );
+        this.exformEdit.controls['hora_inicio'].setValue(
+          this.mentoria1.hora_inicio
+        );
+        this.exformEdit.controls['hora_fin'].setValue(this.mentoria1.hora_fin);
 
-      this.registroMentoriaService.getMentoria(id_mentoria).subscribe(
-        (res) => {
-         this.mentoria1 = res;
-         this.localTime = moment(this.mentoria1.fecha).format('DD-MM-YYYY');
-         this.exformEdit.controls['fecha'].setValue(this.localTime);
-         this.exformEdit.controls['nombre_materia'].setValue(this.mentoria1.nombre_materia);
-         this.exformEdit.controls['hora_inicio'].setValue(this.mentoria1.hora_inicio);
-         this.exformEdit.controls['hora_fin'].setValue(this.mentoria1.hora_fin);
-
-
-          // this.localTime = moment(this.mentoria1.fecha).format('YYYY-MM-DD');
-          // this.mentoria1.fecha = this.localTime;
-
-        },
-        (err) => this.alerts.showError('Error Operation', 'No se puede actualizar')
-
-      );
-
+        // this.localTime = moment(this.mentoria1.fecha).format('YYYY-MM-DD');
+        // this.mentoria1.fecha = this.localTime;
+      },
+      (err) =>
+        this.alerts.showError('Error Operation', 'No se puede actualizar')
+    );
   }
 
   saveMentoria() {
@@ -277,6 +300,7 @@ export class RegistroMentoriasComponent implements OnInit {
     this.mentoria.fecha = this.exform.controls['fecha'].value;
     this.mentoria.hora_inicio = this.exform.controls['hora_inicio'].value;
     this.mentoria.hora_fin = this.exform.controls['hora_fin'].value;
+    this.mentoria.nombre_tema = this.exform.controls['nombre_tema'].value;
 
     if (this.mentoria.hora_fin > this.mentoria.hora_inicio) {
       this.registroMentoriaService.saveMentoria(this.mentoria).subscribe(
@@ -288,8 +312,6 @@ export class RegistroMentoriasComponent implements OnInit {
           this.getMentorias();
           this.clear();
           this.ngOnInit();
-
-
         },
         (err) => {
           this.error = err;
@@ -321,15 +343,12 @@ export class RegistroMentoriasComponent implements OnInit {
     }
   }
   updateMentoria() {
-
-
-    this.mentoria1.nombre_materia = this.exformEdit.controls['nombre_materia'].value;
+    this.mentoria1.nombre_materia =
+      this.exformEdit.controls['nombre_materia'].value;
     this.mentoria1.fecha = this.exformEdit.controls['fecha'].value;
     this.mentoria1.hora_inicio = this.exformEdit.controls['hora_inicio'].value;
     this.mentoria1.hora_fin = this.exformEdit.controls['hora_fin'].value;
-    this.mentoria1.id_estado_mentoria
-
-
+    this.mentoria1.id_estado_mentoria;
 
     this.registroMentoriaService
       .updateMentoria(this.mentoria1.id_registro_mentoria, this.mentoria1)
@@ -360,20 +379,22 @@ export class RegistroMentoriasComponent implements OnInit {
           );
           this.getMentorias();
         },
-        (err) =>{
-          this.alerts.showError('Error Operation', 'No se puede cancelar la mentoria');
+        (err) => {
+          this.alerts.showError(
+            'Error Operation',
+            'No se puede cancelar la mentoria'
+          );
         }
       );
     }
   }
 
- EjecutarMentoria(id: string) {
+  EjecutarMentoria(id: string) {
     this.mentoria1.id_estado_mentoria = 4;
     if (confirm('Esta seguro que desea ejecutar la mentoria?')) {
       this.registroCancelarMentoria.cancelarMentoria(id, this.datosM).subscribe(
         (res) => {
           this.alerts.showSuccess(
-
             'Successfull Operation',
             'Mentoria Cancelada'
           );
@@ -385,6 +406,7 @@ export class RegistroMentoriasComponent implements OnInit {
       );
     }
   }
+
   getMaterias() {
     var subjet = [];
     var c = 0;

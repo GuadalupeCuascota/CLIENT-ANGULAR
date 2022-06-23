@@ -1,45 +1,14 @@
-/*//////////////encabezado////////////////*/
-* {
-  /* padding: 0; */
-  margin: 0;
-}
-
-p {
-  margin-bottom: 20px;
-}
-a {
-  font-size: 110%;
-  font-weight: 700;
-}
-
 header {
   width: 100%;
   position: fixed;
   z-index: 10;
 }
-/*//////////////menu publicacion////////////////*/
-.content {
-  margin-left: 360px;
-  padding-left: 20px;
-  margin-right: 130px;
-  padding-top: 90px;
+a{
+  font-size: 115%;
+  font-weight: 700;
 }
-.contenido {
-  padding: 30% 0 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.5),rgba(71, 69, 69, 0.5)),
-    url(../../../../assets/mentor.jpg);
-  background-repeat: no-repeat center center fixed;
-  min-height: 100vh;
-  background-size: 100% 100%;
-}
-h1 {
-  margin: 0 0 10px 0;
-  font-weight: 800;
-  margin-top: -10%;
-}
-.navbar-nav li a {
-  padding: 15px;
-}
+
 .navbar{
   padding: 0.2rem 1rem;
 }
+

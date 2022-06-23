@@ -1,25 +1,26 @@
 <app-menu-principal-m></app-menu-principal-m>
 <div class="contenido">
+
   <div class="container">
     <br />
     <br />
-
+    <br />
     <div class="col-md-12 ">
       <div class="card">
         <div class="card-header  " >
           <h5  style="color: #4b4949;font-weight: 700;">
-            Listado de materias
+            Listado de materias a impartir en la mentoria
           </h5>
         </div>
         <div class="card-body text-center">
-         
+
           <div class="row">
             <div class="col-md-3">
               <button
                 (click)="open(contenido); clear()"
                 class="btn btn-primary"
               >
-                CREAR NUEVO <i class="fas fa-plus-square"></i>
+                AGREGAR MATERIA <i class="fas fa-plus-square"></i>
               </button>
             </div>
             <div class="col-md-4"></div>
@@ -94,7 +95,7 @@
                       "
                       class="btn btn-success"
                     >
-                    <i class="fa fa-plus-square" aria-hidden="true"></i> Agregar 
+                    <i class="fa fa-plus-square" aria-hidden="true"></i> Agregar
                     </button>
                     |
                     <button
@@ -132,7 +133,7 @@
   <!-- <div class="contenido">
   <div class="content">
     <div class="row">
-      
+
       <div class="col-md-6 offset-md-3">
         <button class="btn btn-primary" (click)="Crear()">
           <i class="fas fa-plus-square"></i> Crear materia
@@ -148,12 +149,12 @@
                   <th scope="col">Acciones</th>
                 </tr>
               </thead>
-        
+
               <tbody>
                 <tr *ngFor="let materiaCarrera of materiasCarrera  | paginate: { itemsPerPage: 5, currentPage: p }" >
                   <td>{{materiaCarrera.nombre_carrera}}</td>
                   <td>{{materiaCarrera.nombre_materia}}</td>
-        
+
                   <td>
                     <button class="btn btn-primary">
                       <i class="fas fa-edit"></i>
@@ -171,10 +172,10 @@
           </div>
         </div>
     </div>
-  
-   
-  
- 
+
+
+
+
   </div>
 </div> -->
 </div>
@@ -364,7 +365,7 @@
         </table>
       </div>
     </div>
-    
+
     <div *ngIf="temas.length ==0">
       {{ msjErr }}
     </div>
